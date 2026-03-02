@@ -1,10 +1,9 @@
 function appendListElement(listId, value) {
 	const ul = document.getElementById(listId);
 	let li = document.createElement('li');
-	let newLink = document.createElement('a')
-	newLink.setAttribute('href', value)
-	newLink.innerHTML = value;
-	li.appendChild(newLink);
+	let newItem = document.createElement('span')
+	newItem.innerHTML = value;
+	li.appendChild(newItem);
 	ul.appendChild(li);
 }
 
@@ -15,7 +14,7 @@ function addToList(event, listName) { // listName = 'avoid' || 'visit'
 		const resultList = result[listName] || [];
 		const inputValue = document.getElementById(`${listName}Input`).value;
 
-		chrome.storage.local.set({ listName: [...resultList, inputValue] }).then(() => {
+		chrome.storage.local.set({ [listName]: [...resultList, inputValue] }).then(() => {
 				console.log(`${inputValue} added to ${listName} list`);
 		});
 	appendListElement(`${listName}List`, inputValue);
@@ -40,7 +39,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	});
 
 	chrome.storage.local.get("visit", function(result){
-		const visitArray = result.avoid;
+		const visitArray = result.visit;
 		if (visitArray && visitArray.length > 0) {
 			visitArray.map((visitItem) => {
 				appendListElement("visitList", visitItem);

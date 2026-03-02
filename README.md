@@ -42,6 +42,7 @@ Gamification:
 - [ ] 'remove' button for urls
 - [ ] streak gamification
 - [ ] positive reinforcement
+- [ ] avoid urls should not be clickable
 
 - [x] Nicer copies
 - [ ] Fix icon not showing up
