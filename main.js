@@ -1,4 +1,4 @@
-function appendToList(listId, value) {
+function appendListElement(listId, value) {
 	const ul = document.getElementById(listId);
 	let li = document.createElement('li');
 	let newLink = document.createElement('a')
@@ -8,29 +8,42 @@ function appendToList(listId, value) {
 	ul.appendChild(li);
 }
 
-function addToAvoidList(event) {
+function addToList(event, listName) { // listName = 'avoid' || 'visit'
 	event.preventDefault();
 
-	chrome.storage.local.get("avoid", function(result){
-		const avoidList = result.avoid || [];
-		const inputValue = document.getElementById("avoidInput").value;
+	chrome.storage.local.get(listName, function(result){
+		const resultList = result[listName] || [];
+		const inputValue = document.getElementById(`${listName}Input`).value;
 
-		chrome.storage.local.set({ "avoid": [...avoidList, inputValue] }).then(() => {
-				console.log(`${inputValue} added to avoid list`);
+		chrome.storage.local.set({ listName: [...resultList, inputValue] }).then(() => {
+				console.log(`${inputValue} added to ${listName} list`);
 		});
-	appendToList("avoidList", inputValue);
+	appendListElement(`${listName}List`, inputValue);
 	});
 }
 
 window.addEventListener("DOMContentLoaded", (event) => {
-  const element = document.getElementById("avoidButton");
-	element?.addEventListener("click", addToAvoidList);
+	const eventHandlerWithArg = (event, arg) => addToList(event, arg);
+  const avoidButton = document.getElementById("avoidButton");
+	avoidButton?.addEventListener("click", (event) => eventHandlerWithArg(event, "avoid"));
+
+	const visitButton = document.getElementById("visitButton");
+	visitButton?.addEventListener("click", (event) => eventHandlerWithArg(event, "visit"));
 
 	chrome.storage.local.get("avoid", function(result){
 		const avoidArray = result.avoid;
 		if (avoidArray && avoidArray.length > 0) {
 			avoidArray.map((avoidItem) => {
-				appendToList("avoidList", avoidItem);
+				appendListElement("avoidList", avoidItem);
+			})
+		}
+	});
+
+	chrome.storage.local.get("visit", function(result){
+		const visitArray = result.avoid;
+		if (visitArray && visitArray.length > 0) {
+			visitArray.map((visitItem) => {
+				appendListElement("visitList", visitItem);
 			})
 		}
 	});
