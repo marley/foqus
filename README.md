@@ -39,10 +39,10 @@ Gamification:
 - [ ] Navigating to guilty pleasure url triggers 5 minute wait when other url rejected
 - [ ] Allow for more than 1 guilty pleasure and more than 1 preferred site
 - [ ] Remove input text from input field after submit
-- [ ] 'remove' button for urls
+- [x] 'remove' button for urls
 - [ ] streak gamification
 - [ ] positive reinforcement
-- [ ] avoid urls should not be clickable
+- [x] avoid urls should not be clickable
 
 - [x] Nicer copies
 - [ ] Fix icon not showing up

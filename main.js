@@ -1,10 +1,28 @@
 function appendListElement(listId, value) {
 	const ul = document.getElementById(listId);
+	const listName = listId.replace('List', '');
 	let li = document.createElement('li');
-	let newItem = document.createElement('span')
+	let newItem = document.createElement('span');
 	newItem.innerHTML = value;
 	li.appendChild(newItem);
+	const removeBtn = document.createElement('button');
+	removeBtn.classList.add( "removeBtn" );
+	removeBtn.textContent = 'x';
+	removeBtn.addEventListener('click', () => removeFromList(listName, value, li));
+	li.appendChild(removeBtn);
 	ul.appendChild(li);
+}
+
+function removeFromList(listName, value, liElement) {
+	chrome.storage.local.get(listName, function(result) {
+		const resultList = result[listName] || [];
+		const index = resultList.indexOf(value);
+		if (index === -1) return;
+		const updatedList = [...resultList.slice(0, index), ...resultList.slice(index + 1)];
+		chrome.storage.local.set({ [listName]: updatedList }).then(() => {
+			liElement.remove();
+		});
+	});
 }
 
 function addToList(event, listName) { // listName = 'avoid' || 'visit'
