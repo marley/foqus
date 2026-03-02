@@ -1,17 +1,33 @@
 <html>
+  <head>
+    <script src="main.js"></script>
+    <style>
+      #main {padding: 10px}
+    </style>
+  </head>
   <body>
     <h1>Welcome to Foqus</h1>
-    <h2>Today I want to avoid this site</h2>
-    <input type="text"/>
-    
-    <h2>Today I want to build this habit</h2>
-    <input type="text"/>
+    <div id="main">
+      <h2>Sites to avoid</h2>
+      <form>
+        <label for="avoidInput">Enter a new item:</label>
+        <input type="text" name="avoidInput" id="avoidInput">
+        <button id="avoidButton">Add</button>
+      </form>
+      <ul id="avoidList">
 
-    <button>Set intention</button>
+      </ul>
+      
+      <h2>Sites to visit more</h2>
+      <form>
+        <label for="item">Enter a new item:</label>
+        <input type="text" name="item" id="item">
+        <button>Add</button>
+      </form>
+      <ul>
 
-
+      </ul>
+    </div>
     <a href="https://ko-fi.com/foqus" target="_blank">Support me on Ko-fi</a>
-
-<!-- <script type='text/javascript'>kofiwidget2.init('', '#72a4f2', 'H2H1WPGNQ');kofiwidget2.draw();</script>  -->
   </body>
 </html>

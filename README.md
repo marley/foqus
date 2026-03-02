@@ -34,10 +34,10 @@ Gamification:
    - Other versions: penguins vs polar bears, seals vs orcas.
 
 # Todos
-- [x] When user inputs url, it gets saved to local storage
-- [x] Navigating to guilty pleasure url triggers page which suggests other url instead
-- [x] Navigating to guilty pleasure url triggers 5 minute wait when other url rejected
-- [x] Allow for more than 1 guilty pleasure and more than 1 preferred site
+- [x] When user inputs url, it gets saved to chrome.storage.local
+- [ ] Navigating to guilty pleasure url triggers page which suggests other url instead
+- [ ] Navigating to guilty pleasure url triggers 5 minute wait when other url rejected
+- [ ] Allow for more than 1 guilty pleasure and more than 1 preferred site
 
 - [x] Nicer copies
 - [ ] Fix icon not showing up
