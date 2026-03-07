@@ -15,7 +15,15 @@
 .foqus-overlay-title {
     font-size: 50px;
     color: white;
-    padding-bottom: 10px
+    padding-bottom: 10px;
+}
+
+.foqus-overlay-countdown {
+    font-size: 36px;
+    color: white;
+    font-weight: 600;
+    padding-bottom: 20px;
+    letter-spacing: 0.05em;
 }
 
 .foqus-overlay-subtitle {
