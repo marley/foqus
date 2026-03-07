@@ -24,6 +24,7 @@
     font-weight: 600;
     padding-bottom: 20px;
     letter-spacing: 0.05em;
+    min-height: 1.2em;
 }
 
 .foqus-overlay-subtitle {
@@ -45,6 +46,10 @@
 
 .foqus-overlay-suggested-sites > li > a {
     font-weight: 800;
+}
+
+.foqus-overlay-button-container {
+    min-height: 44px;
 }
 
 .foqus-overlay-button {

@@ -7,7 +7,7 @@ function addTitleSection(parent, refs) {
 
 	const countdown = document.createElement("div");
 	countdown.className = "foqus-overlay-countdown";
-	countdown.hidden = true;
+	countdown.style.visibility = "hidden";
 	parent.appendChild(countdown);
 	refs.countdown = countdown;
 }
@@ -66,7 +66,7 @@ function startCountdown(refs) {
 	refs.initialButton.remove();
 	refs.initialButton = null;
 
-	refs.countdown.hidden = false;
+	refs.countdown.style.visibility = "visible";
 	let remaining = 5 * 60;
 
 	function tick() {
@@ -84,7 +84,6 @@ function startCountdown(refs) {
 }
 
 function showAccessButton(refs) {
-
 	const accessBtn = document.createElement("button");
 	accessBtn.className = "foqus-overlay-button";
 	accessBtn.innerHTML = "access distraction site";
