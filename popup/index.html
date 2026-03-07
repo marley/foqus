@@ -6,7 +6,7 @@
   <body>
     <h1>Welcome to Foqus</h1>
     <div id="main" class="popup-main">
-      <h2>Sites to avoid</h2>
+      <h2>Distraction sites</h2>
       <form>
         <input placeholder="example.com" type="text" name="avoidInput" id="avoidInput">
         <button id="avoidButton">Add</button>
@@ -14,8 +14,8 @@
       <ul id="avoidList">
 
       </ul>
-      
-      <h2>Sites to visit</h2>
+
+      <h2>Intentional sites</h2>
       <form>
         <input placeholder="example.com" type="text" name="visitInput" id="visitInput">
         <button id="visitButton">Add</button>
@@ -23,6 +23,19 @@
       <ul id="visitList">
 
       </ul>
+    </div>
+    <div class="popup-settings">
+      <div class="popup-settings-header">
+        <button type="button" id="settingsToggle" class="popup-settings-toggle" aria-expanded="false">Settings</button>
+        <span id="savedIndicator" class="popup-settings-saved" hidden>Saved!</span>
+      </div>
+      <div id="settingsDrawer" class="popup-settings-drawer" hidden>
+        <h3>Unblock time limit</h3>
+        <form id="limitForm">
+          <input type="number" name="overrideLimitInput" id="overrideLimitInput" min="1" max="120" value="5" placeholder="5"> minutes
+          <button id="limitSaveButton">Save</button>
+        </form>
+      </div>
     </div>
     <a href="https://ko-fi.com/foqus" target="_blank">Support me on Ko-fi</a>
   </body>

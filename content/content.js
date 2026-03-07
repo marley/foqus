@@ -1,15 +1,11 @@
+const OVERRIDE_LIMIT_DEFAULT = 5;
+
 function addTitleSection(parent, refs) {
 	const title = document.createElement("h1");
 	title.className = "foqus-overlay-title";
 	title.innerHTML = "This is a danger zone.";
 	parent.appendChild(title);
 	refs.title = title;
-
-	const countdown = document.createElement("div");
-	countdown.className = "foqus-overlay-countdown";
-	countdown.style.visibility = "hidden";
-	parent.appendChild(countdown);
-	refs.countdown = countdown;
 }
 
 function addMainSection(parent, urlArray) {
@@ -37,84 +33,111 @@ function addMainSection(parent, urlArray) {
 	}
 }
 
-function formatTime(seconds) {
-	const m = Math.floor(seconds / 60);
-	const s = seconds % 60;
-	return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+function getOverrideMinutes(value) {
+	const n = value != null ? Math.floor(Number(value)) : null;
+	if (n == null || Number.isNaN(n) || n < 1) return OVERRIDE_LIMIT_DEFAULT;
+	return Math.min(120, n);
 }
 
-function addButtonSection(parent, refs) {
+function addButtonSection(parent, refs, minutes) {
 	const container = document.createElement("div");
 	container.className = "foqus-overlay-button-container";
 
 	const button = document.createElement("button");
 	button.className = "foqus-overlay-button";
-	button.innerHTML = "I'll go anyway";
-	button.addEventListener("click", () => startCountdown(refs));
+	button.innerHTML = `unblock for ${minutes} minute${minutes === 1 ? "" : "s"}`;
+	button.addEventListener("click", () => grantUnblock(minutes));
 	container.appendChild(button);
 
 	parent.appendChild(container);
 	refs.buttonContainer = container;
-	refs.initialButton = button;
 }
 
-function startCountdown(refs) {
-	const overlay = refs.title.closest("#foqus-overlay");
+function grantUnblock(minutes) {
+	const overlay = document.getElementById("foqus-overlay");
 	if (!overlay) return;
 
-	refs.title.innerHTML = "5 minutes starts now";
-	refs.initialButton.remove();
-	refs.initialButton = null;
-
-	refs.countdown.style.visibility = "visible";
-	let remaining = 5 * 60;
-
-	function tick() {
-		refs.countdown.textContent = formatTime(remaining);
-		if (remaining <= 0) {
-			clearInterval(refs.countdownInterval);
-			refs.countdownInterval = null;
-			showAccessButton(refs);
-			return;
-		}
-		remaining--;
+	const host = normalizeHost(location.hostname);
+	if (host) {
+		const expiry = Date.now() + minutes * 60 * 1000;
+		chrome.storage.local.get("overrideUntilByHost", (result) => {
+			const map = result.overrideUntilByHost || {};
+			chrome.storage.local.set({
+				overrideUntilByHost: { ...map, [host]: expiry }
+			});
+		});
 	}
-	tick();
-	refs.countdownInterval = setInterval(tick, 1000);
-}
 
-function showAccessButton(refs) {
-	const accessBtn = document.createElement("button");
-	accessBtn.className = "foqus-overlay-button";
-	accessBtn.innerHTML = "access distraction site";
-	accessBtn.addEventListener("click", () => {
-		const overlay = refs.title.closest("#foqus-overlay");
-		if (refs.countdownInterval) {
-			clearInterval(refs.countdownInterval);
-		}
-		overlay?.remove();
-	});
-	refs.buttonContainer.appendChild(accessBtn);
+	overlay.remove();
+
+	setTimeout(() => {
+		chrome.storage.local.get("visit", (result) => {
+			if (result.visit) maybeShowOverlay(result.visit);
+		});
+	}, minutes * 60 * 1000);
 }
 function showOverlay(urlsToVisit) {
 	if (document.getElementById("foqus-overlay")) return;
 
-	const overlay = document.createElement("div");
-	overlay.id = "foqus-overlay";
-	overlay.className = "foqus-overlay";
+	chrome.storage.local.get("overrideLimitMinutes", (result) => {
+		const minutes = getOverrideMinutes(result.overrideLimitMinutes);
 
-	const refs = {};
-	overlay._foqusRefs = refs;
+		const overlay = document.createElement("div");
+		overlay.id = "foqus-overlay";
+		overlay.className = "foqus-overlay";
 
-	addTitleSection(overlay, refs);
-	addMainSection(overlay, urlsToVisit);
-	addButtonSection(overlay, refs);
+		const refs = {};
+		overlay._foqusRefs = refs;
 
-	document.body.appendChild(overlay);
+		addTitleSection(overlay, refs);
+		addMainSection(overlay, urlsToVisit);
+		addButtonSection(overlay, refs, minutes);
+
+		document.body.appendChild(overlay);
+	});
+}
+
+function normalizeHost(hostname) {
+	if (!hostname || typeof hostname !== "string") return "";
+	return hostname.toLowerCase().replace(/\.$/, "");
+}
+
+function pruneExpiredHosts(map) {
+	const now = Date.now();
+	const pruned = {};
+	for (const [host, until] of Object.entries(map || {})) {
+		if (until > now) pruned[host] = until;
+	}
+	return pruned;
+}
+
+function isOverrideActiveForHost(overrideUntilByHost, host) {
+	const until = overrideUntilByHost?.[host];
+	return until != null && Date.now() < until;
+}
+
+function maybeShowOverlay(urlsToVisit) {
+	const host = normalizeHost(location.hostname);
+	if (!host) {
+		showOverlay(urlsToVisit);
+		return;
+	}
+
+	chrome.storage.local.get(["overrideUntilByHost", "overrideLimitMinutes"], (result) => {
+		const map = result.overrideUntilByHost || {};
+		const pruned = pruneExpiredHosts(map);
+		if (Object.keys(pruned).length !== Object.keys(map).length) {
+			chrome.storage.local.set({ overrideUntilByHost: pruned });
+		}
+
+		if (isOverrideActiveForHost(pruned, host)) return;
+
+		showOverlay(urlsToVisit);
+	});
 }
 
 chrome.storage.local.get("visit", function(result) {
 	if (result.visit) {
-		showOverlay(result.visit);
+		maybeShowOverlay(result.visit);
 	}
 });

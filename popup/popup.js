@@ -1,5 +1,16 @@
 // add avoid or visit sites to storage
 
+const OVERRIDE_LIMIT_MIN = 1;
+const OVERRIDE_LIMIT_MAX = 120;
+const OVERRIDE_LIMIT_DEFAULT = 5;
+
+function clampOverrideLimit(value) {
+	const n = Number(value);
+	if (Number.isNaN(n) || n < OVERRIDE_LIMIT_MIN) return OVERRIDE_LIMIT_DEFAULT;
+	if (n > OVERRIDE_LIMIT_MAX) return OVERRIDE_LIMIT_MAX;
+	return Math.floor(n);
+}
+
 function appendListElement(listId, value) {
 	const ul = document.getElementById(listId);
 	const listName = listId.replace('List', '');
@@ -50,6 +61,44 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 	const visitButton = document.getElementById("visitButton");
 	visitButton?.addEventListener("click", (event) => eventHandlerWithArg(event, "visit"));
+
+	// Override time limit
+	chrome.storage.local.get("overrideLimitMinutes", (result) => {
+		const input = document.getElementById("overrideLimitInput");
+		if (input) {
+			const stored = result.overrideLimitMinutes;
+			input.value = stored != null ? clampOverrideLimit(stored) : OVERRIDE_LIMIT_DEFAULT;
+		}
+	});
+
+	document.getElementById("limitForm")?.addEventListener("submit", (e) => {
+		e.preventDefault();
+		const input = document.getElementById("overrideLimitInput");
+		if (!input) return;
+		const minutes = clampOverrideLimit(input.value);
+		input.value = minutes;
+		chrome.storage.local.set({ overrideLimitMinutes: minutes });
+
+		const savedIndicator = document.getElementById("savedIndicator");
+		if (savedIndicator) {
+			savedIndicator.hidden = false;
+			clearTimeout(savedIndicator._hideTimeout);
+			savedIndicator._hideTimeout = setTimeout(() => {
+				savedIndicator.hidden = true;
+			}, 2000);
+		}
+	});
+
+	// Settings toggle drawer
+	const settingsToggle = document.getElementById("settingsToggle");
+	const settingsDrawer = document.getElementById("settingsDrawer");
+	if (settingsToggle && settingsDrawer) {
+		settingsToggle.addEventListener("click", () => {
+			const isExpanded = settingsDrawer.hidden;
+			settingsDrawer.hidden = !isExpanded;
+			settingsToggle.setAttribute("aria-expanded", isExpanded);
+		});
+	}
 
 	chrome.storage.local.get("avoid", function(result){
 		const avoidArray = result.avoid;

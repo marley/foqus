@@ -18,3 +18,43 @@
     cursor: pointer;
     margin-left: 2px;
 }
+
+.popup-settings {
+    padding: 0 10px 10px;
+    border-top: 1px solid #ccc;
+    margin-top: 8px;
+}
+
+.popup-settings-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.popup-settings-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #666;
+    text-align: left;
+}
+
+.popup-settings-toggle:hover {
+    color: #333;
+}
+
+.popup-settings-saved {
+    font-size: 12px;
+    color: #0a0;
+}
+
+.popup-settings-drawer {
+    padding-top: 8px;
+}
+
+.popup-settings-drawer h3 {
+    margin: 0 0 6px 0;
+    font-size: 13px;
+}
