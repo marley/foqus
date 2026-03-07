@@ -11,3 +11,20 @@
     align-items: center;
     justify-content: center;
 }
+
+.foqus-overlay-title {
+    font-size: 50px;
+    color: white;
+    padding-bottom: 10px
+}
+
+.foqus-overlay-button {
+    font-size: 20px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    text-decoration: underline;
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+}

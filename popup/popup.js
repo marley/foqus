@@ -4,11 +4,13 @@ function appendListElement(listId, value) {
 	const ul = document.getElementById(listId);
 	const listName = listId.replace('List', '');
 	let li = document.createElement('li');
+	li.classList.add('popup-list-item');
 	let newItem = document.createElement('span');
+	newItem.classList.add('popup-list-item-text');
 	newItem.innerHTML = value;
 	li.appendChild(newItem);
 	const removeBtn = document.createElement('button');
-	removeBtn.classList.add( "removeBtn" );
+	removeBtn.classList.add('popup-remove-btn');
 	removeBtn.textContent = 'x';
 	removeBtn.addEventListener('click', () => removeFromList(listName, value, li));
 	li.appendChild(removeBtn);
