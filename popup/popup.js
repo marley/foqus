@@ -1,3 +1,5 @@
+// add avoid or visit sites to storage
+
 function appendListElement(listId, value) {
 	const ul = document.getElementById(listId);
 	const listName = listId.replace('List', '');
@@ -33,7 +35,7 @@ function addToList(event, listName) { // listName = 'avoid' || 'visit'
 		const inputValue = document.getElementById(`${listName}Input`).value;
 
 		chrome.storage.local.set({ [listName]: [...resultList, inputValue] }).then(() => {
-				console.log(`${inputValue} added to ${listName} list`);
+			console.log(`${inputValue} added to ${listName} list`);
 		});
 	appendListElement(`${listName}List`, inputValue);
 	});
@@ -41,7 +43,7 @@ function addToList(event, listName) { // listName = 'avoid' || 'visit'
 
 window.addEventListener("DOMContentLoaded", (event) => {
 	const eventHandlerWithArg = (event, arg) => addToList(event, arg);
-  const avoidButton = document.getElementById("avoidButton");
+  	const avoidButton = document.getElementById("avoidButton");
 	avoidButton?.addEventListener("click", (event) => eventHandlerWithArg(event, "avoid"));
 
 	const visitButton = document.getElementById("visitButton");
@@ -66,4 +68,3 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	});
 
 });
-
