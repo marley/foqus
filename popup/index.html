@@ -1,42 +1,62 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=340">
     <link rel="stylesheet" href="popup.css">
     <script src="popup.js"></script>
   </head>
   <body>
-    <h1>Welcome to Foqus</h1>
-    <div id="main" class="popup-main">
-      <h2>Distraction sites</h2>
-      <form>
-        <input placeholder="example.com" type="text" name="avoidInput" id="avoidInput">
-        <button id="avoidButton">Add</button>
-      </form>
-      <ul id="avoidList">
+    <header class="popup-header">
+      <h1 class="popup-brand">foqus</h1>
+    </header>
+    <main id="main" class="popup-main">
+      <section class="popup-card">
+        <h2 class="popup-card-title">Sites to avoid</h2>
+        <form id="avoidForm">
+          <div class="popup-input-row">
+            <label for="avoidInput" class="visually-hidden">Add a site to avoid</label>
+            <input placeholder="example.com" type="text" name="avoidInput" id="avoidInput">
+            <button type="submit" id="avoidButton" aria-label="Add site">+</button>
+          </div>
+          <div class="popup-list-wrap">
+            <ul id="avoidList"></ul>
+            <p class="popup-empty-state" id="avoidEmptyState">No sites added yet</p>
+          </div>
+        </form>
+      </section>
 
-      </ul>
-
-      <h2>Intentional sites</h2>
-      <form>
-        <input placeholder="example.com" type="text" name="visitInput" id="visitInput">
-        <button id="visitButton">Add</button>
-      </form>
-      <ul id="visitList">
-
-      </ul>
-    </div>
+      <section class="popup-card">
+        <h2 class="popup-card-title">Places to go instead</h2>
+        <form id="visitForm">
+          <div class="popup-input-row">
+            <label for="visitInput" class="visually-hidden">Add an intentional site</label>
+            <input placeholder="example.com" type="text" name="visitInput" id="visitInput">
+            <button type="submit" id="visitButton" aria-label="Add site">+</button>
+          </div>
+          <div class="popup-list-wrap">
+            <ul id="visitList"></ul>
+            <p class="popup-empty-state" id="visitEmptyState">No sites added yet</p>
+          </div>
+        </form>
+      </section>
+    </main>
     <div class="popup-settings">
       <div class="popup-settings-header">
-        <button type="button" id="settingsToggle" class="popup-settings-toggle" aria-expanded="false">Settings</button>
+        <button type="button" id="settingsToggle" class="popup-settings-toggle" aria-expanded="false"><span class="popup-settings-icon" aria-hidden="true">&#9881;</span> Settings</button>
         <span id="savedIndicator" class="popup-settings-saved" hidden>Saved!</span>
       </div>
       <div id="settingsDrawer" class="popup-settings-drawer" hidden>
         <h3>Unblock time limit</h3>
         <form id="limitForm">
+          <label for="overrideLimitInput" class="visually-hidden">Unblock time limit in minutes</label>
           <input type="number" name="overrideLimitInput" id="overrideLimitInput" min="1" max="120" value="5" placeholder="5"> minutes
-          <button id="limitSaveButton">Save</button>
+          <button type="submit" id="limitSaveButton">Save</button>
         </form>
       </div>
     </div>
-    <a href="https://ko-fi.com/foqus" target="_blank">Support me on Ko-fi</a>
+    <footer class="popup-footer">
+      <a href="https://ko-fi.com/foqus" target="_blank" rel="noopener noreferrer" class="popup-ko-fi">♥ Support Foqus on Ko-fi</a>
+    </footer>
   </body>
 </html>

@@ -56,11 +56,8 @@ function addToList(event, listName) { // listName = 'avoid' || 'visit'
 
 window.addEventListener("DOMContentLoaded", (event) => {
 	const eventHandlerWithArg = (event, arg) => addToList(event, arg);
-  	const avoidButton = document.getElementById("avoidButton");
-	avoidButton?.addEventListener("click", (event) => eventHandlerWithArg(event, "avoid"));
-
-	const visitButton = document.getElementById("visitButton");
-	visitButton?.addEventListener("click", (event) => eventHandlerWithArg(event, "visit"));
+	document.getElementById("avoidForm")?.addEventListener("submit", (e) => eventHandlerWithArg(e, "avoid"));
+	document.getElementById("visitForm")?.addEventListener("submit", (e) => eventHandlerWithArg(e, "visit"));
 
 	// Override time limit
 	chrome.storage.local.get("overrideLimitMinutes", (result) => {
