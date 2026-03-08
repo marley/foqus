@@ -83,12 +83,13 @@ function grantUnblock(minutes) {
 function showOverlay(urlsToVisit) {
 	if (document.getElementById("foqus-overlay")) return;
 
-	chrome.storage.local.get("overrideLimitMinutes", (result) => {
+	chrome.storage.local.get(["overrideLimitMinutes", "preferReducedMotion"], (result) => {
 		const minutes = getOverrideMinutes(result.overrideLimitMinutes);
+		const preferReducedMotion = result.preferReducedMotion === true;
 
 		const overlay = document.createElement("div");
 		overlay.id = "foqus-overlay";
-		overlay.className = "foqus-overlay";
+		overlay.className = "foqus-overlay" + (preferReducedMotion ? " foqus-overlay--reduced-motion" : "");
 
 		const content = document.createElement("div");
 		content.className = "foqus-overlay-content";
@@ -103,7 +104,11 @@ function showOverlay(urlsToVisit) {
 		overlay.appendChild(content);
 		document.body.appendChild(overlay);
 
-		if (typeof FoqusGradient !== "undefined") {
+		if (preferReducedMotion) {
+			const staticBg = document.createElement("div");
+			staticBg.className = "foqus-gradient-static";
+			overlay.insertBefore(staticBg, overlay.firstChild);
+		} else if (typeof FoqusGradient !== "undefined") {
 			overlay._foqusGradient = new FoqusGradient(overlay);
 		}
 	});

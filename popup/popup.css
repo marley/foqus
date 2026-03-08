@@ -336,6 +336,23 @@ body {
   filter: brightness(1.08);
 }
 
+.popup-settings-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.popup-settings-row input[type="checkbox"] {
+  width: auto;
+}
+
+.popup-settings-row label {
+  font-size: 14px;
+  color: var(--foqus-text);
+  cursor: pointer;
+}
+
 /* Footer */
 .popup-footer {
   margin-top: 16px;

@@ -90,6 +90,26 @@ window.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
+	// Prefer reduced motion
+	chrome.storage.local.get("preferReducedMotion", (result) => {
+		const checkbox = document.getElementById("preferReducedMotion");
+		if (checkbox) {
+			checkbox.checked = result.preferReducedMotion === true;
+		}
+	});
+	document.getElementById("preferReducedMotion")?.addEventListener("change", (e) => {
+		const checked = e.target.checked;
+		chrome.storage.local.set({ preferReducedMotion: checked });
+		const savedIndicator = document.getElementById("savedIndicator");
+		if (savedIndicator) {
+			savedIndicator.hidden = false;
+			clearTimeout(savedIndicator._hideTimeout);
+			savedIndicator._hideTimeout = setTimeout(() => {
+				savedIndicator.hidden = true;
+			}, 2000);
+		}
+	});
+
 	document.getElementById("limitForm")?.addEventListener("submit", (e) => {
 		e.preventDefault();
 		const input = document.getElementById("overrideLimitInput");

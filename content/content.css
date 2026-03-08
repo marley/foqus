@@ -20,6 +20,32 @@
   display: block;
 }
 
+/* Static gradient for reduced-motion mode - vertical gradient with old-TV grain */
+.foqus-gradient-static {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #2f6f64 0%,
+    #4f7e73 25%,
+    #ff8e63 50%,
+    #f15a22 75%,
+    #0a3d36 100%
+  );
+}
+
+.foqus-gradient-static::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  pointer-events: none;
+}
+
 .foqus-overlay-content {
   position: relative;
   z-index: 1;
@@ -38,6 +64,31 @@
   to {
     opacity: 1;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foqus-overlay {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Reduced-motion mode: disable transitions, animations, and pulse effects */
+.foqus-overlay--reduced-motion {
+  animation: none;
+  opacity: 1;
+}
+
+.foqus-overlay--reduced-motion .foqus-overlay-suggested-sites > li {
+  transition: none;
+}
+
+.foqus-overlay--reduced-motion .foqus-overlay-button {
+  transition: none;
+}
+
+.foqus-overlay--reduced-motion .foqus-overlay-breathe {
+  animation: none;
 }
 
 .foqus-overlay-title {
