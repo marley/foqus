@@ -1,5 +1,14 @@
 const OVERRIDE_LIMIT_DEFAULT = 5;
 const RETURN_WARNING_SECONDS = 10;
+const overlayTitles = [
+	"Come here often?",
+	"Here be dragons.", 
+	"Murky waters ahead.", 
+	"Approaching a vortex.", 
+	"Captain, we\'re drifting off course!", 
+	"Nothing to see here.",
+	"You shall not pass."
+]
 
 function showReturnWarning(urlsToVisit, countdownSeconds = RETURN_WARNING_SECONDS) {
 	chrome.storage.local.get("preferReducedMotion", (result) => {
@@ -32,10 +41,13 @@ function showReturnWarning(urlsToVisit, countdownSeconds = RETURN_WARNING_SECOND
 	});
 }
 
-function addTitleSection(parent, refs) {
+function addTitleSection(parent, refs, customTitle) {
+	const text = customTitle
+		? customTitle
+		: overlayTitles[Math.floor(Math.random() * overlayTitles.length)];
 	const title = document.createElement("h1");
 	title.className = "foqus-overlay-title";
-	title.textContent = "This is a danger zone.";
+	title.textContent = text;
 	parent.appendChild(title);
 	refs.title = title;
 }
@@ -127,9 +139,10 @@ function grantUnblock(minutes) {
 function showOverlay(urlsToVisit, options = {}) {
 	if (document.getElementById("foqus-overlay")) return;
 
-	chrome.storage.local.get(["overrideLimitMinutes", "preferReducedMotion"], (result) => {
+	chrome.storage.local.get(["overrideLimitMinutes", "preferReducedMotion", "customOverlayTitle"], (result) => {
 		const minutes = getOverrideMinutes(result.overrideLimitMinutes);
 		const preferReducedMotion = result.preferReducedMotion === true;
+		const customOverlayTitle = result.customOverlayTitle?.trim() || null;
 		const isReturn = options.isReturn === true;
 
 		const overlay = document.createElement("div");
@@ -145,7 +158,7 @@ function showOverlay(urlsToVisit, options = {}) {
 		const refs = {};
 		overlay._foqusRefs = refs;
 
-		addTitleSection(content, refs);
+		addTitleSection(content, refs, customOverlayTitle);
 		addMainSection(content, urlsToVisit);
 		addButtonSection(content, refs, minutes);
 

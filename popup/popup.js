@@ -113,6 +113,23 @@ window.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
+	// Custom overlay title
+	chrome.storage.local.get("customOverlayTitle", (result) => {
+		const input = document.getElementById("overlayTitleInput");
+		if (input) input.value = result.customOverlayTitle || "";
+	});
+	document.getElementById("overlayTitleForm")?.addEventListener("submit", (e) => {
+		e.preventDefault();
+		const input = document.getElementById("overlayTitleInput");
+		if (!input) return;
+		const val = input.value.trim();
+		if (val) {
+			chrome.storage.local.set({ customOverlayTitle: val }, showSavedIndicator);
+		} else {
+			chrome.storage.local.remove("customOverlayTitle", showSavedIndicator);
+		}
+	});
+
 	// Prefer reduced motion
 	chrome.storage.local.get("preferReducedMotion", (result) => {
 		const checkbox = document.getElementById("preferReducedMotion");

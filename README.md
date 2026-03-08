@@ -5,15 +5,15 @@ Track your distraction sites and create new habits with this browser extension (
 Chrome extension: Foqus
 
 
-Guilty pleasures list - apps that you can’t stop using, apps that you spend too much time on
+distractions list - apps that you can’t stop using, apps that you spend too much time on
 Healthy pleasures list - apps or activities that you want to spend more time on!
 
 
 Main idea
 
-- You choose your guilty pleasures (instagram, Tik Tok, etc) at the beginning of each day.
+- You choose your distractions (instagram, Tik Tok, etc) at the beginning of each day.
 - You also choose which activities you want to do more of (e-book, strava, memrise)
-- Every time you try to open a guilty pleasure app, there is instead a screen showing the other apps saying “how about this instead?” If you say no, then you still have to wait 5 minutes before you are allowed to use your guilty pleasure app.
+- Every time you try to open a distraction app, there is instead a screen showing the other apps saying “how about this instead?” If you say no, then you still have to wait 5 minutes before you are allowed to use your distraction app.
 - At the end of each week you get a summary of how much you used guilty pleasure vs other apps.
 - Any day that you avoid guilt pleasure apps completely you get a streak.
 
@@ -28,16 +28,16 @@ Other
 
 Gamification:
 
-- Each guilty pleasure is like a chocolate. You save them for a later time. Idk could make people feel judged.
-- Every time you do something else instead of visiting the guilty pleasure site, you generate a cabbage. At the end of the day you feed the cabbages to a hungry rhino and the rhino is happy.
-- Every time you do at least 5 minutes of a task that you want to track, it adds a fish to your lake. Every time you do a guilty pleasure task, some predator comes at eats a random number of fish. The more time you spend on the GP task, the more likely more fish will get eaten.
+- Each distraction is like a chocolate. You save them for a later time. Idk could make people feel judged.
+- Every time you do something else instead of visiting the distraction site, you generate a cabbage. At the end of the day you feed the cabbages to a hungry rhino and the rhino is happy.
+- Every time you do at least 5 minutes of a task that you want to track, it adds a fish to your lake. Every time you do a distraction task, some predator comes at eats a random number of fish. The more time you spend on the GP task, the more likely more fish will get eaten.
    - Other versions: penguins vs polar bears, seals vs orcas.
 
 # Todos
 - [x] When user inputs url, it gets saved to chrome.storage.local
-- [x] Navigating to guilty pleasure url triggers overlay which suggests other url instead
-- [x] Navigating to guilty pleasure url triggers 5 minute wait when other url rejected
-- [x] Allow for more than 1 guilty pleasure and more than 1 preferred site
+- [x] Navigating to distraction url triggers overlay which suggests other url instead
+- [x] Navigating to distraction url triggers 5 minute wait when other url rejected
+- [x] Allow for more than 1 distraction and more than 1 preferred site
 - [x] Remove input text from input field after submit
 - [x] 'remove' button for urls
 - [ ] streak gamification
