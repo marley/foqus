@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=340">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="popup.css">
     <script src="popup.js"></script>
   </head>
@@ -11,7 +14,7 @@
       <h1 class="popup-brand">foqus</h1>
     </header>
     <main id="main" class="popup-main">
-      <section class="popup-card">
+      <section class="popup-card popup-card-avoid">
         <h2 class="popup-card-title">Sites to avoid</h2>
         <form id="avoidForm">
           <div class="popup-input-row">
@@ -26,7 +29,7 @@
         </form>
       </section>
 
-      <section class="popup-card">
+      <section class="popup-card popup-card-visit">
         <h2 class="popup-card-title">Places to go instead</h2>
         <form id="visitForm">
           <div class="popup-input-row">
