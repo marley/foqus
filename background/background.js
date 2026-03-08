@@ -1,53 +1,61 @@
-// listen to page navigation and respond accordingly
+const injectedTabs = new Set();
 
 function toMatchPattern(url) {
-	try {
-			const { protocol, hostname } = new URL(url);
-			return `${protocol}//${hostname}/*`;
-	} catch {
-			return null;
-	}
+    try {
+        const { protocol, hostname } = new URL(url);
+        return `${protocol}//${hostname}/*`;
+    } catch {
+        return null;
+    }
 }
 
-function registerListener(urls) {
-	// Remove the old listener before adding a new one
-	if (chrome.webRequest.onBeforeRequest.hasListener(callback)) {
-		chrome.webRequest.onBeforeRequest.removeListener(callback);
-	}
-
-	const patterns = urls.map(toMatchPattern).filter(Boolean); // checks that url is parsable
-  if (patterns.length === 0) return; // return if url not parsable
-	
-	chrome.webRequest.onBeforeRequest.addListener(
-		callback,
-		{ urls: patterns }
-	);
+function urlMatchesPatterns(url, storedUrls) {
+    try {
+        const { hostname } = new URL(url);
+        return storedUrls.some(storedUrl => {
+            const { hostname: storedHost } = new URL(storedUrl);
+            return hostname === storedHost;
+        });
+    } catch {
+        return false;
+    }
 }
 
-function callback(details) {
-	if (details.tabId === -1) return;
+function injectIntoTab(tabId) {
+    if (injectedTabs.has(tabId)) return;
+    injectedTabs.add(tabId);
 
-	chrome.scripting.insertCSS({
-		target: { tabId: details.tabId },
-		files: ["content/content.css"]
-	});
-	
-	chrome.scripting.executeScript({
-		target: { tabId: details.tabId },
-		files: ["content/three.min.js", "content/gradient.js", "content/content.js"]
-	});
+    chrome.scripting.insertCSS({
+        target: { tabId },
+        files: ["content/content.css"]
+    });
+
+    chrome.scripting.executeScript({
+        target: { tabId },
+        files: ["content/three.min.js", "content/gradient.js", "content/content.js"]
+    });
 }
 
-// Initial setup
-chrome.storage.local.get("avoid", function(result) {
-	if (result.avoid) {
-		registerListener(result.avoid);
-	}
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    // Wait until the page is fully loaded
+    if (changeInfo.status !== "complete") return;
+    if (!tab.url) return;
+
+    chrome.storage.local.get("avoid", function(result) {
+        if (!result.avoid) return;
+        if (urlMatchesPatterns(tab.url, result.avoid)) {
+            injectIntoTab(tabId);
+        }
+    });
 });
 
-// Re-register whenever storage changes
-chrome.storage.onChanged.addListener(function(changes) {
-	if (changes.avoid) {
-		registerListener(changes.avoid.newValue);
-	}
+// Clear tab from set when it starts a new navigation
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+    if (changeInfo.status === "loading") {
+        injectedTabs.delete(tabId);
+    }
+});
+
+chrome.tabs.onRemoved.addListener(function(tabId) {
+    injectedTabs.delete(tabId);
 });
