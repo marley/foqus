@@ -57,6 +57,7 @@ function removeFromList(listName, value, liElement) {
 
 		const updatedList = [...resultList.slice(0, index), ...resultList.slice(index + 1)];
 		chrome.storage.local.set({ [listName]: updatedList }).then(() => {
+			liElement.classList.remove('popup-list-item-enter', 'popup-list-item-enter-active');
 			liElement.classList.add('popup-list-item-exit');
 			liElement.addEventListener('transitionend', () => {
 				liElement.remove();
