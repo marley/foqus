@@ -11,6 +11,13 @@ function clampOverrideLimit(value) {
 	return Math.floor(n);
 }
 
+function updateEmptyState(listName) {
+	const ul = document.getElementById(`${listName}List`);
+	const emptyState = document.getElementById(`${listName}EmptyState`);
+	if (!ul || !emptyState) return;
+	emptyState.hidden = ul.children.length > 0;
+}
+
 function appendListElement(listId, value) {
 	const ul = document.getElementById(listId);
 	if (!ul) return;
@@ -32,6 +39,7 @@ function appendListElement(listId, value) {
 	li.appendChild(removeBtn);
 
 	ul.appendChild(li);
+	updateEmptyState(listId.replace('List', ''));
 
 	// Trigger enter animation
 	requestAnimationFrame(() => {
@@ -50,7 +58,10 @@ function removeFromList(listName, value, liElement) {
 		const updatedList = [...resultList.slice(0, index), ...resultList.slice(index + 1)];
 		chrome.storage.local.set({ [listName]: updatedList }).then(() => {
 			liElement.classList.add('popup-list-item-exit');
-			liElement.addEventListener('transitionend', () => liElement.remove(), { once: true });
+			liElement.addEventListener('transitionend', () => {
+				liElement.remove();
+				updateEmptyState(listName);
+			}, { once: true });
 		});
 	});
 }
@@ -143,6 +154,8 @@ window.addEventListener("DOMContentLoaded", () => {
 		const avoidArray = result.avoid;
 		if (avoidArray && avoidArray.length > 0) {
 			avoidArray.forEach((avoidItem) => appendListElement("avoidList", avoidItem));
+		} else {
+			updateEmptyState("avoid");
 		}
 	});
 
@@ -150,6 +163,8 @@ window.addEventListener("DOMContentLoaded", () => {
 		const visitArray = result.visit;
 		if (visitArray && visitArray.length > 0) {
 			visitArray.forEach((visitItem) => appendListElement("visitList", visitItem));
+		} else {
+			updateEmptyState("visit");
 		}
 	});
 });
