@@ -27,7 +27,7 @@ function injectIntoTab(tabId) {
 
     chrome.scripting.insertCSS({
         target: { tabId },
-        files: ["content/content.css"]
+        files: ["shared/variables.css", "content/content.css"]
     });
 
     chrome.scripting.executeScript({

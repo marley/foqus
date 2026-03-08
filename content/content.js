@@ -1,4 +1,36 @@
 const OVERRIDE_LIMIT_DEFAULT = 5;
+const RETURN_WARNING_SECONDS = 10;
+
+function showReturnWarning(urlsToVisit, countdownSeconds = RETURN_WARNING_SECONDS) {
+	chrome.storage.local.get("preferReducedMotion", (result) => {
+		if (result.preferReducedMotion === true) {
+			showOverlay(urlsToVisit, { isReturn: true });
+			return;
+		}
+
+		const duration = Math.max(1, Math.min(countdownSeconds, RETURN_WARNING_SECONDS));
+		const toast = document.createElement("div");
+		toast.className = "foqus-return-toast";
+		toast.textContent = duration === 1
+			? "Focus mode returning in 1 second"
+			: `Focus mode returning in ${duration} seconds`;
+		document.body.appendChild(toast);
+
+		let remaining = duration;
+		const interval = setInterval(() => {
+			remaining--;
+			if (remaining <= 0) {
+				clearInterval(interval);
+				toast.remove();
+				showOverlay(urlsToVisit, { isReturn: true });
+			} else {
+				toast.textContent = remaining === 1
+					? "Focus mode returning in 1 second"
+					: `Focus mode returning in ${remaining} seconds`;
+			}
+		}, 1000);
+	});
+}
 
 function addTitleSection(parent, refs) {
 	const title = document.createElement("h1");
@@ -74,22 +106,27 @@ function grantUnblock(minutes) {
 	}
 	overlay.remove();
 
+	const delay = Math.max(minutes * 60 * 1000 - RETURN_WARNING_SECONDS * 1000, 0);
 	setTimeout(() => {
 		chrome.storage.local.get("visit", (result) => {
-			if (result.visit) maybeShowOverlay(result.visit);
+			if (result.visit) showReturnWarning(result.visit);
 		});
-	}, minutes * 60 * 1000);
+	}, delay);
 }
-function showOverlay(urlsToVisit) {
+function showOverlay(urlsToVisit, options = {}) {
 	if (document.getElementById("foqus-overlay")) return;
 
 	chrome.storage.local.get(["overrideLimitMinutes", "preferReducedMotion"], (result) => {
 		const minutes = getOverrideMinutes(result.overrideLimitMinutes);
 		const preferReducedMotion = result.preferReducedMotion === true;
+		const isReturn = options.isReturn === true;
 
 		const overlay = document.createElement("div");
 		overlay.id = "foqus-overlay";
-		overlay.className = "foqus-overlay" + (preferReducedMotion ? " foqus-overlay--reduced-motion" : "");
+		let overlayClass = "foqus-overlay";
+		if (preferReducedMotion) overlayClass += " foqus-overlay--reduced-motion";
+		if (isReturn) overlayClass += " foqus-overlay--returning";
+		overlay.className = overlayClass;
 
 		const content = document.createElement("div");
 		content.className = "foqus-overlay-content";
@@ -148,8 +185,12 @@ function maybeShowOverlay(urlsToVisit) {
 		}
 
 		if (isOverrideActiveForHost(pruned, host)) {
-			const delay = pruned[host] - Date.now();
-			setTimeout(() => maybeShowOverlay(urlsToVisit), Math.max(delay, 0));
+			const expiry = pruned[host];
+			const delay = Math.max(expiry - Date.now() - RETURN_WARNING_SECONDS * 1000, 0);
+			setTimeout(() => {
+				const remainingSeconds = Math.min(RETURN_WARNING_SECONDS, Math.max(0, Math.ceil((expiry - Date.now()) / 1000)));
+				showReturnWarning(urlsToVisit, remainingSeconds);
+			}, delay);
 			return;
 		}
 

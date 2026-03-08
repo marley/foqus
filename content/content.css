@@ -29,11 +29,11 @@
   height: 100%;
   background: linear-gradient(
     90deg,
-    #2f6f64 0%,
-    #4f7e73 25%,
-    #ff8e63 50%,
-    #f15a22 75%,
-    #0a3d36 100%
+    var(--brand-teal-mid) 0%,
+    var(--brand-teal-light) 25%,
+    var(--brand-coral) 50%,
+    var(--brand-orange) 75%,
+    var(--brand-teal-darkest) 100%
   );
 }
 
@@ -63,6 +63,56 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes foqus-overlay-fade-in-slow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.foqus-overlay--returning {
+  animation: foqus-overlay-fade-in-slow 2.5s ease-out;
+}
+
+.foqus-overlay--reduced-motion.foqus-overlay--returning {
+  animation: none;
+  opacity: 1;
+}
+
+/* Return warning toast */
+.foqus-return-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9998;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  background: var(--brand-orange);
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: foqus-toast-fade-in 200ms ease-out;
+}
+
+@keyframes foqus-toast-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foqus-return-toast {
+    animation: none;
   }
 }
 
