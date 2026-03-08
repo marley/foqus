@@ -16,7 +16,7 @@
     </header>
     <main id="main" class="popup-main">
       <section class="popup-card popup-card-avoid">
-        <h2 class="popup-card-title">Sites to avoid</h2>
+        <h2 class="popup-card-title"><span class="popup-card-marker popup-card-marker--avoid">×</span> Sites to avoid</h2>
         <form id="avoidForm">
           <div class="popup-input-row">
             <label for="avoidInput" class="visually-hidden">Add a site to avoid</label>
@@ -31,7 +31,7 @@
       </section>
 
       <section class="popup-card popup-card-visit">
-        <h2 class="popup-card-title">Places to go instead</h2>
+        <h2 class="popup-card-title"><span class="popup-card-marker popup-card-marker--visit">→</span> Places to go instead</h2>
         <form id="visitForm">
           <div class="popup-input-row">
             <label for="visitInput" class="visually-hidden">Add an intentional site</label>
@@ -55,11 +55,25 @@
         <form id="limitForm">
           <label for="overrideLimitInput" class="visually-hidden">Unblock time limit in minutes</label>
           <input type="number" name="overrideLimitInput" id="overrideLimitInput" min="1" max="120" value="5" placeholder="5"> minutes
-          <button type="submit" id="limitSaveButton">Save</button>
+          <button type="submit" id="limitSaveButton" class="popup-settings-button">Save</button>
         </form>
         <div class="popup-settings-row">
-          <input type="checkbox" id="preferReducedMotion" name="preferReducedMotion">
-          <label for="preferReducedMotion">Prefer reduced motion</label>
+          <label class="popup-toggle" for="preferReducedMotion">
+            <input type="checkbox" id="preferReducedMotion" name="preferReducedMotion" class="popup-toggle-input">
+            <span class="popup-toggle-track" aria-hidden="true">
+              <span class="popup-toggle-thumb"></span>
+            </span>
+            <span class="popup-toggle-label">Prefer reduced motion</span>
+          </label>
+        </div>
+        <div class="popup-settings-row">
+          <label class="popup-toggle" for="darkMode">
+            <input type="checkbox" id="darkMode" name="darkMode" class="popup-toggle-input">
+            <span class="popup-toggle-track" aria-hidden="true">
+              <span class="popup-toggle-thumb"></span>
+            </span>
+            <span class="popup-toggle-label">Dark mode</span>
+          </label>
         </div>
       </div>
     </div>

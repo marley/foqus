@@ -67,6 +67,17 @@ function removeFromList(listName, value, liElement) {
 	});
 }
 
+function showSavedIndicator() {
+	const savedIndicator = document.getElementById("savedIndicator");
+	if (savedIndicator) {
+		savedIndicator.hidden = false;
+		clearTimeout(savedIndicator._hideTimeout);
+		savedIndicator._hideTimeout = setTimeout(() => {
+			savedIndicator.hidden = true;
+		}, 2000);
+	}
+}
+
 function addToList(event, listName) {
 	event.preventDefault();
 
@@ -110,16 +121,23 @@ window.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 	document.getElementById("preferReducedMotion")?.addEventListener("change", (e) => {
-		const checked = e.target.checked;
-		chrome.storage.local.set({ preferReducedMotion: checked });
-		const savedIndicator = document.getElementById("savedIndicator");
-		if (savedIndicator) {
-			savedIndicator.hidden = false;
-			clearTimeout(savedIndicator._hideTimeout);
-			savedIndicator._hideTimeout = setTimeout(() => {
-				savedIndicator.hidden = true;
-			}, 2000);
+		chrome.storage.local.set({ preferReducedMotion: e.target.checked });
+		showSavedIndicator();
+	});
+
+	// Dark mode
+	chrome.storage.local.get("darkMode", (result) => {
+		document.body.classList.toggle("dark-mode", result.darkMode === true);
+		const checkbox = document.getElementById("darkMode");
+		if (checkbox) {
+			checkbox.checked = result.darkMode === true;
 		}
+	});
+	document.getElementById("darkMode")?.addEventListener("change", (e) => {
+		const checked = e.target.checked;
+		chrome.storage.local.set({ darkMode: checked });
+		document.body.classList.toggle("dark-mode", checked);
+		showSavedIndicator();
 	});
 
 	document.getElementById("limitForm")?.addEventListener("submit", (e) => {
@@ -129,15 +147,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		const minutes = clampOverrideLimit(input.value);
 		input.value = minutes;
 		chrome.storage.local.set({ overrideLimitMinutes: minutes });
-
-		const savedIndicator = document.getElementById("savedIndicator");
-		if (savedIndicator) {
-			savedIndicator.hidden = false;
-			clearTimeout(savedIndicator._hideTimeout);
-			savedIndicator._hideTimeout = setTimeout(() => {
-				savedIndicator.hidden = true;
-			}, 2000);
-		}
+		showSavedIndicator();
 	});
 
 	// Settings toggle drawer

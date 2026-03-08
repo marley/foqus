@@ -43,20 +43,31 @@ function addTitleSection(parent, refs) {
 function addMainSection(parent, urlArray) {
 	if (urlArray && urlArray.length > 0) {
 		const main = document.createElement("div");
-		
+
 		const subtitle = document.createElement("h2");
 		subtitle.className = "foqus-overlay-subtitle";
-		subtitle.textContent = "Your chosen alternatives:";
+		subtitle.textContent = "// go somewhere better";
 		main.appendChild(subtitle);
 
 		const ul = document.createElement("ul");
 		ul.className = "foqus-overlay-suggested-sites";
-		urlArray.forEach((suggestedSiteUrl) => {
+		urlArray.forEach((suggestedSiteUrl, i) => {
+			const num = String(i + 1).padStart(2, "0");
+			const displayUrl = suggestedSiteUrl.replace(/^https?:\/\//, "");
 			const li = document.createElement("li");
-			const suggestedSite = document.createElement("a");
-			suggestedSite.setAttribute("href", suggestedSiteUrl);
-			suggestedSite.textContent = suggestedSiteUrl;
-			li.appendChild(suggestedSite);
+			const a = document.createElement("a");
+			a.setAttribute("href", suggestedSiteUrl);
+			const numSpan = document.createElement("span");
+			numSpan.className = "foqus-site-num";
+			numSpan.textContent = num;
+			const urlSpan = document.createElement("span");
+			urlSpan.className = "foqus-site-url";
+			urlSpan.textContent = displayUrl;
+			const arrow = document.createElement("span");
+			arrow.className = "foqus-site-arrow";
+			arrow.textContent = "→";
+			a.append(numSpan, urlSpan, arrow);
+			li.appendChild(a);
 			ul.appendChild(li);
 		});
 
