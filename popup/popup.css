@@ -191,6 +191,22 @@ body {
   gap: 8px;
   padding: 8px 0;
   border-bottom: 1px solid var(--foqus-border);
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+
+.popup-list-item-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.popup-list-item-enter.popup-list-item-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.popup-list-item-exit {
+  opacity: 0;
+  transform: translateY(-4px);
 }
 
 .popup-list-item:last-child {

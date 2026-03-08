@@ -13,19 +13,32 @@ function clampOverrideLimit(value) {
 
 function appendListElement(listId, value) {
 	const ul = document.getElementById(listId);
+	if (!ul) return;
+
 	const listName = listId.replace('List', '');
-	let li = document.createElement('li');
-	li.classList.add('popup-list-item');
-	let newItem = document.createElement('span');
+	const li = document.createElement('li');
+	li.classList.add('popup-list-item', 'popup-list-item-enter');
+
+	const newItem = document.createElement('span');
 	newItem.classList.add('popup-list-item-text');
-	newItem.innerHTML = value;
+	newItem.textContent = value;
 	li.appendChild(newItem);
+
 	const removeBtn = document.createElement('button');
 	removeBtn.classList.add('popup-remove-btn');
 	removeBtn.textContent = 'x';
+	removeBtn.setAttribute('aria-label', `Remove ${value}`);
 	removeBtn.addEventListener('click', () => removeFromList(listName, value, li));
 	li.appendChild(removeBtn);
+
 	ul.appendChild(li);
+
+	// Trigger enter animation
+	requestAnimationFrame(() => {
+		requestAnimationFrame(() => {
+			li.classList.add('popup-list-item-enter-active');
+		});
+	});
 }
 
 function removeFromList(listName, value, liElement) {
@@ -33,31 +46,40 @@ function removeFromList(listName, value, liElement) {
 		const resultList = result[listName] || [];
 		const index = resultList.indexOf(value);
 		if (index === -1) return;
+
 		const updatedList = [...resultList.slice(0, index), ...resultList.slice(index + 1)];
 		chrome.storage.local.set({ [listName]: updatedList }).then(() => {
-			liElement.remove();
+			liElement.classList.add('popup-list-item-exit');
+			liElement.addEventListener('transitionend', () => liElement.remove(), { once: true });
 		});
 	});
 }
 
-function addToList(event, listName) { // listName = 'avoid' || 'visit'
+function addToList(event, listName) {
 	event.preventDefault();
 
-	chrome.storage.local.get(listName, function(result){
+	const inputEl = document.getElementById(`${listName}Input`);
+	if (!inputEl) return;
+
+	const rawValue = inputEl.value;
+	const inputValue = rawValue.trim();
+
+	if (!inputValue) return;
+
+	chrome.storage.local.get(listName, function(result) {
 		const resultList = result[listName] || [];
-		const inputValue = document.getElementById(`${listName}Input`).value;
+		if (resultList.includes(inputValue)) return;
 
 		chrome.storage.local.set({ [listName]: [...resultList, inputValue] }).then(() => {
-			console.log(`${inputValue} added to ${listName} list`);
+			appendListElement(`${listName}List`, inputValue);
+			inputEl.value = '';
 		});
-	appendListElement(`${listName}List`, inputValue);
 	});
 }
 
-window.addEventListener("DOMContentLoaded", (event) => {
-	const eventHandlerWithArg = (event, arg) => addToList(event, arg);
-	document.getElementById("avoidForm")?.addEventListener("submit", (e) => eventHandlerWithArg(e, "avoid"));
-	document.getElementById("visitForm")?.addEventListener("submit", (e) => eventHandlerWithArg(e, "visit"));
+window.addEventListener("DOMContentLoaded", () => {
+	document.getElementById("avoidForm")?.addEventListener("submit", (e) => addToList(e, "avoid"));
+	document.getElementById("visitForm")?.addEventListener("submit", (e) => addToList(e, "visit"));
 
 	// Override time limit
 	chrome.storage.local.get("overrideLimitMinutes", (result) => {
@@ -93,26 +115,21 @@ window.addEventListener("DOMContentLoaded", (event) => {
 		settingsToggle.addEventListener("click", () => {
 			const isExpanded = settingsDrawer.hidden;
 			settingsDrawer.hidden = !isExpanded;
-			settingsToggle.setAttribute("aria-expanded", isExpanded);
+			settingsToggle.setAttribute("aria-expanded", String(isExpanded));
 		});
 	}
 
-	chrome.storage.local.get("avoid", function(result){
+	chrome.storage.local.get("avoid", function(result) {
 		const avoidArray = result.avoid;
 		if (avoidArray && avoidArray.length > 0) {
-			avoidArray.map((avoidItem) => {
-				appendListElement("avoidList", avoidItem);
-			})
+			avoidArray.forEach((avoidItem) => appendListElement("avoidList", avoidItem));
 		}
 	});
 
-	chrome.storage.local.get("visit", function(result){
+	chrome.storage.local.get("visit", function(result) {
 		const visitArray = result.visit;
 		if (visitArray && visitArray.length > 0) {
-			visitArray.map((visitItem) => {
-				appendListElement("visitList", visitItem);
-			})
+			visitArray.forEach((visitItem) => appendListElement("visitList", visitItem));
 		}
 	});
-
 });
