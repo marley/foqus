@@ -3,7 +3,7 @@ const OVERRIDE_LIMIT_DEFAULT = 5;
 function addTitleSection(parent, refs) {
 	const title = document.createElement("h1");
 	title.className = "foqus-overlay-title";
-	title.innerHTML = "This is a danger zone.";
+	title.textContent = "This is a danger zone.";
 	parent.appendChild(title);
 	refs.title = title;
 }
@@ -14,7 +14,7 @@ function addMainSection(parent, urlArray) {
 		
 		const subtitle = document.createElement("h2");
 		subtitle.className = "foqus-overlay-subtitle";
-		subtitle.innerHTML = "Your chosen alternatives:";
+		subtitle.textContent = "Your chosen alternatives:";
 		main.appendChild(subtitle);
 
 		const ul = document.createElement("ul");
@@ -23,7 +23,7 @@ function addMainSection(parent, urlArray) {
 			const li = document.createElement("li");
 			const suggestedSite = document.createElement("a");
 			suggestedSite.setAttribute("href", suggestedSiteUrl);
-			suggestedSite.innerHTML = suggestedSiteUrl;
+			suggestedSite.textContent = suggestedSiteUrl;
 			li.appendChild(suggestedSite);
 			ul.appendChild(li);
 		});
@@ -45,7 +45,7 @@ function addButtonSection(parent, refs, minutes) {
 
 	const button = document.createElement("button");
 	button.className = "foqus-overlay-button";
-	button.innerHTML = `unblock for ${minutes} minute${minutes === 1 ? "" : "s"}`;
+	button.textContent = `unblock for ${minutes} minute${minutes === 1 ? "" : "s"}`;
 	button.addEventListener("click", () => grantUnblock(minutes));
 	container.appendChild(button);
 
