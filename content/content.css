@@ -1,15 +1,43 @@
+/* Overlay */
 .foqus-overlay {
-    background: rgba(0, 0, 0, 0.8);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  background: #000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  overflow: hidden;
+  animation: foqus-overlay-fade-in 300ms ease-out;
+}
+
+.foqus-gradient-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.foqus-overlay-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes foqus-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .foqus-overlay-title {
@@ -19,46 +47,116 @@
 }
 
 .foqus-overlay-countdown {
-    font-size: 36px;
-    color: white;
-    font-weight: 600;
-    padding-bottom: 20px;
-    letter-spacing: 0.05em;
-    min-height: 1.2em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  padding-bottom: 16px;
+  letter-spacing: 0.05em;
+  min-height: 1.2em;
 }
 
 .foqus-overlay-subtitle {
-    font-size: 15px;
-    color: white;
-    padding-bottom: 10px
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  padding-bottom: 12px;
+  text-align: center;
 }
 
+/* Breathing prompt - element added via content.js */
+.foqus-overlay-breathe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  animation: foqus-breathe-pulse 4s ease-in-out infinite;
+}
+
+@keyframes foqus-breathe-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* Suggested sites - rounded cards */
 .foqus-overlay-suggested-sites {
-    list-style: none;
-    display: grid;
-    grid-gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 320px;
 }
 
 .foqus-overlay-suggested-sites > li {
-    background: white;
-    padding: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: background 150ms ease;
+  cursor: pointer;
+}
+
+.foqus-overlay-suggested-sites > li:hover {
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .foqus-overlay-suggested-sites > li > a {
-    font-weight: 800;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 15px;
 }
 
+.foqus-overlay-suggested-sites > li > a:hover {
+  text-decoration: underline;
+}
+
+.foqus-overlay-suggested-sites > li > a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Unblock button - pill shape */
 .foqus-overlay-button-container {
-    min-height: 44px;
+  min-height: 44px;
+  margin-top: 24px;
 }
 
 .foqus-overlay-button {
-    font-size: 20px;
-    background-color: transparent;
-    color: white;
-    border: none;
-    text-decoration: underline;
-    margin: 5px;
-    padding: 5px;
-    cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.foqus-overlay-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.foqus-overlay-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
 }

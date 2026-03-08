@@ -34,7 +34,7 @@ function callback(details) {
 	
 	chrome.scripting.executeScript({
 		target: { tabId: details.tabId },
-		files: ["content/content.js"]
+		files: ["content/three.min.js", "content/gradient.js", "content/content.js"]
 	});
 }
 

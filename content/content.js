@@ -68,6 +68,10 @@ function grantUnblock(minutes) {
 		});
 	}
 
+	if (overlay._foqusGradient) {
+		overlay._foqusGradient.destroy();
+		overlay._foqusGradient = null;
+	}
 	overlay.remove();
 
 	setTimeout(() => {
@@ -86,14 +90,22 @@ function showOverlay(urlsToVisit) {
 		overlay.id = "foqus-overlay";
 		overlay.className = "foqus-overlay";
 
+		const content = document.createElement("div");
+		content.className = "foqus-overlay-content";
+
 		const refs = {};
 		overlay._foqusRefs = refs;
 
-		addTitleSection(overlay, refs);
-		addMainSection(overlay, urlsToVisit);
-		addButtonSection(overlay, refs, minutes);
+		addTitleSection(content, refs);
+		addMainSection(content, urlsToVisit);
+		addButtonSection(content, refs, minutes);
 
+		overlay.appendChild(content);
 		document.body.appendChild(overlay);
+
+		if (typeof FoqusGradient !== "undefined") {
+			overlay._foqusGradient = new FoqusGradient(overlay);
+		}
 	});
 }
 
