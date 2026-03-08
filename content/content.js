@@ -147,7 +147,11 @@ function maybeShowOverlay(urlsToVisit) {
 			chrome.storage.local.set({ overrideUntilByHost: pruned });
 		}
 
-		if (isOverrideActiveForHost(pruned, host)) return;
+		if (isOverrideActiveForHost(pruned, host)) {
+			const delay = pruned[host] - Date.now();
+			setTimeout(() => maybeShowOverlay(urlsToVisit), Math.max(delay, 0));
+			return;
+		}
 
 		showOverlay(urlsToVisit);
 	});
