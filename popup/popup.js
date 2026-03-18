@@ -139,6 +139,21 @@ window.addEventListener("DOMContentLoaded", () => {
 	let activeMode = "avoid";
 	let userManuallyOpenedBoth = false;
 
+	// Description banner dismiss
+	chrome.storage.local.get("descriptionBannerDismissed", (result) => {
+		const banner = document.getElementById("descriptionBanner");
+		if (banner && result.descriptionBannerDismissed === true) {
+			banner.hidden = true;
+		}
+	});
+	document.getElementById("descriptionBannerDismiss")?.addEventListener("click", () => {
+		const banner = document.getElementById("descriptionBanner");
+		if (banner) {
+			banner.hidden = true;
+			chrome.storage.local.set({ descriptionBannerDismissed: true });
+		}
+	});
+
 	// Prefill single input with current tab hostname
 	chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 		const tab = tabs && tabs[0];

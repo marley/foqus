@@ -64,6 +64,56 @@ body {
   letter-spacing: 0.02em;
 }
 
+.popup-description-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 16px 16px 16px;
+  padding: 12px 12px 12px 16px;
+  background: var(--foqus-card);
+  border: 1px solid var(--foqus-border);
+}
+
+.popup-description-banner[hidden] {
+  display: none;
+}
+
+.popup-description-orange {
+  flex: 1;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.popup-description-orange {
+  color: var(--brand-orange);
+}
+
+.popup-description-green {
+  color: var(--brand-teal-mid);
+}
+
+.popup-description-banner-dismiss {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: -2px -2px 0 0;
+  border: none;
+  background: transparent;
+  color: var(--foqus-text-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-description-banner-dismiss:hover {
+  color: var(--foqus-text);
+}
+
 /* Main content */
 .popup-main {
   display: flex;
