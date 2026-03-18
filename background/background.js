@@ -13,8 +13,13 @@ function urlMatchesPatterns(url, storedUrls) {
     try {
         const { hostname } = new URL(url);
         return storedUrls.some(storedUrl => {
-            const { hostname: storedHost } = new URL(storedUrl);
-            return hostname === storedHost;
+            try {
+                const normalized = storedUrl.includes('://') ? storedUrl : `https://${storedUrl}`;
+                const { hostname: storedHost } = new URL(normalized);
+                return hostname === storedHost;
+            } catch {
+                return false;
+            }
         });
     } catch {
         return false;
