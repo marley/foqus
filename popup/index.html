@@ -21,7 +21,7 @@
           <div class="popup-input-row">
             <label for="avoidInput" class="visually-hidden">Add a site to avoid</label>
             <input placeholder="example.com" type="text" name="avoidInput" id="avoidInput">
-            <button type="submit" id="avoidButton" aria-label="Add site">+</button>
+            <button class="orange-button" type="submit" id="avoidButton" aria-label="Add site">+</button>
           </div>
           <div class="popup-list-wrap">
             <ul id="avoidList"></ul>
@@ -36,7 +36,7 @@
           <div class="popup-input-row">
             <label for="visitInput" class="visually-hidden">Add an intentional site</label>
             <input placeholder="example.com" type="text" name="visitInput" id="visitInput">
-            <button type="submit" id="visitButton" aria-label="Add site">+</button>
+            <button class="green-button" type="submit" id="visitButton" aria-label="Add site">+</button>
           </div>
           <div class="popup-list-wrap">
             <ul id="visitList"></ul>
@@ -75,7 +75,7 @@
             <span class="popup-toggle-label">Dark mode</span>
           </label>
         </div>
-        <h3>Block screen message</h3>
+        <h3 class="popup-settings-subheading">Block screen message</h3>
         <form id="overlayTitleForm">
           <label for="overlayTitleInput" class="visually-hidden">Custom block screen message</label>
           <input type="text" name="overlayTitleInput" id="overlayTitleInput" placeholder="You shall not pass.">

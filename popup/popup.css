@@ -58,7 +58,7 @@ body {
 .popup-brand {
   margin: 0;
   font-family: "Noto Sans Mono", monospace;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--foqus-accent);
   letter-spacing: 0.02em;
@@ -84,7 +84,6 @@ body {
 
 .popup-card-visit {
   border-left: 3px solid var(--brand-teal-mid);
-  border-top: 1px solid var(--brand-teal-dark);
   background: transparent;
 }
 
@@ -153,7 +152,6 @@ body {
   padding: 0;
   border: none;
   border-radius: 0;
-  background: var(--foqus-accent);
   color: white;
   font-size: 20px;
   font-weight: 300;
@@ -162,6 +160,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.orange-button {
+  background: var(--foqus-accent);
+}
+
+.green-button {
+  background: var(--brand-teal-mid);
 }
 
 .popup-input-row button:hover {
@@ -272,7 +278,6 @@ body {
 
 /* Settings */
 .popup-settings {
-  margin-top: 16px;
   padding: 16px 16px 0 16px;
   border-top: 1px solid var(--foqus-border);
 }
@@ -281,6 +286,10 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.popup-settings-subheading {
+  padding-top: 12px;
 }
 
 .popup-settings-toggle {
