@@ -470,7 +470,11 @@ body {
 }
 
 .popup-settings-subheading {
-  padding-top: 12px;
+  padding-top: 10px;
+}
+
+.popup-settings-label {
+  font-size: 10px;
 }
 
 .popup-settings-toggle {
@@ -509,10 +513,10 @@ body {
 }
 
 .popup-settings-drawer h3 {
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
   font-size: 13px;
   font-weight: 600;
-  color: var(--foqus-text);
+  color: var(--foqus-text-muted);
 }
 
 .popup-settings-drawer form {

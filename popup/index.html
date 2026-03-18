@@ -76,19 +76,14 @@
         <span id="savedIndicator" class="popup-settings-saved" hidden>Saved!</span>
       </div>
       <div id="settingsDrawer" class="popup-settings-drawer" hidden>
-        <h3>Unblock time limit</h3>
-        <form id="limitForm">
-          <label for="overrideLimitInput" class="visually-hidden">Unblock time limit in minutes</label>
-          <input type="number" name="overrideLimitInput" id="overrideLimitInput" min="1" max="120" value="5" placeholder="5"> minutes
-          <button type="submit" id="limitSaveButton" class="popup-settings-button">Save</button>
-        </form>
+        <h3 class="popup-settings-subheading">Visuals</h3>
         <div class="popup-settings-row">
           <label class="popup-toggle" for="preferReducedMotion">
             <input type="checkbox" id="preferReducedMotion" name="preferReducedMotion" class="popup-toggle-input">
             <span class="popup-toggle-track" aria-hidden="true">
               <span class="popup-toggle-thumb"></span>
             </span>
-            <span class="popup-toggle-label">Prefer reduced motion</span>
+            <span class="popup-toggle-label">Reduce animations</span>
           </label>
         </div>
         <div class="popup-settings-row">
@@ -100,11 +95,18 @@
             <span class="popup-toggle-label">Dark mode</span>
           </label>
         </div>
-        <h3 class="popup-settings-subheading">Block screen message</h3>
+        <h3 class="popup-settings-subheading">Screen block</h3>
+        <p class="popup-settings-label">Custom message</p>
         <form id="overlayTitleForm">
           <label for="overlayTitleInput" class="visually-hidden">Custom block screen message</label>
           <input type="text" name="overlayTitleInput" id="overlayTitleInput" placeholder="You shall not pass.">
           <button type="submit" id="overlayTitleSaveButton" class="popup-settings-button">Save</button>
+        </form>
+        <p class="popup-settings-label">Unblock time limit</p>
+        <form id="limitForm">
+          <label for="overrideLimitInput" class="visually-hidden">Unblock time limit in minutes</label>
+          <input type="number" name="overrideLimitInput" id="overrideLimitInput" min="1" max="120" value="5" placeholder="5"> minutes
+          <button type="submit" id="limitSaveButton" class="popup-settings-button">Save</button>
         </form>
       </div>
     </div>
