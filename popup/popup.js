@@ -101,6 +101,21 @@ function addToList(event, listName) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+		const tab = tabs && tabs[0];
+		if (tab && tab.url) {
+			try {
+				const { hostname } = new URL(tab.url);
+				if (hostname) {
+					const avoidInput = document.getElementById("avoidInput");
+					if (avoidInput) avoidInput.value = hostname;
+					const visitInput = document.getElementById("visitInput");
+					if (visitInput) visitInput.value = hostname;
+				}
+			} catch {}
+		}
+	});
+
 	document.getElementById("avoidForm")?.addEventListener("submit", (e) => addToList(e, "avoid"));
 	document.getElementById("visitForm")?.addEventListener("submit", (e) => addToList(e, "visit"));
 
