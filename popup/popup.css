@@ -85,14 +85,36 @@ body {
 
 .popup-mode-toggle {
   display: flex;
+  position: relative;
   gap: 0;
   margin-bottom: 12px;
+  border: 1px solid var(--foqus-border);
+}
+
+.popup-mode-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--foqus-accent);
+  transition: transform 200ms ease-out, background 200ms ease-out;
+  z-index: 0;
+}
+
+.popup-input-section[data-mode="visit"] .popup-mode-slider {
+  transform: translateX(100%);
+  background: var(--brand-teal-mid);
 }
 
 .popup-mode-btn {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
   padding: 8px 16px;
-  border: 1px solid var(--foqus-border);
-  background: var(--foqus-bg);
+  border: none;
+  background: transparent;
   font-size: 13px;
   font-family: "Noto Sans Mono", monospace;
   font-weight: 600;
@@ -102,24 +124,16 @@ body {
   cursor: pointer;
 }
 
-.popup-mode-btn:first-child {
-  border-right: none;
-  border-radius: 0;
-}
-
 .popup-mode-btn:hover {
   color: var(--foqus-text);
 }
 
 .popup-mode-btn--active {
-  background: var(--foqus-accent);
   color: white;
-  border-color: var(--foqus-accent);
 }
 
-.popup-input-section[data-mode="visit"] .popup-mode-btn--active {
-  background: var(--brand-teal-mid);
-  border-color: var(--brand-teal-mid);
+.popup-mode-btn--active:hover {
+  color: white;
 }
 
 .popup-card-marker {
