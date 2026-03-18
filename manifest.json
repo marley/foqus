@@ -1,6 +1,6 @@
 {
   "name": "Foqus",
-  "description": "Base Level Extension",
+  "description": "Track your sites of distraction and reshape your browsing habits",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
