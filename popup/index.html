@@ -15,35 +15,46 @@
       <h1 class="popup-brand">foqus</h1>
     </header>
     <main id="main" class="popup-main">
-      <section class="popup-card popup-card-avoid">
-        <h2 class="popup-card-title"><span class="popup-card-marker popup-card-marker--avoid">×</span> Sites to avoid</h2>
-        <form id="avoidForm">
+      <div class="popup-input-section" data-mode="avoid">
+        <div class="popup-mode-toggle" role="group" aria-label="Add to list type">
+          <button type="button" id="modeAvoid" class="popup-mode-btn popup-mode-btn--active" aria-pressed="true">avoid</button>
+          <button type="button" id="modeVisit" class="popup-mode-btn" aria-pressed="false">visit</button>
+        </div>
+        <form id="siteForm">
           <div class="popup-input-row">
-            <label for="avoidInput" class="visually-hidden">Add a site to avoid</label>
-            <input placeholder="example.com" type="text" name="avoidInput" id="avoidInput">
-            <button class="orange-button" type="submit" id="avoidButton" aria-label="Add site">+</button>
-          </div>
-          <div class="popup-list-wrap">
-            <ul id="avoidList"></ul>
-            <p class="popup-empty-state" id="avoidEmptyState" hidden>No sites added yet</p>
+            <label for="siteInput" class="visually-hidden">Add a site</label>
+            <input placeholder="example.com" type="text" name="siteInput" id="siteInput">
+            <button type="submit" id="siteButton" class="popup-submit-btn" aria-label="Add site">+</button>
           </div>
         </form>
-      </section>
+      </div>
 
-      <section class="popup-card popup-card-visit">
-        <h2 class="popup-card-title"><span class="popup-card-marker popup-card-marker--visit">→</span> Places to go instead</h2>
-        <form id="visitForm">
-          <div class="popup-input-row">
-            <label for="visitInput" class="visually-hidden">Add an intentional site</label>
-            <input placeholder="example.com" type="text" name="visitInput" id="visitInput">
-            <button class="green-button" type="submit" id="visitButton" aria-label="Add site">+</button>
+      <div class="popup-accordion">
+        <div class="popup-accordion-item popup-accordion-item--avoid">
+          <button type="button" id="accordionAvoid" class="popup-accordion-header" aria-expanded="true" aria-controls="accordionAvoidBody">
+            <span class="popup-card-marker popup-card-marker--avoid">×</span> Sites to avoid
+            <span class="popup-accordion-icon" aria-hidden="true">▾</span>
+          </button>
+          <div id="accordionAvoidBody" class="popup-accordion-body" role="region" aria-labelledby="accordionAvoid">
+            <div class="popup-list-wrap">
+              <ul id="avoidList"></ul>
+              <p class="popup-empty-state" id="avoidEmptyState" hidden>No sites added yet</p>
+            </div>
           </div>
-          <div class="popup-list-wrap">
-            <ul id="visitList"></ul>
-            <p class="popup-empty-state" id="visitEmptyState" hidden>No sites added yet</p>
+        </div>
+        <div class="popup-accordion-item popup-accordion-item--visit">
+          <button type="button" id="accordionVisit" class="popup-accordion-header" aria-expanded="false" aria-controls="accordionVisitBody">
+            <span class="popup-card-marker popup-card-marker--visit">→</span> Places to go instead
+            <span class="popup-accordion-icon" aria-hidden="true">▸</span>
+          </button>
+          <div id="accordionVisitBody" class="popup-accordion-body" role="region" aria-labelledby="accordionVisit" hidden>
+            <div class="popup-list-wrap">
+              <ul id="visitList"></ul>
+              <p class="popup-empty-state" id="visitEmptyState" hidden>No sites added yet</p>
+            </div>
           </div>
-        </form>
-      </section>
+        </div>
+      </div>
     </main>
     <div class="popup-settings">
       <div class="popup-settings-header">

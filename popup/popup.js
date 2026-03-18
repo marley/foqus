@@ -81,7 +81,7 @@ function showSavedIndicator() {
 function addToList(event, listName) {
 	event.preventDefault();
 
-	const inputEl = document.getElementById(`${listName}Input`);
+	const inputEl = document.getElementById("siteInput");
 	if (!inputEl) return;
 
 	const rawValue = inputEl.value;
@@ -100,24 +100,101 @@ function addToList(event, listName) {
 	});
 }
 
+function setInputMode(mode) {
+	const inputSection = document.querySelector(".popup-input-section");
+	const modeAvoid = document.getElementById("modeAvoid");
+	const modeVisit = document.getElementById("modeVisit");
+	const submitBtn = document.getElementById("siteButton");
+
+	if (!inputSection || !modeAvoid || !modeVisit || !submitBtn) return;
+
+	inputSection.setAttribute("data-mode", mode);
+	modeAvoid.setAttribute("aria-pressed", mode === "avoid" ? "true" : "false");
+	modeVisit.setAttribute("aria-pressed", mode === "visit" ? "true" : "false");
+	modeAvoid.classList.toggle("popup-mode-btn--active", mode === "avoid");
+	modeVisit.classList.toggle("popup-mode-btn--active", mode === "visit");
+	submitBtn.classList.toggle("popup-submit-btn--visit", mode === "visit");
+}
+
+function setAccordionOpen(listName, open) {
+	const isAvoid = listName === "avoid";
+	const header = document.getElementById(isAvoid ? "accordionAvoid" : "accordionVisit");
+	const body = document.getElementById(isAvoid ? "accordionAvoidBody" : "accordionVisitBody");
+	const icon = header?.querySelector(".popup-accordion-icon");
+
+	if (!header || !body) return;
+
+	header.setAttribute("aria-expanded", String(open));
+	body.hidden = !open;
+	if (icon) icon.textContent = open ? "▾" : "▸";
+}
+
+function isAccordionOpen(listName) {
+	const isAvoid = listName === "avoid";
+	const body = document.getElementById(isAvoid ? "accordionAvoidBody" : "accordionVisitBody");
+	return body && !body.hidden;
+}
+
 window.addEventListener("DOMContentLoaded", () => {
+	let activeMode = "avoid";
+	let userManuallyOpenedBoth = false;
+
+	// Prefill single input with current tab hostname
 	chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 		const tab = tabs && tabs[0];
 		if (tab && tab.url) {
 			try {
 				const { hostname } = new URL(tab.url);
 				if (hostname) {
-					const avoidInput = document.getElementById("avoidInput");
-					if (avoidInput) avoidInput.value = hostname;
-					const visitInput = document.getElementById("visitInput");
-					if (visitInput) visitInput.value = hostname;
+					const siteInput = document.getElementById("siteInput");
+					if (siteInput) siteInput.value = hostname;
 				}
 			} catch {}
 		}
 	});
 
-	document.getElementById("avoidForm")?.addEventListener("submit", (e) => addToList(e, "avoid"));
-	document.getElementById("visitForm")?.addEventListener("submit", (e) => addToList(e, "visit"));
+	// Mode toggle buttons
+	document.getElementById("modeAvoid")?.addEventListener("click", () => {
+		if (activeMode === "avoid") return;
+		activeMode = "avoid";
+		setInputMode(activeMode);
+
+		if (!userManuallyOpenedBoth) {
+			setAccordionOpen("avoid", true);
+			setAccordionOpen("visit", false);
+		}
+	});
+
+	document.getElementById("modeVisit")?.addEventListener("click", () => {
+		if (activeMode === "visit") return;
+		activeMode = "visit";
+		setInputMode(activeMode);
+
+		if (!userManuallyOpenedBoth) {
+			setAccordionOpen("visit", true);
+			setAccordionOpen("avoid", false);
+		}
+	});
+
+	// Single form submit
+	document.getElementById("siteForm")?.addEventListener("submit", (e) => addToList(e, activeMode));
+
+	// Accordion headers
+	function handleAccordionClick(listName) {
+		const open = isAccordionOpen(listName);
+		const otherName = listName === "avoid" ? "visit" : "avoid";
+		const otherOpen = isAccordionOpen(otherName);
+
+		// User is manually opening; if both will be open after this, set flag
+		if (!open && otherOpen) userManuallyOpenedBoth = true;
+		// User is closing; no longer both open, so clear flag
+		if (open) userManuallyOpenedBoth = false;
+
+		setAccordionOpen(listName, !open);
+	}
+
+	document.getElementById("accordionAvoid")?.addEventListener("click", () => handleAccordionClick("avoid"));
+	document.getElementById("accordionVisit")?.addEventListener("click", () => handleAccordionClick("visit"));
 
 	// Override time limit
 	chrome.storage.local.get("overrideLimitMinutes", (result) => {
