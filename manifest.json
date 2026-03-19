@@ -4,16 +4,27 @@
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "popup/index.html",
-    "default_icon": "foqus_extension.png"
+    "default_popup": "src/popup/index.html",
+    "default_icon": {
+      "16": "foqus_extension.png",
+      "48": "foqus_extension.png",
+      "128": "foqus_extension.png"
+    }
   },
   "background": {
-      "service_worker": "background/background.js"
+    "service_worker": "src/background/background.js"
   },
   "permissions": [
     "storage",
     "webRequest",
     "scripting"
   ],
-  "host_permissions": ["<all_urls>"]
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["https://extension-build-dummy.invalid/*"],
+      "js": ["src/content/main.js"],
+      "run_at": "document_end"
+    }
+  ]
 }

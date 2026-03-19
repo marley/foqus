@@ -1,6 +1,13 @@
 # foqus
 Track your distraction sites and create new habits with this browser extension (TBA)
 
+## Development
+```bash
+npm install
+npm run build
+```
+Load the `dist/` folder as an unpacked extension in Chrome (Extensions → Load unpacked).
+
 # Goal of this chrome extension
 Chrome extension: Foqus
 

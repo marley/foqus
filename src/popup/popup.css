@@ -385,19 +385,22 @@ body {
   transition: opacity 150ms ease-out, transform 150ms ease-out;
 }
 
-.popup-list-item-enter {
+.popup-list-item-enter-from,
+.popup-list-item-leave-to {
   opacity: 0;
+}
+
+.popup-list-item-enter-from {
   transform: translateY(8px);
 }
 
-.popup-list-item-enter.popup-list-item-enter-active {
-  opacity: 1;
-  transform: translateY(0);
+.popup-list-item-leave-to {
+  transform: translateY(-4px);
 }
 
-.popup-list-item-exit {
-  opacity: 0;
-  transform: translateY(-4px);
+.popup-list-item-enter-active,
+.popup-list-item-leave-active {
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
 }
 
 .popup-list-item:last-child {
