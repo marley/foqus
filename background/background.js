@@ -37,7 +37,7 @@ function injectIntoTab(tabId) {
 
     chrome.scripting.executeScript({
         target: { tabId },
-        files: ["content/three.min.js", "content/gradient.js", "content/content.js"]
+        files: ["content/three.min.js", "content/gradient.js", "src/content/main.js"]
     });
 }
 

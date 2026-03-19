@@ -19,5 +19,12 @@
     "webRequest",
     "scripting"
   ],
-  "host_permissions": ["<all_urls>"]
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["https://extension-build-dummy.invalid/*"],
+      "js": ["src/content/main.js"],
+      "run_at": "document_end"
+    }
+  ]
 }
