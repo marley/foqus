@@ -1,3 +1,7 @@
+(function() {
+	if (window.__foqusGradientInitialized) return;
+	window.__foqusGradientInitialized = true;
+
 class _FoqusTouchTexture {
 	constructor() {
 		this.size = 64;
@@ -331,3 +335,6 @@ class FoqusGradient {
 		}
 	}
 }
+
+	window.FoqusGradient = FoqusGradient;
+})();
