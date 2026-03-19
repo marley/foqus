@@ -5,7 +5,11 @@
   "manifest_version": 3,
   "action": {
     "default_popup": "popup/index.html",
-    "default_icon": "foqus_extension.png"
+    "default_icon": {
+      "16": "foqus_extension.png",
+      "48": "foqus_extension.png",
+      "128": "foqus_extension.png"
+    }
   },
   "background": {
       "service_worker": "background/background.js"
