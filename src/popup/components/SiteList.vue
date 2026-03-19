@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
   type: { type: String, required: true },
   items: { type: Array, default: () => [] },
   open: { type: Boolean, default: false },
