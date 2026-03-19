@@ -1,14 +1,5 @@
 const injectedTabs = new Set();
 
-function toMatchPattern(url) {
-    try {
-        const { protocol, hostname } = new URL(url);
-        return `${protocol}//${hostname}/*`;
-    } catch {
-        return null;
-    }
-}
-
 function urlMatchesPatterns(url, storedUrls) {
     try {
         const { hostname } = new URL(url);
