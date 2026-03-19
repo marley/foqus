@@ -94,10 +94,8 @@ function onUnblock(minutes) {
 }
 
 function maybeShowOverlay() {
-  const urlsToVisit = visit.value || []
-  if (urlsToVisit.length === 0) return
-
   const host = normalizeHost(location.hostname)
+
   if (!host) {
     showOverlay()
     return
