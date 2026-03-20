@@ -24,12 +24,16 @@ body.dark-mode {
 
 body {
   width: 340px;
+  max-height: 520px;
   margin: 0;
   padding: 20px 0 20px 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   color: var(--foqus-text);
   background: var(--foqus-bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .visually-hidden {
@@ -57,7 +61,7 @@ body {
 
 .popup-brand {
   margin: 0;
-  font-family: "Noto Sans Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 20px;
   font-weight: 600;
   color: var(--foqus-accent);
@@ -166,7 +170,7 @@ body {
   border: none;
   background: transparent;
   font-size: 13px;
-  font-family: "Noto Sans Mono", monospace;
+  font-family: var(--font-mono);
   font-weight: 600;
   text-transform: lowercase;
   letter-spacing: 0.04em;
@@ -339,7 +343,7 @@ body {
   border: none;
   border-bottom: none;
   background: var(--foqus-card);
-  font-family: "Noto Sans Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -634,6 +638,73 @@ body {
 .popup-toggle-label {
   font-size: 14px;
   color: var(--foqus-text);
+}
+
+/* Tab navigation */
+.popup-tab-nav {
+  display: flex;
+  border-top: 1px solid var(--foqus-border);
+  border-bottom: 1px solid var(--foqus-border);
+}
+
+.popup-tab-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  background: var(--foqus-bg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--foqus-text-muted);
+  cursor: pointer;
+}
+
+.popup-tab-btn:hover {
+  color: var(--foqus-text);
+  background: var(--foqus-card);
+}
+
+.popup-tab-btn--active {
+  color: var(--foqus-text);
+  background: var(--foqus-card);
+  border-bottom: 2px solid var(--foqus-accent);
+}
+
+.popup-tab-body {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 260px;
+  position: relative;
+}
+
+.popup-tab-body::after {
+  content: '';
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(transparent, var(--foqus-bg));
+  pointer-events: none;
+  display: block;
+}
+
+.popup-tab-panel {
+  min-height: 80px;
+}
+
+/* Inline settings (inside tab) */
+.popup-settings--inline {
+  padding: 0;
+  border-top: none;
+}
+
+.popup-settings-drawer--inline {
+  margin-top: 0;
+  border: none;
+  background: transparent;
 }
 
 /* Footer */

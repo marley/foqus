@@ -1,13 +1,18 @@
 const injectedTabs = new Set();
 
+function stripWww(host) {
+    return host.replace(/^www\./, '');
+}
+
 function urlMatchesPatterns(url, storedUrls) {
     try {
         const { hostname } = new URL(url);
+        const bare = stripWww(hostname);
         return storedUrls.some(storedUrl => {
             try {
                 const normalized = storedUrl.includes('://') ? storedUrl : `https://${storedUrl}`;
                 const { hostname: storedHost } = new URL(normalized);
-                return hostname === storedHost;
+                return bare === stripWww(storedHost);
             } catch {
                 return false;
             }
