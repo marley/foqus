@@ -1,0 +1,688 @@
+{
+  "upg_version": "0.1.0",
+  "exported_at": "2026-03-20T14:11:44.004Z",
+  "source": {
+    "tool": "upg-mcp-local",
+    "tool_version": "0.1.0"
+  },
+  "product": {
+    "id": "-ucH2AS4YZV01Rqu",
+    "title": "product"
+  },
+  "nodes": [
+    {
+      "id": "n_H25OdY7yPx6oibFE",
+      "type": "product",
+      "title": "Foqus",
+      "description": "A Chrome extension that helps users set intentions for how they want to browse the web — tracking current habits and creating new browsing intentions, rather than just blocking sites.",
+      "tags": [
+        "chrome-extension",
+        "productivity",
+        "digital-wellbeing"
+      ],
+      "properties": {
+        "platform": "Chrome Extension",
+        "stage": "idea"
+      }
+    },
+    {
+      "id": "n_sEFIHzDDcd1XJyaf",
+      "type": "value_proposition",
+      "title": "Intention-first browsing over brute-force blocking",
+      "description": "Unlike existing site blockers and focus apps that use restriction as the primary mechanism, this extension helps users track their current browsing habits and set positive intentions for how they want to browse — making behavior change feel chosen rather than enforced."
+    },
+    {
+      "id": "n_KmPUdRw2eUU51d0j",
+      "type": "competitor",
+      "title": "Existing site blockers & focus apps",
+      "description": "Category of Chrome extensions and apps (e.g. BlockSite, Cold Turkey, Freedom, StayFocusd) that primarily use blocking/restriction to control browsing behavior. The gap: they don't help users understand their habits or set positive intentions.",
+      "tags": [
+        "competitor-category"
+      ]
+    },
+    {
+      "id": "n_K0842USTutFoonFQ",
+      "type": "pain_point",
+      "title": "Addicted to certain sites and wanting to feel better",
+      "description": "Users find themselves repeatedly drawn to specific websites (social media, news, entertainment) in ways that feel compulsive. They recognise the pattern and want to change — not just block access, but actually feel better about how they spend their time online."
+    },
+    {
+      "id": "n_T_rjs0SBFuuBW0Kc",
+      "type": "feature",
+      "title": "Site intention list",
+      "description": "The core first-run experience. Users open the Foqus extension and declare which sites they don't want to visit anymore. This is the primary input mechanism — an intention list rather than a block list.",
+      "tags": [
+        "core",
+        "onboarding"
+      ]
+    },
+    {
+      "id": "n_pTZkS5VRsf4GEdQ-",
+      "type": "feature",
+      "title": "Intention overlay with personality",
+      "description": "When a user visits a site on their intention list, a full-screen overlay appears instead of blocking outright. It shows a playful, personality-driven quote (e.g. \"Come here often?\", \"Captain, we are straying from the path\"), suggests alternative sites the user has said they want to visit more, and includes an unblock button so the user always has the final say.",
+      "tags": [
+        "core",
+        "ux"
+      ]
+    },
+    {
+      "id": "n_e57rQxXbzjSuyS58",
+      "type": "feature",
+      "title": "Positive sites list",
+      "description": "During onboarding (alongside the avoidance list), users can optionally set up a list of sites they want to visit more — learning platforms, portfolio sites, tools for a side project, etc. This list is OPTIONAL — users may not know what to put there yet. The empty state should have encouraging messaging that explains the concept and invites them to add sites later. These positive sites are surfaced as alternatives on the intention overlay when a user tries to visit an avoided site.",
+      "tags": [
+        "core",
+        "onboarding"
+      ]
+    },
+    {
+      "id": "n_7_LAdTbFFkoK0CzC",
+      "type": "feature",
+      "title": "Streak tracking",
+      "description": "Track consecutive days where the user stuck to their intentions. Gamified motivation — appeals to users who respond to maintaining streaks. Visual streak counter in the extension popup.",
+      "tags": [
+        "habit-tracking",
+        "gamification"
+      ]
+    },
+    {
+      "id": "n_99JiAlPCElI9v-CD",
+      "type": "feature",
+      "title": "Trend lines — progress over time",
+      "description": "Show directional progress rather than absolute numbers. \"You visited Reddit 30% less than last week\" instead of \"you visited Reddit 47 times.\" Framed as progress, never shaming. Helps users see they're getting better even when they're not perfect.",
+      "tags": [
+        "habit-tracking",
+        "analytics"
+      ]
+    },
+    {
+      "id": "n_kYVqo1JvsPN7zJXj",
+      "type": "feature",
+      "title": "Intentions kept counter",
+      "description": "Track every time the overlay appeared and the user chose NOT to unblock — framed as a positive \"intentions kept\" metric rather than tracking failures. Reframes self-control moments as wins.",
+      "tags": [
+        "habit-tracking",
+        "positive-framing"
+      ]
+    },
+    {
+      "id": "n_fEVTdBya3WvMjHKu",
+      "type": "feature",
+      "title": "Weekly reflection summary",
+      "description": "A short, warm weekly summary: intentions kept percentage, strongest day, positive site visits. Progress-oriented tone, never punishing. Could be a notification or shown when opening the extension.",
+      "tags": [
+        "habit-tracking",
+        "engagement"
+      ]
+    },
+    {
+      "id": "n_7JlkiktLR6GgJiDT",
+      "type": "feature",
+      "title": "Graceful unblock tracking",
+      "description": "When a user clicks unblock, no shaming or punishment. Quietly log it and over time surface \"you're unblocking less often\" as a positive trend. The unblock button is data, not failure.",
+      "tags": [
+        "habit-tracking",
+        "positive-framing"
+      ]
+    },
+    {
+      "id": "n_AZr-253O9F1bbO2N",
+      "type": "feature",
+      "title": "Data export",
+      "description": "Allow data-oriented users to export their full browsing intention data — streaks, trends, unblock history, site visit patterns. CSV or JSON format. For the nerdy users who want to dig into their own data.",
+      "tags": [
+        "power-user",
+        "data"
+      ]
+    },
+    {
+      "id": "n_qjL0Kv3D1mjGWGBk",
+      "type": "value_proposition",
+      "title": "Privacy-first — all data stays local",
+      "description": "Foqus stores all browsing intention data in local storage only. No server, no data collection, no tracking. This is both a personal conviction (what Mar wants as a user) and a competitive differentiator — most alternatives collect and store user browsing data.",
+      "tags": [
+        "core-principle",
+        "privacy"
+      ]
+    },
+    {
+      "id": "n_IGKWjoIIhZm_a_aZ",
+      "type": "pricing_strategy",
+      "title": "Freemium — free local, paid for sync",
+      "description": "Two tiers. Free: full core experience, local storage, no account required — works completely standalone. Paid: account creation, cross-browser sync, cross-device sync, and potential premium features. The paid tier exists to cover server costs for sync infrastructure, not as a paywall on core functionality."
+    },
+    {
+      "id": "n_RSQBHU5nNvZJJaAd",
+      "type": "pricing_tier",
+      "title": "Free — no account, fully local",
+      "description": "All core features: avoid list, positive sites list, intention overlay, streaks, trends, intentions kept, weekly summary, unblock button, data export. Everything stored in local storage. No account needed. No server involved.",
+      "tags": [
+        "free-tier"
+      ]
+    },
+    {
+      "id": "n_VPwiwxghq9jQ-Oux",
+      "type": "pricing_tier",
+      "title": "Premium — account with cross-device sync",
+      "description": "Everything in free tier plus: user account, sync intentions and progress across browsers and devices, potential future premium features. Requires server infrastructure — the paid tier covers these costs.",
+      "tags": [
+        "paid-tier"
+      ]
+    },
+    {
+      "id": "n_m5z8gjOldEd4PIbp",
+      "type": "opportunity",
+      "title": "Ethical alternatives — help users de-platform from big tech",
+      "description": "Future idea: Foqus could help users find alternatives to big tech services they want to move away from (e.g. de-Googling). Could surface in the positive sites suggestions. Mar sees potential but flagged it as possibly extraneous to the core product — parking this as a future opportunity, not a launch feature.",
+      "tags": [
+        "future",
+        "ethical-tech"
+      ],
+      "status": "parked"
+    },
+    {
+      "id": "n_f3t2mEl4I05CYAsq",
+      "type": "persona",
+      "title": "Angie — College student writing her thesis",
+      "description": "Angie is driven by community and intellectual curiosity. She loves being connected to her friends, learning what they're working on, and she's politically engaged. She used to be a reader but lost the habit to social media. She's not lazy — she's ambitious and wants to publish her thesis work — but she's managing her own time for the first time and the pull of Facebook is stronger than her current tools can handle.",
+      "tags": [
+        "college",
+        "first-time-self-manager"
+      ],
+      "properties": {
+        "context": "Undergrad student living on campus for the first time, away from home. Managing her own schedule for the first time without anyone telling her what to do. Juggling classes, homework, thesis, social life, and political engagement. Getting swamped by all the changes of college life at once.",
+        "goals": [
+          "Finish her thesis and write a cool article about it to share with friends",
+          "Stay informed on politics and news without falling into doomscrolling",
+          "Get better at managing her own time independently",
+          "Get back into reading — a habit she lost to social media"
+        ],
+        "frustrations": [
+          "Already tried a site blocker but undoes it after a long day of classes and homework — all-or-nothing approach fails her",
+          "Loses track of time once she gives in — before she knows it she has to start the next task",
+          "Information gets lost between tools — calendar, notes, reminders don't stay in sync",
+          "The line between legitimate social connection / news and doomscrolling is blurry"
+        ],
+        "tech_comfort": 3
+      }
+    },
+    {
+      "id": "n_s9hBA1JeI5Fa8L9C",
+      "type": "jtbd",
+      "title": "Use the internet as a tool, then get back to real life",
+      "description": "When I go online, I want to use it as a tool to gain information about current events — political and social, like what's happening on campus — and then not be tied to it, so I can go and do the other things I enjoy in person.",
+      "properties": {
+        "statement": "When I go online, I want to use it as a tool to gain information and then not be tied to it, so I can go and do the things I enjoy in person",
+        "job_type": "emotional",
+        "importance": 5,
+        "satisfaction": 1
+      }
+    },
+    {
+      "id": "n_BRHI7_-UdF3lQPUc",
+      "type": "persona",
+      "title": "Bob — Working professional losing free time to TikTok",
+      "description": "Bob is a storyteller at heart. He wants to be the guy at the barbecue with stories about what he built, where he hiked, what he made with his hands — not someone recounting TikTok reels. His wife noticed the problem before he did, and the embarrassment of realizing all his stories come from a screen is what's pushing him to change. He's not anti-tech, he just wants his free time back.",
+      "tags": [
+        "working-professional",
+        "mobile-first"
+      ],
+      "properties": {
+        "context": "Mid-30s married man working in corporate. Got into tech later in life than his friends. Primarily a phone user — uses his computer only for work. Has tools sitting in the garage and an unfinished project. His wife has told him he might have a problem with his phone usage.",
+        "goals": [
+          "Get back into hands-on projects — finish the garage build",
+          "Spend more time in nature",
+          "Have interesting real-life stories to tell people again instead of referencing TikTok reels",
+          "Actually watch the tutorials he means to watch instead of getting pulled into junk content"
+        ],
+        "frustrations": [
+          "His wife has called out his phone addiction — he knows she's right",
+          "All his stories lately are about TikTok reels and he's embarrassed about it",
+          "Has never tried a tool to fix this — Foqus would be his first attempt",
+          "His problem is on his phone, not his computer — he needs mobile help"
+        ],
+        "tech_comfort": 2
+      }
+    },
+    {
+      "id": "n_e3POFme36V_EBCqi",
+      "type": "jtbd",
+      "title": "Reclaim free time from mindless scrolling",
+      "description": "When I pick up my phone in my free time, I want something to redirect me toward the tutorials and content I actually care about, so I can get back to building things, being outdoors, and having real stories to tell.",
+      "properties": {
+        "statement": "When I pick up my phone in my free time, I want something to redirect me toward content I actually care about, so I can get back to building things and having real stories to tell",
+        "job_type": "emotional",
+        "importance": 5,
+        "satisfaction": 1
+      }
+    },
+    {
+      "id": "n_OE6tjc0fkvMIfPXP",
+      "type": "persona",
+      "title": "Kyle — Unemployed tech worker stuck in a procrastination cycle",
+      "description": "Kyle is genuinely smart and capable — he's worked in tech before and knows what he needs to do. But anxiety about the changing industry creates dread, which causes procrastination, which creates more anxiety. He starts online courses and drops them for YouTube. He even uses productive-feeling activities like language learning to avoid the harder work of upskilling. He doesn't need someone to block his sites — he needs a mirror that shows him his real patterns and rewards him for doing better.",
+      "tags": [
+        "tech-worker",
+        "power-user",
+        "anxiety-driven"
+      ],
+      "properties": {
+        "context": "Late twenties, unemployed tech worker. Previously employed but currently in a rut. Knows the tech world is changing and he needs to upskill. Has started multiple online courses but only completed the first few lessons. Anxiety-driven procrastination cycle: dread → avoidance → more anxiety. Will block one set of sites and find new ones to procrastinate with.",
+        "goals": [
+          "Learn the latest tech tools he should be using",
+          "Build a side project to showcase in job interviews",
+          "Have something smart and real to talk about in interviews",
+          "Break the anxiety-procrastination cycle"
+        ],
+        "frustrations": [
+          "Blocks distraction sites but just finds new ones — whack-a-mole procrastination",
+          "Starts online courses but abandons them after a few lessons for YouTube",
+          "Uses productive-feeling activities (language learning) to avoid the harder work",
+          "Dread about the changing tech landscape makes it hard to even start"
+        ],
+        "tech_comfort": 5
+      }
+    },
+    {
+      "id": "n_QVDAvTS4eru1w3LP",
+      "type": "jtbd",
+      "title": "See my real patterns and get rewarded for improving",
+      "description": "When I sit down to upskill or work on my side project, I want a tool that honestly shows me where my time is actually going — including the productive-feeling procrastination — and rewards me when I do better, so I can break the anxiety-avoidance cycle and build something I'm proud of.",
+      "properties": {
+        "statement": "When I sit down to upskill, I want a tool that shows me my real patterns and rewards me for improving, so I can break the anxiety-avoidance cycle and build something I'm proud of",
+        "job_type": "emotional",
+        "importance": 5,
+        "satisfaction": 1
+      }
+    },
+    {
+      "id": "n_K0ngwr7hEQhOWEIz",
+      "type": "vision",
+      "title": "People have a healthier relationship with technology because they chose it, not because something blocked them",
+      "description": "A world where the default relationship with technology is intentional and self-directed. People don't need to be locked out of websites — they understand their own patterns, set their own intentions, and feel empowered rather than restricted. Technology serves them; they don't serve it.",
+      "properties": {
+        "horizon": "5-10 years",
+        "status": "active"
+      }
+    },
+    {
+      "id": "n_skZVlTEVt_pZvxOF",
+      "type": "mission",
+      "title": "We help people who feel trapped by their browsing habits take back control — gently, without shame",
+      "description": "Foqus serves anyone who recognises that their relationship with certain websites has become compulsive. Instead of punishment or restriction, Foqus offers awareness, intention-setting, and positive reinforcement. The approach is warm, human, and empowering — never guilt-driven.",
+      "properties": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "n_kLdMmN61g0c8nHMT",
+      "type": "strategic_theme",
+      "title": "Personality-driven UX",
+      "description": "Win on tone and warmth where every competitor is cold and clinical. The overlay quotes, the weekly summaries, the empty states — every touchpoint has a voice that feels like a supportive friend, not a productivity tool. This is the emotional moat that makes users stay and tell their friends.",
+      "properties": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "n_KhmEiH91VfZNYzKU",
+      "type": "strategic_theme",
+      "title": "Privacy as a feature",
+      "description": "Local-first, no data collection, no accounts required, in a market where competitors track browsing behavior. Privacy isn't just a policy — it's a selling point. Users trust Foqus because it literally cannot see their data. This attracts privacy-conscious users and removes the biggest objection to installing a browsing extension.",
+      "properties": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "n_7v_W30FCFI991RgL",
+      "type": "initiative",
+      "title": "Design a brand personality guide",
+      "description": "Define Foqus's voice as a character — warm, playful, supportive but honest. Establish tone principles that apply to every touchpoint: overlay messages, weekly summaries, onboarding copy, empty states, error messages. This is the foundation that everything else builds on.",
+      "properties": {
+        "status": "planned",
+        "timeline": "Q1"
+      }
+    },
+    {
+      "id": "n_A0c_liV4pRCat_gI",
+      "type": "initiative",
+      "title": "Build the quote and voice system",
+      "description": "Curate a library of playful, warm overlay messages that rotate so the experience never feels stale. Multiple tones (humorous, gentle, motivational) grounded in the brand personality guide. This is what users actually see and feel — the personality in action.",
+      "properties": {
+        "status": "planned",
+        "timeline": "Q1"
+      }
+    },
+    {
+      "id": "n_3wnJUpxq-9peJ1DP",
+      "type": "initiative",
+      "title": "Local by default, sync only on opt-in",
+      "description": "Free tier is fully local — data never leaves the browser. Premium tier enables sync, but only when the user explicitly chooses it. Privacy isn't marketed as the headline, but it's baked into the architecture as a foundation. The people who care will notice; the people who don't won't be put off.",
+      "properties": {
+        "status": "planned",
+        "timeline": "Q1"
+      }
+    },
+    {
+      "id": "n_160iwm62u6quN9Of",
+      "type": "outcome",
+      "title": "Every touchpoint speaks in one consistent voice",
+      "description": "Overlay messages, onboarding flow, weekly summaries, empty states, and error messages all feel like the same character. A qualitative audit of any screen should pass the question: does this sound like Foqus?",
+      "properties": {
+        "status": "planned"
+      }
+    },
+    {
+      "id": "n_q6npnSCScQmLqxpg",
+      "type": "outcome",
+      "title": "Higher retention than competing blockers",
+      "description": "Users keep Foqus installed longer than they keep traditional site blockers. The personality and warm tone create an emotional connection that makes users want to keep it around rather than uninstalling after the novelty wears off.",
+      "properties": {
+        "status": "planned"
+      }
+    },
+    {
+      "id": "n_WEJejgbCjINUsta_",
+      "type": "outcome",
+      "title": "Overlay dismissal rate drops over time",
+      "description": "Users stop reflexively clicking past the intention overlay because the messages actually resonate. A declining dismissal rate means the quotes are landing — users are pausing, reading, and choosing to redirect rather than just unblocking.",
+      "properties": {
+        "status": "planned"
+      }
+    },
+    {
+      "id": "n_Hyxfr6o6Pjse71d1",
+      "type": "outcome",
+      "title": "Premium conversion driven by sync need, not paywall frustration",
+      "description": "People upgrade to premium because they genuinely want cross-device sync, not because they hit an artificial wall. The free tier is fully functional — the upgrade is a choice, not a ransom. This keeps the brand honest and the mission intact.",
+      "properties": {
+        "status": "planned"
+      }
+    },
+    {
+      "id": "n_UdqBJQ228oMfeg-u",
+      "type": "outcome",
+      "title": "Trust signals in reviews — users feel safe",
+      "description": "Users mention feeling safe installing Foqus because it doesn't ask for data or require an account. Critical for the most sensitive use cases — some users are managing habits they'd never want stored in a cloud. Local-first isn't just a feature, it's the reason they trust Foqus enough to install it at all.",
+      "properties": {
+        "status": "planned"
+      }
+    },
+    {
+      "id": "n_A3BY7xf4eIa6-7O_",
+      "type": "learning",
+      "title": "UX Architecture Decision: Slim Popup + Blocker Dashboard",
+      "description": "Product decision to split the extension UX into two distinct surfaces. The popup becomes a minimal quick-action tool (mode toggle, add site, 3 stats). The full-screen blocker page becomes the primary management interface — embedding site lists, stats, settings, and the blocking message into one cohesive experience. Rationale: the popup fights Chrome's size constraints and gets scrolly with many sites; the blocker page has massive unused space and is the moment of highest user engagement.",
+      "tags": [
+        "ux",
+        "architecture",
+        "popup",
+        "blocker-dashboard"
+      ]
+    },
+    {
+      "id": "n_JAZ4m_VUUIPCdIP8",
+      "type": "opportunity",
+      "title": "Blocker page as the primary app surface",
+      "description": "The full-screen blocker page is the moment of highest user engagement — the user is right there, facing the decision to stay focused or give in. Currently 95% of this space is empty. Opportunity to embed the full management experience (site lists, weekly charts, session history, streak visualizations, settings) into this surface, turning the blocking moment into the app itself rather than just a wall.",
+      "tags": [
+        "ux",
+        "blocker-dashboard",
+        "engagement"
+      ]
+    },
+    {
+      "id": "n_Uj09J9Fpetk88tB8",
+      "type": "learning",
+      "title": "Event tracking architecture — append-only local log",
+      "description": "Chose an append-only event log in chrome.storage.local as the data layer for all tracking features. Events (overlay_shown, intention_kept, unblock) are recorded with timestamps and pruned to a 90-day rolling window. Stats (streaks, trends, counters) are computed on read, not stored separately. This keeps the storage schema simple and makes export trivial.",
+      "tags": [
+        "architecture",
+        "data-layer",
+        "decision"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_gz2e9TrKTwn8-0iT",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_sEFIHzDDcd1XJyaf",
+      "type": "product_has_value_proposition"
+    },
+    {
+      "id": "e_--ZgCiP9U_ys9pTz",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_KmPUdRw2eUU51d0j",
+      "type": "product_has_competitor"
+    },
+    {
+      "id": "e_tBjWZe4Y4Su6O1Tn",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_K0842USTutFoonFQ",
+      "type": "product_has_pain_point"
+    },
+    {
+      "id": "e_2J3AlHtaO8j4wUhH",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_T_rjs0SBFuuBW0Kc",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_yilgrG-nptncCgGg",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_pTZkS5VRsf4GEdQ-",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_UbFPMdfrrPi-fksA",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_e57rQxXbzjSuyS58",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_42H_56O1lUa31B-b",
+      "source": "n_pTZkS5VRsf4GEdQ-",
+      "target": "n_e57rQxXbzjSuyS58",
+      "type": "feature_has_feature"
+    },
+    {
+      "id": "e_Vz2BiL9Jv9FAYGl_",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_7_LAdTbFFkoK0CzC",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_PRb9RJ3TDmkVcnIm",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_99JiAlPCElI9v-CD",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_F9i5gX3anLnkl24q",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_kYVqo1JvsPN7zJXj",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_AO_oSNPEz42u_STh",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_fEVTdBya3WvMjHKu",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_G0qgPdE1sVL7HEMn",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_7JlkiktLR6GgJiDT",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_e8ZxgkNGq3QQQ1_0",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_AZr-253O9F1bbO2N",
+      "type": "product_has_feature"
+    },
+    {
+      "id": "e_v9pY1xWUBITVkoC2",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_qjL0Kv3D1mjGWGBk",
+      "type": "product_has_value_proposition"
+    },
+    {
+      "id": "e_KcVySgGY5WDgN6RY",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_IGKWjoIIhZm_a_aZ",
+      "type": "product_has_pricing_strategy"
+    },
+    {
+      "id": "e_uoSRUb6dZZmBsIbq",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_RSQBHU5nNvZJJaAd",
+      "type": "product_has_pricing_tier"
+    },
+    {
+      "id": "e_y7LMcCNznBfESzdb",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_VPwiwxghq9jQ-Oux",
+      "type": "product_has_pricing_tier"
+    },
+    {
+      "id": "e_NCMUHycUhZ1rkHIo",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_m5z8gjOldEd4PIbp",
+      "type": "product_has_opportunity"
+    },
+    {
+      "id": "e_NqZ7ww5Bb9ri2z_z",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_f3t2mEl4I05CYAsq",
+      "type": "product_has_persona"
+    },
+    {
+      "id": "e_Uo4st-H_JFzg3nqZ",
+      "source": "n_f3t2mEl4I05CYAsq",
+      "target": "n_s9hBA1JeI5Fa8L9C",
+      "type": "persona_has_jtbd"
+    },
+    {
+      "id": "e_dk4FyRdGhQ-uElpm",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_BRHI7_-UdF3lQPUc",
+      "type": "product_has_persona"
+    },
+    {
+      "id": "e_eKJwqvVOeQJkqxKW",
+      "source": "n_BRHI7_-UdF3lQPUc",
+      "target": "n_e3POFme36V_EBCqi",
+      "type": "persona_has_jtbd"
+    },
+    {
+      "id": "e_ulqVv14UP-t3QeDe",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_OE6tjc0fkvMIfPXP",
+      "type": "product_has_persona"
+    },
+    {
+      "id": "e_C1SBF2siRlwuQiQR",
+      "source": "n_OE6tjc0fkvMIfPXP",
+      "target": "n_QVDAvTS4eru1w3LP",
+      "type": "persona_has_jtbd"
+    },
+    {
+      "id": "e_T1SY-4EDV_641RNY",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_K0ngwr7hEQhOWEIz",
+      "type": "product_has_vision"
+    },
+    {
+      "id": "e_EvGhnwy3xttqlmmz",
+      "source": "n_K0ngwr7hEQhOWEIz",
+      "target": "n_skZVlTEVt_pZvxOF",
+      "type": "vision_has_mission"
+    },
+    {
+      "id": "e__R-5bPlgfVdJYhkx",
+      "source": "n_skZVlTEVt_pZvxOF",
+      "target": "n_kLdMmN61g0c8nHMT",
+      "type": "mission_has_strategic_theme"
+    },
+    {
+      "id": "e_k57iZptKi5G5C4bx",
+      "source": "n_skZVlTEVt_pZvxOF",
+      "target": "n_KhmEiH91VfZNYzKU",
+      "type": "mission_has_strategic_theme"
+    },
+    {
+      "id": "e_67bXQpONC-c5wPTJ",
+      "source": "n_kLdMmN61g0c8nHMT",
+      "target": "n_7v_W30FCFI991RgL",
+      "type": "strategic_theme_has_initiative"
+    },
+    {
+      "id": "e_PpLwi3JyRRZnJ7Av",
+      "source": "n_kLdMmN61g0c8nHMT",
+      "target": "n_A0c_liV4pRCat_gI",
+      "type": "strategic_theme_has_initiative"
+    },
+    {
+      "id": "e_RDYei7g-3u5P84RD",
+      "source": "n_KhmEiH91VfZNYzKU",
+      "target": "n_3wnJUpxq-9peJ1DP",
+      "type": "strategic_theme_has_initiative"
+    },
+    {
+      "id": "e_x7BMIQkHcgpHJX41",
+      "source": "n_7v_W30FCFI991RgL",
+      "target": "n_160iwm62u6quN9Of",
+      "type": "initiative_has_outcome"
+    },
+    {
+      "id": "e_TFu-XnlDMJ3oKyr4",
+      "source": "n_7v_W30FCFI991RgL",
+      "target": "n_q6npnSCScQmLqxpg",
+      "type": "initiative_has_outcome"
+    },
+    {
+      "id": "e_kX8E3hmXO1F0qOGJ",
+      "source": "n_A0c_liV4pRCat_gI",
+      "target": "n_WEJejgbCjINUsta_",
+      "type": "initiative_has_outcome"
+    },
+    {
+      "id": "e_2hJZe0UOOSKoF-0k",
+      "source": "n_3wnJUpxq-9peJ1DP",
+      "target": "n_Hyxfr6o6Pjse71d1",
+      "type": "initiative_has_outcome"
+    },
+    {
+      "id": "e_3el5BjcrGSrUgtFI",
+      "source": "n_3wnJUpxq-9peJ1DP",
+      "target": "n_UdqBJQ228oMfeg-u",
+      "type": "initiative_has_outcome"
+    },
+    {
+      "id": "e_RnCQHpsqJ53bvwi_",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_A3BY7xf4eIa6-7O_",
+      "type": "product_has_learning"
+    },
+    {
+      "id": "e_R68Uwxey78kIOw3V",
+      "source": "n_H25OdY7yPx6oibFE",
+      "target": "n_JAZ4m_VUUIPCdIP8",
+      "type": "product_has_opportunity"
+    },
+    {
+      "id": "e_IBAqWDCJeswLu64l",
+      "source": "n_JAZ4m_VUUIPCdIP8",
+      "target": "n_A3BY7xf4eIa6-7O_",
+      "type": "opportunity_has_learning"
+    },
+    {
+      "id": "e_kZja1EJSQNWzpJjP",
+      "source": "n_7_LAdTbFFkoK0CzC",
+      "target": "n_Uj09J9Fpetk88tB8",
+      "type": "feature_has_learning"
+    }
+  ]
+}
