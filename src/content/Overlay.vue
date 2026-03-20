@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
+import OverlaySidebar from './OverlaySidebar.vue'
 
 const OVERRIDE_LIMIT_DEFAULT = 5
 const overlayTitles = [
@@ -91,5 +92,7 @@ onUnmounted(() => {
         </button>
       </div>
     </div>
+
+    <OverlaySidebar />
   </div>
 </template>

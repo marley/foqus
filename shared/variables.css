@@ -1,10 +1,26 @@
 :root {
+  /* Primary */
   --brand-orange:      #F15A22;
+  --brand-ink:         #1a1a1a;
+  --brand-parchment:   #FAF7F2;
+  --brand-linen:       #EDE7DC;
+  --brand-white:       #ffffff;
+
+  /* Teal */
   --brand-teal-dark:   #004238;
   --brand-teal-mid:    #2f6f64;
   --brand-teal-light:  #4f7e73;
   --brand-teal-darkest:#0a3d36;
   --brand-coral:       #ff8e63;
-  --brand-parchment:   #FAF7F2;
-  --brand-linen:       #EDE7DC;
+
+  /* Gradient palette */
+  --brand-peach:       #E8956A;
+  --brand-sage:        #2f6f64;
+  --brand-seafoam:     #7BA69E;
+  --brand-sand:        #C4A882;
+  --brand-umber:       #8B7355;
+
+  /* Typography */
+  --font-sans:         'Sora', system-ui, -apple-system, sans-serif;
+  --font-mono:         'Noto Sans Mono', ui-monospace, monospace;
 }
