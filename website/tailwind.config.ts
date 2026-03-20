@@ -1,6 +1,9 @@
 import type { Config } from 'tailwindcss'
 
 export default {
+  content: [
+    './app/**/*.{vue,js,ts}',
+  ],
   darkMode: 'class',
   theme: {
     extend: {
@@ -26,7 +29,7 @@ export default {
       },
       fontFamily: {
         mono: ['"Noto Sans Mono"', 'ui-monospace', 'monospace'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Sora', 'system-ui', '-apple-system', 'sans-serif'],
       },
     },
   },

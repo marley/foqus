@@ -3,6 +3,21 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+  // Workaround: Node 23 IPC issue with Nuxt 4 dev server
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+      },
+    },
+  },
+
+  nitro: {
+    experimental: {
+      websocket: false,
+    },
+  },
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/google-fonts',
@@ -12,6 +27,11 @@ export default defineNuxtConfig({
     families: {
       'Noto Sans Mono': [400, 500, 600, 700],
       'Inter': [400, 500, 600, 700],
+      'Space Grotesk': [400, 500, 600, 700],
+      'DM Sans': [400, 500, 600, 700],
+      'Sora': [400, 500, 600, 700],
+      'Outfit': [400, 500, 600, 700],
+      'Manrope': [400, 500, 600, 700],
     },
     display: 'swap',
   },
