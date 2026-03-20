@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap");
 
 /* Overlay */
 .foqus-overlay {
@@ -304,4 +304,394 @@
 .foqus-overlay-button:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.8);
   outline-offset: 2px;
+}
+
+/* ========================================
+   Sidebar trigger tab
+   ======================================== */
+.foqus-sidebar-trigger {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 10002;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border: none;
+  border-radius: 8px 0 0 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease, right 300ms ease;
+  font-family: var(--font-mono, "Noto Sans Mono", monospace);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.foqus-sidebar-trigger:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.foqus-sidebar-trigger--open {
+  right: 360px;
+}
+
+.foqus-sidebar-trigger-icon {
+  font-size: 16px;
+  writing-mode: horizontal-tb;
+}
+
+.foqus-sidebar-trigger-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ========================================
+   Sidebar panel
+   ======================================== */
+.foqus-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10001;
+  width: 360px;
+  height: 100%;
+  background: rgba(10, 15, 13, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-y: auto;
+  font-family: var(--font-sans, 'Sora', system-ui, sans-serif);
+}
+
+.foqus-sidebar-enter-active,
+.foqus-sidebar-leave-active {
+  transition: transform 300ms ease;
+}
+
+.foqus-sidebar-enter-from,
+.foqus-sidebar-leave-to {
+  transform: translateX(100%);
+}
+
+.foqus-sidebar-inner {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.foqus-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.foqus-sidebar-title {
+  margin: 0;
+  font-family: var(--font-mono, "Noto Sans Mono", monospace);
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+.foqus-sidebar-close {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foqus-sidebar-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Sidebar stats */
+.foqus-sidebar-stats {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.foqus-sidebar-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 0;
+}
+
+.foqus-sidebar-stat + .foqus-sidebar-stat {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.foqus-sidebar-stat-value {
+  font-family: var(--font-mono, "Noto Sans Mono", monospace);
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1;
+}
+
+.foqus-sidebar-stat-value--streak {
+  color: var(--brand-orange);
+}
+
+.foqus-sidebar-stat-value--kept {
+  color: var(--brand-teal-mid);
+}
+
+.foqus-sidebar-stat-label {
+  font-size: 9px;
+  font-family: var(--font-mono, "Noto Sans Mono", monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Sidebar sections */
+.foqus-sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.foqus-sidebar-section-title {
+  margin: 0;
+  font-family: var(--font-mono, "Noto Sans Mono", monospace);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* List toggle (avoid/visit) */
+.foqus-sidebar-list-toggle {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.foqus-sidebar-list-btn {
+  flex: 1;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono, "Noto Sans Mono", monospace);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.foqus-sidebar-list-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.foqus-sidebar-list-btn--active {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Add form */
+.foqus-sidebar-add-form {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.foqus-sidebar-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.foqus-sidebar-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.foqus-sidebar-input:focus {
+  outline: none;
+}
+
+.foqus-sidebar-input--small {
+  width: 60px;
+  flex: 0 0 auto;
+}
+
+.foqus-sidebar-add-btn {
+  flex-shrink: 0;
+  width: 32px;
+  padding: 0;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.foqus-sidebar-add-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+/* Site list */
+.foqus-sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.foqus-sidebar-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.foqus-sidebar-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.foqus-sidebar-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.foqus-sidebar-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.foqus-sidebar-list-item:last-child {
+  border-bottom: none;
+}
+
+.foqus-sidebar-list-text {
+  font-size: 13px;
+  word-break: break-word;
+}
+
+.foqus-sidebar-list-text--avoid {
+  color: var(--brand-orange);
+}
+
+.foqus-sidebar-list-text--visit {
+  color: var(--brand-teal-mid);
+}
+
+.foqus-sidebar-empty {
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.25);
+  padding: 6px 0;
+}
+
+.foqus-sidebar-remove {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.foqus-sidebar-list-item:hover .foqus-sidebar-remove {
+  opacity: 1;
+}
+
+.foqus-sidebar-remove:hover {
+  color: var(--brand-orange);
+}
+
+/* Settings forms */
+.foqus-sidebar-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.foqus-sidebar-label {
+  font-size: 10px;
+  font-family: var(--font-mono, "Noto Sans Mono", monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.foqus-sidebar-settings-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.foqus-sidebar-settings-row .foqus-sidebar-input {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.foqus-sidebar-unit {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.foqus-sidebar-save-btn {
+  padding: 6px 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-mono, "Noto Sans Mono", monospace);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.foqus-sidebar-save-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.foqus-sidebar-saved {
+  font-size: 11px;
+  color: var(--brand-teal-mid);
 }

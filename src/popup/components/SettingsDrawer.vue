@@ -1,6 +1,11 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useStorage } from '../../composables/useStorage'
+import DataExport from './DataExport.vue'
+
+const props = defineProps({
+  inline: { type: Boolean, default: false },
+})
 
 const OVERRIDE_LIMIT_MIN = 1
 const OVERRIDE_LIMIT_MAX = 120
@@ -75,8 +80,8 @@ async function onDarkModeChange(checked) {
 </script>
 
 <template>
-  <div class="popup-settings">
-    <div class="popup-settings-header">
+  <div class="popup-settings" :class="{ 'popup-settings--inline': inline }">
+    <div v-if="!inline" class="popup-settings-header">
       <button
         type="button"
         class="popup-settings-toggle"
@@ -87,7 +92,7 @@ async function onDarkModeChange(checked) {
       </button>
       <span v-show="savedIndicator" class="popup-settings-saved">Saved!</span>
     </div>
-    <div v-show="settingsOpen" class="popup-settings-drawer">
+    <div v-show="inline || settingsOpen" class="popup-settings-drawer" :class="{ 'popup-settings-drawer--inline': inline }">
       <h3 class="popup-settings-subheading">Visuals</h3>
       <div class="popup-settings-row">
         <label class="popup-toggle" for="preferReducedMotion">
@@ -147,6 +152,7 @@ async function onDarkModeChange(checked) {
         minutes
         <button type="submit" class="popup-settings-button">Save</button>
       </form>
+      <DataExport />
     </div>
   </div>
 </template>

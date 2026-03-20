@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "upg-local": {
+      "command": "npx",
+      "args": ["tsx", "/Users/FH/Documents/_Code/marleys-apps/upg-mcp-server/src/index.ts", "--file", "./product.upg"]
+    }
+  }
+}
