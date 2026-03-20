@@ -16,8 +16,12 @@
     <VariantPicker current="v2" />
 
     <!-- Hero -->
-    <section class="min-h-screen flex items-end px-8 pb-24 pt-16">
-      <div class="max-w-6xl mx-auto w-full">
+    <section class="min-h-screen flex items-end px-8 pb-24 pt-16 relative overflow-hidden">
+      <!-- Warm Drift -->
+      <div class="absolute top-[-20%] right-[-10%] w-[50%] h-[80%] bg-[#F15A22]/[0.07] rounded-full blur-[100px] animate-float-slow" aria-hidden="true" />
+      <div class="absolute bottom-[-10%] left-[-5%] w-[40%] h-[70%] bg-[#E8956A]/[0.05] rounded-full blur-[80px] animate-float-medium" aria-hidden="true" />
+      <div class="absolute top-[20%] left-[30%] w-[30%] h-[50%] bg-[#C4A882]/[0.04] rounded-full blur-[60px] animate-float-fast" aria-hidden="true" />
+      <div class="max-w-6xl mx-auto w-full relative z-10">
         <div class="grid md:grid-cols-12 gap-8 items-end">
           <div class="md:col-span-8">
             <h1 class="text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.95] tracking-tighter">
@@ -52,8 +56,11 @@
     </section>
 
     <!-- Problem -->
-    <section class="px-8 py-32 bg-[#1a1a1a] text-[#f5f2ed]">
-      <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-8">
+    <section class="px-8 py-32 bg-[#1a1a1a] text-[#f5f2ed] relative overflow-hidden">
+      <!-- Night Drift -->
+      <div class="absolute top-[-15%] right-[10%] w-[45%] h-[70%] bg-[#F15A22]/[0.06] rounded-full blur-[80px] animate-float-slow" aria-hidden="true" />
+      <div class="absolute bottom-[-10%] left-[5%] w-[40%] h-[60%] bg-[#2f6f64]/[0.08] rounded-full blur-[70px] animate-float-medium" aria-hidden="true" />
+      <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-8 relative z-10">
         <div class="md:col-span-4">
           <span class="font-mono text-[11px] tracking-[0.15em] uppercase text-[#f5f2ed]/30">The problem</span>
         </div>
@@ -132,8 +139,11 @@
     </section>
 
     <!-- Personas -->
-    <section class="px-8 py-32 bg-[#1a1a1a] text-[#f5f2ed]">
-      <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-8">
+    <section class="px-8 py-32 bg-[#1a1a1a] text-[#f5f2ed] relative overflow-hidden">
+      <!-- Night Drift (offset) -->
+      <div class="absolute top-[10%] left-[-10%] w-[40%] h-[70%] bg-[#2f6f64]/[0.07] rounded-full blur-[80px] animate-float-medium" aria-hidden="true" />
+      <div class="absolute bottom-[-15%] right-[5%] w-[35%] h-[60%] bg-[#F15A22]/[0.05] rounded-full blur-[70px] animate-float-slow" aria-hidden="true" />
+      <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-8 relative z-10">
         <div class="md:col-span-4">
           <span class="font-mono text-[11px] tracking-[0.15em] uppercase text-[#f5f2ed]/30">People</span>
         </div>
@@ -147,8 +157,11 @@
     </section>
 
     <!-- Features -->
-    <section id="features" class="px-8 py-32">
-      <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-8">
+    <section id="features" class="px-8 py-32 relative overflow-hidden">
+      <!-- Cool Drift -->
+      <div class="absolute top-[-10%] left-[-10%] w-[45%] h-[70%] bg-[#2f6f64]/[0.05] rounded-full blur-[80px] animate-float-medium" aria-hidden="true" />
+      <div class="absolute bottom-[-15%] right-[-5%] w-[50%] h-[80%] bg-[#7BA69E]/[0.04] rounded-full blur-[70px] animate-float-slow" aria-hidden="true" />
+      <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-8 relative z-10">
         <div class="md:col-span-4">
           <span class="font-mono text-[11px] tracking-[0.15em] uppercase text-[#1a1a1a]/30">Features</span>
         </div>
@@ -203,8 +216,10 @@
     </section>
 
     <!-- Footer -->
-    <footer class="px-8 py-16 border-t border-[#1a1a1a]/10">
-      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8">
+    <footer class="px-8 py-16 border-t border-[#1a1a1a]/10 relative overflow-hidden">
+      <!-- Warm Drift (subtle) -->
+      <div class="absolute bottom-[-30%] right-[-10%] w-[40%] h-[80%] bg-[#F15A22]/[0.04] rounded-full blur-[80px]" aria-hidden="true" />
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8 relative z-10">
         <div>
           <h2 class="text-4xl font-bold tracking-tighter mb-4">BROWSE WITH<br />INTENTION.</h2>
           <a href="#" class="inline-block font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 bg-[#1a1a1a] text-[#f5f2ed] hover:bg-brand-orange transition-colors">
@@ -248,6 +263,28 @@ const features = [
   { name: 'Data export', description: 'CSV and JSON. Your data is yours.', live: false },
 ]
 </script>
+
+<style scoped>
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(3%, 5%) scale(1.02); }
+}
+@keyframes float-medium {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-4%, 3%) scale(1.03); }
+}
+@keyframes float-fast {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5%, -3%) scale(1.01); }
+}
+.animate-float-slow { animation: float-slow 20s ease-in-out infinite; }
+.animate-float-medium { animation: float-medium 15s ease-in-out infinite; }
+.animate-float-fast { animation: float-fast 12s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow, .animate-float-medium, .animate-float-fast { animation: none; }
+}
+</style>
 
 <style>
 html { scroll-behavior: smooth; }
