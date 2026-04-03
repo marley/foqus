@@ -35,7 +35,7 @@ function onSubmit(e) {
       placeholder="example.com"
       :name="inputId"
     >
-    <button type="submit" class="popup-submit-btn" aria-label="Add site">
+    <button type="submit" class="popup-submit-btn" aria-label="Add site to the list">
       +
     </button>
   </form>

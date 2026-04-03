@@ -10,7 +10,13 @@ function streakLabel(n) {
 </script>
 
 <template>
-  <div class="popup-stats" aria-label="Your progress">
+  <div
+    class="popup-stats"
+    role="region"
+    aria-label="Your progress"
+    aria-live="polite"
+    aria-atomic="true"
+  >
     <p class="popup-stats-strip">
       <span class="popup-stats-item">
         <span class="popup-stats-num popup-stats-num--accent">{{ stats.streak }}</span>

@@ -28,6 +28,7 @@ const savedIndicator = ref(false)
 const overlayTitleInput = ref('')
 const overrideLimitInput = ref(OVERRIDE_LIMIT_DEFAULT)
 const closeBtnRef = ref(null)
+const overlayRef = ref(null)
 
 watch(overrideLimitMinutes, (val) => {
   overrideLimitInput.value = val != null ? clampOverrideLimit(val) : OVERRIDE_LIMIT_DEFAULT
@@ -41,25 +42,61 @@ watch(darkMode, (val) => {
   document.body.classList.toggle('dark-mode', val === true)
 }, { immediate: true })
 
-function onDocumentEscape(e) {
-  if (e.key === 'Escape' && open.value) {
+function getFocusables() {
+  const root = overlayRef.value
+  if (!root) return []
+  const sel = [
+    'button:not([disabled])',
+    '[href]',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])',
+  ].join(', ')
+  return Array.from(root.querySelectorAll(sel)).filter((el) => {
+    if (el.getAttribute('aria-hidden') === 'true') return false
+    if (el.closest('[aria-hidden="true"]')) return false
+    return el.getClientRects().length > 0
+  })
+}
+
+function onDocumentKeydown(e) {
+  if (!open.value) return
+  if (e.key === 'Escape') {
     e.preventDefault()
     close()
+    return
+  }
+  if (e.key !== 'Tab') return
+  const focusables = getFocusables()
+  if (!focusables.length) return
+  const active = document.activeElement
+  if (!overlayRef.value?.contains(active)) return
+  const first = focusables[0]
+  const last = focusables[focusables.length - 1]
+  if (e.shiftKey) {
+    if (active === first) {
+      e.preventDefault()
+      last.focus()
+    }
+  } else if (active === last) {
+    e.preventDefault()
+    first.focus()
   }
 }
 
 watch(open, async (isOpen) => {
   if (isOpen) {
-    document.addEventListener('keydown', onDocumentEscape)
+    document.addEventListener('keydown', onDocumentKeydown)
     await nextTick()
     closeBtnRef.value?.focus()
   } else {
-    document.removeEventListener('keydown', onDocumentEscape)
+    document.removeEventListener('keydown', onDocumentKeydown)
   }
 })
 
 onUnmounted(() => {
-  document.removeEventListener('keydown', onDocumentEscape)
+  document.removeEventListener('keydown', onDocumentKeydown)
 })
 
 function showSaved() {
@@ -106,6 +143,7 @@ function close() {
   <div
     v-show="open"
     id="settings-panel"
+    ref="overlayRef"
     class="popup-settings-overlay"
     role="dialog"
     aria-modal="true"
@@ -118,6 +156,7 @@ function close() {
       <span
         v-show="savedIndicator"
         role="status"
+        aria-live="polite"
         class="popup-settings-saved"
       >Saved!</span>
       <button

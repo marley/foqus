@@ -31,7 +31,13 @@ function showExported() {
   <div class="popup-export">
     <h3 class="popup-settings-subheading">Data export</h3>
     <div class="popup-export-buttons">
-      <button type="button" @click="exportJSON">Export JSON</button>
+      <button
+        type="button"
+        aria-label="Export statistics as a JSON file"
+        @click="exportJSON"
+      >
+        Export JSON
+      </button>
       <span
         v-show="exported"
         role="status"
