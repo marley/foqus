@@ -1,4 +1,4 @@
-/* Slate + indigo palette (content script still uses shared/variables.css) */
+/* Popup themes nod to overlay teal/orange (see shared/variables.css) */
 :root {
   --foqus-bg: #f7f7f8;
   --foqus-surface: #ffffff;
@@ -7,8 +7,8 @@
   --foqus-text: #18181b;
   --foqus-text-secondary: #71717a;
   --foqus-text-muted: var(--foqus-text-secondary);
-  --foqus-accent: #6366f1;
-  --foqus-accent-subtle: #eef2ff;
+  --foqus-accent: #2f6f64;
+  --foqus-accent-subtle: #e8f0ee;
   --foqus-positive: #22c55e;
   --foqus-destructive: #ef4444;
   --foqus-destructive-subtle: #fef2f2;
@@ -24,11 +24,49 @@ body.dark-mode {
   --foqus-text: #fafafa;
   --foqus-text-secondary: #a1a1aa;
   --foqus-text-muted: var(--foqus-text-secondary);
-  --foqus-accent: #818cf8;
-  --foqus-accent-subtle: #1e1b4b;
+  --foqus-accent: #6ca899;
+  --foqus-accent-subtle: #0a3d36;
   --foqus-positive: #4ade80;
   --foqus-destructive: #f87171;
   --foqus-destructive-subtle: #2d1515;
+  --foqus-remove: var(--foqus-destructive);
+}
+
+body.theme-green {
+  --foqus-accent: #2f6f64;
+  --foqus-accent-subtle: #e8f0ee;
+}
+
+body.dark-mode.theme-green {
+  --foqus-accent: #6ca899;
+  --foqus-accent-subtle: #0a3d36;
+}
+
+body.theme-orange {
+  --foqus-accent: #e85d26;
+  --foqus-accent-subtle: #fff1eb;
+}
+
+body.dark-mode.theme-orange {
+  --foqus-accent: #ff8a50;
+  --foqus-accent-subtle: #3d1a0a;
+}
+
+body.theme-mono {
+  --foqus-accent: #404040;
+  --foqus-accent-subtle: #f0f0f0;
+  --foqus-positive: #525252;
+  --foqus-destructive: #6b6b6b;
+  --foqus-destructive-subtle: #ececec;
+  --foqus-remove: var(--foqus-destructive);
+}
+
+body.dark-mode.theme-mono {
+  --foqus-accent: #b0b0b0;
+  --foqus-accent-subtle: #252525;
+  --foqus-positive: #9ca3af;
+  --foqus-destructive: #9ca3af;
+  --foqus-destructive-subtle: #2a2a2a;
   --foqus-remove: var(--foqus-destructive);
 }
 
