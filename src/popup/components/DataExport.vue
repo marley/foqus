@@ -55,7 +55,6 @@ function showExported() {
   background: var(--foqus-bg);
   color: var(--foqus-text);
   font-size: 12px;
-  font-family: "Noto Sans Mono", monospace;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;

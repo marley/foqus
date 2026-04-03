@@ -62,7 +62,6 @@ const { stats } = useStats()
 }
 
 .popup-stat-value {
-  font-family: "Noto Sans Mono", monospace;
   font-size: 20px;
   font-weight: 700;
   color: var(--foqus-text);
@@ -70,16 +69,15 @@ const { stats } = useStats()
 }
 
 .popup-stat-value--streak {
-  color: var(--brand-orange);
+  color: var(--foqus-accent);
 }
 
 .popup-stat-value--kept {
-  color: var(--brand-teal-mid);
+  color: var(--foqus-positive);
 }
 
 .popup-stat-label {
   font-size: 10px;
-  font-family: "Noto Sans Mono", monospace;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--foqus-text-muted);
@@ -93,6 +91,6 @@ const { stats } = useStats()
 }
 
 .popup-stats-trend--positive {
-  color: var(--brand-teal-mid);
+  color: var(--foqus-positive);
 }
 </style>
