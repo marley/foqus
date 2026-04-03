@@ -2,24 +2,31 @@
 import { useStats } from '../../composables/useStats'
 
 const { stats } = useStats()
+
+function streakLabel(n) {
+  if (n === 1) return 'day streak'
+  return 'days streak'
+}
 </script>
 
 <template>
-  <div class="popup-stats">
-    <div class="popup-stats-grid">
-      <div class="popup-stat">
-        <span class="popup-stat-value popup-stat-value--streak">{{ stats.streak }}</span>
-        <span class="popup-stat-label">day streak</span>
-      </div>
-      <div class="popup-stat">
-        <span class="popup-stat-value popup-stat-value--kept">{{ stats.intentionsKept }}</span>
-        <span class="popup-stat-label">intentions kept</span>
-      </div>
-      <div class="popup-stat">
-        <span class="popup-stat-value">{{ stats.keptToday }}</span>
-        <span class="popup-stat-label">kept today</span>
-      </div>
-    </div>
+  <div class="popup-stats" aria-label="Your progress">
+    <p class="popup-stats-strip">
+      <span class="popup-stats-item">
+        <span class="popup-stats-num popup-stats-num--accent">{{ stats.streak }}</span>
+        <span class="popup-stats-unit"> {{ streakLabel(stats.streak) }}</span>
+      </span>
+      <span class="popup-stats-sep" aria-hidden="true">·</span>
+      <span class="popup-stats-item">
+        <span class="popup-stats-num popup-stats-num--positive">{{ stats.intentionsKept }}</span>
+        <span class="popup-stats-unit"> kept</span>
+      </span>
+      <span class="popup-stats-sep" aria-hidden="true">·</span>
+      <span class="popup-stats-item">
+        <span class="popup-stats-num">{{ stats.keptToday }}</span>
+        <span class="popup-stats-unit"> today</span>
+      </span>
+    </p>
     <p
       v-if="stats.weeklyTrend && stats.weeklyTrend.change < 0"
       class="popup-stats-trend popup-stats-trend--positive"
@@ -38,54 +45,59 @@ const { stats } = useStats()
 <style scoped>
 .popup-stats {
   margin: 0;
-  padding: 12px 16px;
-  border-top: 1px solid var(--foqus-border);
-  background: var(--foqus-card);
+  padding: 8px 14px 10px;
+  background: transparent;
 }
 
-.popup-stats-grid {
+.popup-stats-strip {
+  margin: 0;
   display: flex;
-  gap: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  column-gap: 6px;
+  row-gap: 2px;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
 }
 
-.popup-stat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 4px 0;
+.popup-stats-item {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
 }
 
-.popup-stat + .popup-stat {
-  border-left: 1px solid var(--foqus-border);
-}
-
-.popup-stat-value {
-  font-size: 20px;
+.popup-stats-num {
   font-weight: 700;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
   color: var(--foqus-text);
-  line-height: 1;
 }
 
-.popup-stat-value--streak {
+.popup-stats-num--accent {
   color: var(--foqus-accent);
 }
 
-.popup-stat-value--kept {
+.popup-stats-num--positive {
   color: var(--foqus-positive);
 }
 
-.popup-stat-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.popup-stats-unit {
+  font-weight: 500;
+  color: var(--foqus-text-secondary);
+}
+
+.popup-stats-sep {
   color: var(--foqus-text-muted);
+  font-weight: 400;
+  user-select: none;
 }
 
 .popup-stats-trend {
-  margin: 8px 0 0 0;
-  font-size: 12px;
+  margin: 6px 0 0 0;
+  font-size: 11px;
+  line-height: 1.4;
   color: var(--foqus-text-muted);
   text-align: center;
 }
