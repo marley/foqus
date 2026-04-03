@@ -5,6 +5,7 @@ import DescriptionBanner from './components/DescriptionBanner.vue'
 import ModeToggle from './components/ModeToggle.vue'
 import SiteForm from './components/SiteForm.vue'
 import SiteList from './components/SiteList.vue'
+import StatsPanel from './components/StatsPanel.vue'
 import SettingsDrawer from './components/SettingsDrawer.vue'
 
 import './popup.css'
@@ -93,6 +94,8 @@ onMounted(() => {
         @add="onAddSite"
       />
     </div>
+
+    <StatsPanel />
 
     <div class="popup-accordion">
       <SiteList
