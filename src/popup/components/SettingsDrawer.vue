@@ -1,7 +1,9 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, nextTick, onUnmounted } from 'vue'
 import { useStorage } from '../../composables/useStorage'
 import DataExport from './DataExport.vue'
+
+const open = defineModel({ type: Boolean, default: false })
 
 const OVERRIDE_LIMIT_MIN = 1
 const OVERRIDE_LIMIT_MAX = 120
@@ -22,10 +24,10 @@ const {
   set,
 } = useStorage(['preferReducedMotion', 'darkMode', 'overrideLimitMinutes', 'customOverlayTitle'])
 
-const settingsOpen = ref(false)
 const savedIndicator = ref(false)
 const overlayTitleInput = ref('')
 const overrideLimitInput = ref(OVERRIDE_LIMIT_DEFAULT)
+const closeBtnRef = ref(null)
 
 watch(overrideLimitMinutes, (val) => {
   overrideLimitInput.value = val != null ? clampOverrideLimit(val) : OVERRIDE_LIMIT_DEFAULT
@@ -39,10 +41,31 @@ watch(darkMode, (val) => {
   document.body.classList.toggle('dark-mode', val === true)
 }, { immediate: true })
 
+function onDocumentEscape(e) {
+  if (e.key === 'Escape' && open.value) {
+    e.preventDefault()
+    close()
+  }
+}
+
+watch(open, async (isOpen) => {
+  if (isOpen) {
+    document.addEventListener('keydown', onDocumentEscape)
+    await nextTick()
+    closeBtnRef.value?.focus()
+  } else {
+    document.removeEventListener('keydown', onDocumentEscape)
+  }
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', onDocumentEscape)
+})
+
 function showSaved() {
   savedIndicator.value = true
-  clearTimeout(savedIndicator._hideTimeout)
-  savedIndicator._hideTimeout = setTimeout(() => {
+  clearTimeout(showSaved._hideTimeout)
+  showSaved._hideTimeout = setTimeout(() => {
     savedIndicator.value = false
   }, 2000)
 }
@@ -73,22 +96,41 @@ async function onDarkModeChange(checked) {
   await set({ darkMode: checked })
   showSaved()
 }
+
+function close() {
+  open.value = false
+}
 </script>
 
 <template>
-  <div class="popup-settings">
-    <div class="popup-settings-header">
+  <div
+    v-show="open"
+    id="settings-panel"
+    class="popup-settings-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="settings-dialog-title"
+  >
+    <div class="popup-settings-overlay-header">
+      <h2 id="settings-dialog-title" class="popup-settings-overlay-title">
+        Settings
+      </h2>
+      <span
+        v-show="savedIndicator"
+        role="status"
+        class="popup-settings-saved"
+      >Saved!</span>
       <button
+        ref="closeBtnRef"
         type="button"
-        class="popup-settings-toggle"
-        :aria-expanded="settingsOpen"
-        @click="settingsOpen = !settingsOpen"
+        class="popup-settings-close"
+        aria-label="Close settings"
+        @click="close"
       >
-        <span class="popup-settings-icon" aria-hidden="true">&#9881;</span> Settings
+        <span aria-hidden="true">×</span>
       </button>
-      <span v-show="savedIndicator" class="popup-settings-saved">Saved!</span>
     </div>
-    <div v-show="settingsOpen" class="popup-settings-drawer">
+    <div class="popup-settings-drawer-inner">
       <h3 class="popup-settings-subheading">Visuals</h3>
       <div class="popup-settings-row">
         <label class="popup-toggle" for="preferReducedMotion">

@@ -68,6 +68,45 @@ body {
   margin: 0 16px 16px 16px;
 }
 
+.popup-header--row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 16px 10px 16px;
+}
+
+.popup-header--row .popup-brand {
+  margin: 0;
+}
+
+.popup-settings-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--foqus-text-secondary);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.popup-settings-icon-btn:hover {
+  background: var(--foqus-card);
+  color: var(--foqus-text);
+}
+
+.popup-settings-icon-btn .popup-settings-icon {
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.85;
+}
+
 .popup-brand {
   margin: 0;
   font-size: 20px;
@@ -132,6 +171,91 @@ body {
   flex-direction: column;
   gap: 0;
   padding: 0;
+}
+
+/* Tabs */
+.popup-tab-bar {
+  display: flex;
+  gap: 0;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--foqus-border);
+  background: var(--foqus-bg);
+}
+
+.popup-tab {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--foqus-text-muted);
+  cursor: pointer;
+}
+
+.popup-tab:hover {
+  color: var(--foqus-text);
+}
+
+.popup-tab--active {
+  color: var(--foqus-accent);
+  border-bottom-color: var(--foqus-accent);
+}
+
+.popup-tab:focus-visible {
+  outline-offset: -2px;
+}
+
+.popup-tab-panels {
+  display: flex;
+  flex-direction: column;
+}
+
+/* First-run hint (inside tab panels) */
+.popup-onboarding-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 10px 0;
+  padding: 10px 10px 10px 12px;
+  background: var(--foqus-accent-subtle);
+  border: 1px solid var(--foqus-border);
+  border-radius: 6px;
+}
+
+.popup-onboarding-hint-text {
+  flex: 1;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--foqus-text-secondary);
+}
+
+.popup-onboarding-hint-dismiss {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: -4px -4px 0 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--foqus-text-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-onboarding-hint-dismiss:hover {
+  color: var(--foqus-text);
+  background: color-mix(in srgb, var(--foqus-text) 6%, transparent);
 }
 
 /* Input section with mode toggle */
@@ -485,7 +609,114 @@ body {
   }
 }
 
-/* Settings */
+/* Settings overlay (opened from header) */
+.popup-settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: var(--foqus-bg);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.popup-settings-overlay-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 10px 12px 10px 16px;
+  border-bottom: 1px solid var(--foqus-border);
+  background: var(--foqus-card);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.popup-settings-overlay-title {
+  margin: 0;
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foqus-text);
+}
+
+.popup-settings-close {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--foqus-text-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-settings-close:hover {
+  background: var(--foqus-bg);
+  color: var(--foqus-text);
+}
+
+.popup-settings-drawer-inner {
+  padding: 16px;
+  flex: 1;
+}
+
+.popup-settings-drawer-inner .popup-settings-subheading {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foqus-text-muted);
+}
+
+.popup-settings-drawer-inner .popup-settings-subheading:first-of-type {
+  padding-top: 0;
+}
+
+.popup-settings-drawer-inner form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.popup-settings-drawer-inner input:not([type="checkbox"]) {
+  padding: 8px 10px;
+  border: 1px solid var(--foqus-border);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--foqus-text);
+  background: var(--foqus-bg);
+}
+
+.popup-settings-drawer-inner input:not([type="checkbox"]):focus {
+  border-color: var(--foqus-accent);
+  outline: none;
+}
+
+.popup-settings-drawer-inner .popup-settings-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--foqus-accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.popup-settings-drawer-inner .popup-settings-button:hover {
+  filter: brightness(1.08);
+}
+
+/* Legacy settings block (unused after overlay; kept for reference) */
 .popup-settings {
   padding: 16px 16px 0 16px;
   border-top: 1px solid var(--foqus-border);

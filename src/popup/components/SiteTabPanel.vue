@@ -55,6 +55,7 @@ function removeItem(value) {
       :input-id="inputId"
       @add="onAdd"
     />
+    <slot name="before-list" />
     <div class="popup-list-wrap">
       <ul :id="listId" :aria-label="listLabel">
         <TransitionGroup name="popup-list-item">
