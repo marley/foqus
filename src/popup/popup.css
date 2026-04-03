@@ -386,6 +386,21 @@ body {
   padding-left: 0;
 }
 
+/* Tab panels (avoid + visit in tabs layout) */
+.popup-tab-panel {
+  padding: 8px 16px 12px;
+  background: var(--foqus-card);
+}
+
+.popup-tab-panel .popup-list-wrap {
+  padding-left: 0;
+}
+
+.popup-tab-panel--avoid .popup-list-item-text,
+.popup-tab-panel--visit .popup-list-item-text {
+  color: var(--foqus-text);
+}
+
 /* List items */
 .popup-list-item {
   display: flex;
