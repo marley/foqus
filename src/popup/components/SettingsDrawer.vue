@@ -55,12 +55,6 @@ watch(darkMode, (val) => {
   document.body.classList.toggle('dark-mode', val === true)
 }, { immediate: true })
 
-watch(theme, () => {
-  const t = effectiveTheme.value
-  document.body.classList.remove('theme-green', 'theme-orange', 'theme-mono')
-  document.body.classList.add(`theme-${t}`)
-}, { immediate: true })
-
 function getFocusables() {
   const root = overlayRef.value
   if (!root) return []

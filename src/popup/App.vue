@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted, nextTick, watch } from 'vue'
 import { useStorage } from '../composables/useStorage'
+
+const THEME_IDS = ['green', 'orange', 'mono']
 import SiteTabPanel from './components/SiteTabPanel.vue'
 import StatsPanel from './components/StatsPanel.vue'
 import SettingsDrawer from './components/SettingsDrawer.vue'
@@ -11,8 +13,15 @@ const {
   avoid,
   visit,
   descriptionBannerDismissed,
+  theme,
   set,
-} = useStorage(['avoid', 'visit', 'descriptionBannerDismissed'])
+} = useStorage(['avoid', 'visit', 'descriptionBannerDismissed', 'theme'])
+
+watch(theme, () => {
+  const t = THEME_IDS.includes(theme.value) ? theme.value : 'green'
+  document.body.classList.remove('theme-green', 'theme-orange', 'theme-mono')
+  document.body.classList.add(`theme-${t}`)
+}, { immediate: true })
 
 const activeTab = ref('avoid')
 const settingsOpen = ref(false)
