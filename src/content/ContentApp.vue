@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useStorage } from '../composables/useStorage'
+import { useTracker } from '../composables/useTracker'
 import Overlay from './Overlay.vue'
 import ReturnWarning from './ReturnWarning.vue'
 
@@ -47,6 +48,8 @@ const {
   'customOverlayTitle',
 ])
 
+const tracker = useTracker()
+
 const view = ref('hidden') // 'overlay' | 'toast' | 'hidden'
 const toastSeconds = ref(RETURN_WARNING_SECONDS)
 const isReturn = ref(false)
@@ -55,6 +58,8 @@ let toastInterval = null
 function showOverlay(options = {}) {
   view.value = 'overlay'
   isReturn.value = options.isReturn === true
+  const host = normalizeHost(location.hostname)
+  if (host) tracker.overlayShown(host)
 }
 
 function showReturnWarning(countdownSeconds = RETURN_WARNING_SECONDS) {
@@ -74,13 +79,34 @@ function showReturnWarning(countdownSeconds = RETURN_WARNING_SECONDS) {
   }, 1000)
 }
 
+let didUnblock = false
+
 function hideOverlay() {
   view.value = 'hidden'
 }
 
+function onIntentionKept() {
+  const host = normalizeHost(location.hostname)
+  if (host && !didUnblock) tracker.intentionKept(host)
+}
+
+function onVisitSiteClicked(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') return
+  try {
+    const href = rawUrl.includes('://') ? rawUrl : `https://${rawUrl}`
+    const u = new URL(href)
+    const host = normalizeHost(u.hostname)
+    if (host) tracker.visitSiteClicked(host)
+  } catch {
+    /* invalid URL */
+  }
+}
+
 function onUnblock(minutes) {
+  didUnblock = true
   const host = normalizeHost(location.hostname)
   if (host) {
+    tracker.unblock(host, minutes)
     const expiry = Date.now() + minutes * 60 * 1000
     const map = overrideUntilByHost.value || {}
     set({ overrideUntilByHost: { ...map, [host]: expiry } })
@@ -89,7 +115,7 @@ function onUnblock(minutes) {
 
   const delay = Math.max(minutes * 60 * 1000 - RETURN_WARNING_SECONDS * 1000, 0)
   setTimeout(() => {
-    if (visit.value?.length) showReturnWarning()
+    showReturnWarning()
   }, delay)
 }
 
@@ -125,6 +151,9 @@ function maybeShowOverlay() {
 
 onMounted(() => {
   maybeShowOverlay()
+  window.addEventListener('beforeunload', () => {
+    if (view.value === 'overlay') onIntentionKept()
+  })
 })
 </script>
 
@@ -137,6 +166,8 @@ onMounted(() => {
     :prefer-reduced-motion="preferReducedMotion === true"
     :is-return="isReturn"
     @unblock="onUnblock"
+    @intention-kept="onIntentionKept"
+    @visit-site-clicked="onVisitSiteClicked"
   />
   <ReturnWarning
     v-else-if="view === 'toast'"

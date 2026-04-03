@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useStorage } from '../../composables/useStorage'
+import DataExport from './DataExport.vue'
 
 const OVERRIDE_LIMIT_MIN = 1
 const OVERRIDE_LIMIT_MAX = 120
@@ -147,6 +148,7 @@ async function onDarkModeChange(checked) {
         minutes
         <button type="submit" class="popup-settings-button">Save</button>
       </form>
+      <DataExport />
     </div>
   </div>
 </template>

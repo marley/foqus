@@ -9,6 +9,7 @@ const DEFAULTS = {
   preferReducedMotion: false,
   darkMode: false,
   descriptionBannerDismissed: false,
+  foqusEvents: [],
 }
 
 /**

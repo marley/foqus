@@ -20,7 +20,7 @@ const props = defineProps({
   isReturn: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['unblock'])
+const emit = defineEmits(['unblock', 'intention-kept', 'visit-site-clicked'])
 
 const title = props.customTitle?.trim()
   ? props.customTitle.trim()
@@ -38,6 +38,11 @@ function toFullUrl(url) {
 
 function onUnblockClick() {
   emit('unblock', props.overrideMinutes)
+}
+
+function onVisitSiteClick(url) {
+  emit('intention-kept')
+  emit('visit-site-clicked', url)
 }
 
 onMounted(() => {
@@ -73,7 +78,12 @@ onUnmounted(() => {
         <h2 class="foqus-overlay-subtitle">// go somewhere better</h2>
         <ul class="foqus-overlay-suggested-sites">
           <li v-for="(url, i) in urlsToVisit" :key="url">
-            <a :href="toFullUrl(url)" target="_blank" rel="noopener noreferrer">
+            <a
+              :href="toFullUrl(url)"
+              target="_blank"
+              rel="noopener noreferrer"
+              @click="onVisitSiteClick(url)"
+            >
               <span class="foqus-site-num">{{ String(i + 1).padStart(2, '0') }}</span>
               <span class="foqus-site-url">{{ formatUrl(url) }}</span>
               <span class="foqus-site-arrow">→</span>
