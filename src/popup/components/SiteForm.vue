@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 
 defineProps({
-  mode: { type: String, required: true },
   /** Unique id for label/input pairing when multiple forms exist (e.g. tab panels). */
   inputId: { type: String, default: 'siteInput' },
   initialHostname: { type: String, default: '' },
@@ -36,7 +35,7 @@ function onSubmit(e) {
       placeholder="example.com"
       :name="inputId"
     >
-    <button type="submit" class="popup-submit-btn" :class="{ 'popup-submit-btn--visit': mode === 'visit' }" aria-label="Add site">
+    <button type="submit" class="popup-submit-btn" aria-label="Add site">
       +
     </button>
   </form>

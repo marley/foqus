@@ -51,7 +51,6 @@ function removeItem(value) {
   >
     <SiteForm
       ref="siteFormRef"
-      :mode="type"
       :input-id="inputId"
       @add="onAdd"
     />

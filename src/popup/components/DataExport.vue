@@ -32,7 +32,11 @@ function showExported() {
     <h3 class="popup-settings-subheading">Data export</h3>
     <div class="popup-export-buttons">
       <button type="button" @click="exportJSON">Export JSON</button>
-      <span v-show="exported" class="popup-settings-saved">Exported!</span>
+      <span
+        v-show="exported"
+        role="status"
+        class="popup-settings-saved"
+      >Exported!</span>
     </div>
   </div>
 </template>
@@ -51,7 +55,7 @@ function showExported() {
 .popup-export-buttons button {
   padding: 6px 14px;
   border: 1px solid var(--foqus-border);
-  border-radius: 0;
+  border-radius: var(--foqus-radius, 6px);
   background: var(--foqus-bg);
   color: var(--foqus-text);
   font-size: 12px;
