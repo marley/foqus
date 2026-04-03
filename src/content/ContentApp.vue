@@ -115,7 +115,7 @@ function onUnblock(minutes) {
 
   const delay = Math.max(minutes * 60 * 1000 - RETURN_WARNING_SECONDS * 1000, 0)
   setTimeout(() => {
-    if (visit.value?.length) showReturnWarning()
+    showReturnWarning()
   }, delay)
 }
 
