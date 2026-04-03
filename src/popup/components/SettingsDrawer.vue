@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, nextTick, onUnmounted } from 'vue'
+import { ref, computed, watch, nextTick, onUnmounted } from 'vue'
 import { useStorage } from '../../composables/useStorage'
 import DataExport from './DataExport.vue'
 
@@ -16,13 +16,26 @@ function clampOverrideLimit(value) {
   return Math.floor(n)
 }
 
+const THEME_IDS = ['green', 'orange', 'mono']
+
+const THEME_OPTIONS = [
+  { id: 'green', label: 'Teal green, like the block screen' },
+  { id: 'orange', label: 'Coral orange, like the block screen' },
+  { id: 'mono', label: 'Black and white' },
+]
+
 const {
   preferReducedMotion,
   darkMode,
+  theme,
   overrideLimitMinutes,
   customOverlayTitle,
   set,
-} = useStorage(['preferReducedMotion', 'darkMode', 'overrideLimitMinutes', 'customOverlayTitle'])
+} = useStorage(['preferReducedMotion', 'darkMode', 'theme', 'overrideLimitMinutes', 'customOverlayTitle'])
+
+const effectiveTheme = computed(() =>
+  THEME_IDS.includes(theme.value) ? theme.value : 'green',
+)
 
 const savedIndicator = ref(false)
 const overlayTitleInput = ref('')
@@ -40,6 +53,12 @@ watch(customOverlayTitle, (val) => {
 
 watch(darkMode, (val) => {
   document.body.classList.toggle('dark-mode', val === true)
+}, { immediate: true })
+
+watch(theme, () => {
+  const t = effectiveTheme.value
+  document.body.classList.remove('theme-green', 'theme-orange', 'theme-mono')
+  document.body.classList.add(`theme-${t}`)
 }, { immediate: true })
 
 function getFocusables() {
@@ -134,6 +153,11 @@ async function onDarkModeChange(checked) {
   showSaved()
 }
 
+async function onThemeSelect(themeId) {
+  await set({ theme: themeId })
+  showSaved()
+}
+
 function close() {
   open.value = false
 }
@@ -200,6 +224,32 @@ function close() {
           </span>
           <span class="popup-toggle-label">Dark mode</span>
         </label>
+      </div>
+      <div class="popup-settings-row popup-settings-row--theme">
+        <span
+          id="popup-theme-rg-label"
+          class="popup-settings-theme-label"
+        >Accent</span>
+        <div
+          class="popup-settings-theme-swatches"
+          role="radiogroup"
+          aria-labelledby="popup-theme-rg-label"
+        >
+          <button
+            v-for="opt in THEME_OPTIONS"
+            :key="opt.id"
+            type="button"
+            role="radio"
+            class="popup-settings-theme-swatch"
+            :class="[
+              `popup-settings-theme-swatch--${opt.id}`,
+              { 'popup-settings-theme-swatch--selected': effectiveTheme === opt.id },
+            ]"
+            :aria-checked="effectiveTheme === opt.id"
+            :aria-label="opt.label"
+            @click="onThemeSelect(opt.id)"
+          ></button>
+        </div>
       </div>
       <h3 class="popup-settings-subheading">Screen block</h3>
       <p class="popup-settings-label">Custom message</p>

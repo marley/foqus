@@ -48,26 +48,28 @@ body.theme-orange {
 }
 
 body.dark-mode.theme-orange {
-  --foqus-accent: #ff8a50;
-  --foqus-accent-subtle: #3d1a0a;
+  --foqus-accent: #c44a18;
+  --foqus-accent-subtle: #2a1208;
 }
 
 body.theme-mono {
-  --foqus-accent: #404040;
-  --foqus-accent-subtle: #f0f0f0;
-  --foqus-positive: #525252;
-  --foqus-destructive: #6b6b6b;
-  --foqus-destructive-subtle: #ececec;
+  --foqus-accent: #0d0d0d;
+  --foqus-accent-subtle: #f5f5f5;
+  --foqus-positive: #404040;
+  --foqus-destructive: #555555;
+  --foqus-destructive-subtle: #e8e8e8;
   --foqus-remove: var(--foqus-destructive);
+  opacity: 0.9;
 }
 
 body.dark-mode.theme-mono {
-  --foqus-accent: #b0b0b0;
-  --foqus-accent-subtle: #252525;
-  --foqus-positive: #9ca3af;
-  --foqus-destructive: #9ca3af;
-  --foqus-destructive-subtle: #2a2a2a;
+  --foqus-accent: #f0f0f0;
+  --foqus-accent-subtle: #1a1a1a;
+  --foqus-positive: #a0a0a0;
+  --foqus-destructive: #a0a0a0;
+  --foqus-destructive-subtle: #1e1e1e;
   --foqus-remove: var(--foqus-destructive);
+  opacity: 0.9;
 }
 
 * {
@@ -589,6 +591,59 @@ body {
   font-size: 14px;
   color: var(--foqus-text);
   cursor: pointer;
+}
+
+.popup-settings-row--theme {
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.popup-settings-theme-label {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foqus-text);
+}
+
+.popup-settings-theme-swatches {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.popup-settings-theme-swatch {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid var(--foqus-border);
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  appearance: none;
+  background-clip: padding-box;
+}
+
+.popup-settings-theme-swatch--green {
+  background: linear-gradient(145deg, #2f6f64 45%, #0a3d36 45%);
+}
+
+.popup-settings-theme-swatch--orange {
+  background: linear-gradient(145deg, #e85d26 45%, #ff8e63 45%);
+}
+
+.popup-settings-theme-swatch--mono {
+  background: linear-gradient(90deg, #1a1a1a 50%, #f0f0f0 50%);
+}
+
+.popup-settings-theme-swatch--selected {
+  box-shadow: 0 0 0 2px var(--foqus-bg), 0 0 0 4px var(--foqus-accent);
+}
+
+.popup-settings-theme-swatch:focus-visible {
+  outline: 2px solid var(--foqus-accent);
+  outline-offset: 2px;
 }
 
 /* Toggle */
