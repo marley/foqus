@@ -2,24 +2,42 @@
 import { useStats } from '../../composables/useStats'
 
 const { stats } = useStats()
+
+function streakLabel(n) {
+  if (n === 1) return 'day streak'
+  return 'days streak'
+}
 </script>
 
 <template>
-  <div class="popup-stats">
-    <div class="popup-stats-grid">
-      <div class="popup-stat">
-        <span class="popup-stat-value popup-stat-value--streak">{{ stats.streak }}</span>
-        <span class="popup-stat-label">day streak</span>
-      </div>
-      <div class="popup-stat">
-        <span class="popup-stat-value popup-stat-value--kept">{{ stats.intentionsKept }}</span>
-        <span class="popup-stat-label">intentions kept</span>
-      </div>
-      <div class="popup-stat">
-        <span class="popup-stat-value">{{ stats.keptToday }}</span>
-        <span class="popup-stat-label">kept today</span>
-      </div>
-    </div>
+  <div
+    class="popup-stats"
+    role="region"
+    aria-label="Your progress"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    <p class="popup-stats-strip">
+      <span class="popup-stats-item">
+        <span class="popup-stats-num popup-stats-num--accent">{{ stats.streak }}</span>
+        <span class="popup-stats-unit"> {{ streakLabel(stats.streak) }}</span>
+      </span>
+      <span v-if="stats.unblockedToday > 0">
+        <span class="popup-stats-sep" aria-hidden="true">|</span>
+        <span class="popup-stats-item">
+          <span class="popup-stats-num">{{ stats.unblockedToday }}</span>
+          <span class="popup-stats-unit"> unblocked today</span>
+        </span>
+      </span>
+      <span v-else>
+        <span class="popup-stats-sep" aria-hidden="true">|</span>
+        <span class="popup-stats-item">
+          <span class="popup-stats-num">{{ stats.keptToday }}</span>
+          <span class="popup-stats-unit"> avoided today</span>
+        </span>
+      </span>
+      
+    </p>
     <p
       v-if="stats.weeklyTrend && stats.weeklyTrend.change < 0"
       class="popup-stats-trend popup-stats-trend--positive"
@@ -30,7 +48,7 @@ const { stats } = useStats()
       v-else-if="stats.weeklyTrend && stats.weeklyTrend.change === 0"
       class="popup-stats-trend"
     >
-      Same unblock rate as last week — holding steady
+      Same unblock rate as last week
     </p>
   </div>
 </template>
@@ -38,61 +56,66 @@ const { stats } = useStats()
 <style scoped>
 .popup-stats {
   margin: 0;
-  padding: 12px 16px;
-  border-top: 1px solid var(--foqus-border);
-  background: var(--foqus-card);
+  padding: 8px 14px 10px;
+  background: transparent;
 }
 
-.popup-stats-grid {
+.popup-stats-strip {
+  margin: 0;
   display: flex;
-  gap: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  column-gap: 6px;
+  row-gap: 2px;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
 }
 
-.popup-stat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 4px 0;
+.popup-stats-item {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
 }
 
-.popup-stat + .popup-stat {
-  border-left: 1px solid var(--foqus-border);
-}
-
-.popup-stat-value {
-  font-family: "Noto Sans Mono", monospace;
-  font-size: 20px;
+.popup-stats-num {
   font-weight: 700;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
   color: var(--foqus-text);
-  line-height: 1;
 }
 
-.popup-stat-value--streak {
-  color: var(--brand-orange);
+.popup-stats-num--accent {
+  color: var(--foqus-accent);
 }
 
-.popup-stat-value--kept {
-  color: var(--brand-teal-mid);
+.popup-stats-num--positive {
+  color: var(--foqus-positive);
 }
 
-.popup-stat-label {
-  font-size: 10px;
-  font-family: "Noto Sans Mono", monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.popup-stats-unit {
+  font-weight: 500;
+  color: var(--foqus-text-secondary);
+  padding-left: 5px;
+}
+
+.popup-stats-sep {
   color: var(--foqus-text-muted);
+  font-weight: 400;
+  user-select: none;
+  padding-right: 5px;
 }
 
 .popup-stats-trend {
-  margin: 8px 0 0 0;
-  font-size: 12px;
+  margin: 6px 0 0 0;
+  font-size: 11px;
+  line-height: 1.4;
   color: var(--foqus-text-muted);
   text-align: center;
 }
 
 .popup-stats-trend--positive {
-  color: var(--brand-teal-mid);
+  color: var(--foqus-positive);
 }
 </style>

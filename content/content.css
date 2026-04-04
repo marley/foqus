@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@600&display=swap");
+@font-face {
+  font-family: "Mplus1";
+  src: url("../assets/fonts/Mplus1-SemiBold.ttf");
+}
 
 /* Overlay */
 .foqus-overlay {
@@ -162,7 +165,7 @@
 }
 
 .foqus-overlay-subtitle {
-  font-family: "Noto Sans Mono", monospace;
+  font-family: "Mplus1", monospace;
   font-size: 12px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);

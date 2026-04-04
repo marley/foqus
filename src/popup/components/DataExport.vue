@@ -31,8 +31,18 @@ function showExported() {
   <div class="popup-export">
     <h3 class="popup-settings-subheading">Data export</h3>
     <div class="popup-export-buttons">
-      <button type="button" @click="exportJSON">Export JSON</button>
-      <span v-show="exported" class="popup-settings-saved">Exported!</span>
+      <button
+        type="button"
+        aria-label="Export statistics as a JSON file"
+        @click="exportJSON"
+      >
+        Export JSON
+      </button>
+      <span
+        v-show="exported"
+        role="status"
+        class="popup-settings-saved"
+      >Exported!</span>
     </div>
   </div>
 </template>
@@ -51,11 +61,10 @@ function showExported() {
 .popup-export-buttons button {
   padding: 6px 14px;
   border: 1px solid var(--foqus-border);
-  border-radius: 0;
+  border-radius: var(--foqus-radius, 6px);
   background: var(--foqus-bg);
   color: var(--foqus-text);
   font-size: 12px;
-  font-family: "Noto Sans Mono", monospace;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
