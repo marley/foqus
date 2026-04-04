@@ -19,14 +19,21 @@ async function getEvents() {
   return data[STORAGE_KEY] || []
 }
 
-async function recordEvent(type, host, meta) {
-  const events = await getEvents()
-  const event = { type, host, ts: Date.now() }
-  if (meta) event.meta = meta
-  events.push(event)
-  const pruned = pruneOldEvents(events)
-  await chrome.storage.local.set({ [STORAGE_KEY]: pruned })
-  return event
+let recordQueue = Promise.resolve()
+
+function recordEvent(type, host, meta) {
+  const task = recordQueue.then(async () => {
+    const events = await getEvents()
+    const event = { type, host, ts: Date.now() }
+    if (meta) event.meta = meta
+    events.push(event)
+    const pruned = pruneOldEvents(events)
+    await chrome.storage.local.set({ [STORAGE_KEY]: pruned })
+    return event
+  })
+  // Isolate errors so a failed task doesn't stall the queue
+  recordQueue = task.catch(() => {})
+  return task
 }
 
 export function useTracker() {

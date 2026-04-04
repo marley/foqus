@@ -22,14 +22,14 @@ function streakLabel(n) {
         <span class="popup-stats-num popup-stats-num--accent">{{ stats.streak }}</span>
         <span class="popup-stats-unit"> {{ streakLabel(stats.streak) }}</span>
       </span>
-      <span v-if="stats.unblockedToday > 0">
+      <span v-if="stats.unblocksToday > 0">
         <span class="popup-stats-sep" aria-hidden="true">|</span>
         <span class="popup-stats-item">
-          <span class="popup-stats-num">{{ stats.unblockedToday }}</span>
-          <span class="popup-stats-unit"> unblocked today</span>
+          <span class="popup-stats-num">{{ stats.unblocksToday }}</span>
+          <span class="popup-stats-unit"> unblocks today</span>
         </span>
       </span>
-      <span v-else>
+      <span v-if="stats.keptToday > 0">
         <span class="popup-stats-sep" aria-hidden="true">|</span>
         <span class="popup-stats-item">
           <span class="popup-stats-num">{{ stats.keptToday }}</span>

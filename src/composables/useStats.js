@@ -121,6 +121,9 @@ function computeStats(events) {
     d.setDate(d.getDate() - 1)
   }
 
+  // An unblock today breaks the streak
+  if (unblocksToday > 0) streak = 0
+
   // Weekly trend — compare this week's unblocks to last week's
   const thisWeekUnblocks = allUnblocks.filter((e) => e.ts >= weekAgo).length
   const lastWeekUnblocks = allUnblocks.filter((e) => e.ts >= twoWeeksAgo && e.ts < weekAgo).length

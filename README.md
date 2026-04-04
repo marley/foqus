@@ -33,27 +33,5 @@ Other
 - The app is offline first. It is local to your device, chrome.storage.local . There could be an option to have an account in the future.
 
 
-Gamification:
-
-- Each distraction is like a chocolate. You save them for a later time. Idk could make people feel judged.
-- Every time you do something else instead of visiting the distraction site, you generate a cabbage. At the end of the day you feed the cabbages to a hungry rhino and the rhino is happy.
-- Every time you do at least 5 minutes of a task that you want to track, it adds a fish to your lake. Every time you do a distraction task, some predator comes at eats a random number of fish. The more time you spend on the GP task, the more likely more fish will get eaten.
-   - Other versions: penguins vs polar bears, seals vs orcas.
-
-# Todos
-- [x] When user inputs url, it gets saved to chrome.storage.local
-- [x] Navigating to distraction url triggers overlay which suggests other url instead
-- [x] Navigating to distraction url triggers 5 minute wait when other url rejected
-- [x] Allow for more than 1 distraction and more than 1 preferred site
-- [x] Remove input text from input field after submit
-- [x] 'remove' button for urls
-- [ ] streak gamification
-- [ ] positive reinforcement
-- [x] avoid urls should not be clickable
-
-- [x] Nicer copies
-- [ ] Fix icon not showing up
-- [x] Add nicer styling to page
-
 # Acknowledgements
 - Beautiful interactive background for focus overlay by [Cameron Knight](https://codepen.io/cameronknight/pen/ogxWmBP)

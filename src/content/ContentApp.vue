@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useStorage } from '../composables/useStorage'
 import { useTracker } from '../composables/useTracker'
+import { useStats } from '../composables/useStats'
 import Overlay from './Overlay.vue'
 import ReturnWarning from './ReturnWarning.vue'
 
@@ -49,6 +50,7 @@ const {
 ])
 
 const tracker = useTracker()
+const { stats } = useStats()
 
 const view = ref('hidden') // 'overlay' | 'toast' | 'hidden'
 const toastSeconds = ref(RETURN_WARNING_SECONDS)
@@ -58,6 +60,7 @@ let toastInterval = null
 function showOverlay(options = {}) {
   view.value = 'overlay'
   isReturn.value = options.isReturn === true
+  if (options.isReturn) didUnblock = false
   const host = normalizeHost(location.hostname)
   if (host) tracker.overlayShown(host)
 }
@@ -165,6 +168,7 @@ onMounted(() => {
     :custom-title="customOverlayTitle || ''"
     :prefer-reduced-motion="preferReducedMotion === true"
     :is-return="isReturn"
+    :current-streak="stats.streak"
     @unblock="onUnblock"
     @intention-kept="onIntentionKept"
     @visit-site-clicked="onVisitSiteClicked"
