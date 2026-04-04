@@ -1,4 +1,6 @@
 const injectedTabs = new Set();
+/** tabId -> muted before Foqus forced mute (restored on unblock) */
+const originalMuteState = new Map();
 
 function urlMatchesPatterns(url, storedUrls) {
     try {
@@ -45,6 +47,29 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     });
 });
 
+chrome.runtime.onMessage.addListener(function(message, sender, _sendResponse) {
+    if (!message || typeof message.action !== "string") return;
+    const tabId = sender.tab?.id;
+    if (tabId == null) return;
+
+    if (message.action === "muteTab") {
+        chrome.tabs.get(tabId, function(tab) {
+            if (chrome.runtime.lastError) return;
+            if (!originalMuteState.has(tabId)) {
+                const wasMuted = tab.mutedInfo?.muted ?? false;
+                originalMuteState.set(tabId, wasMuted);
+            }
+            chrome.tabs.update(tabId, { muted: true });
+        });
+    } else if (message.action === "unmuteTab") {
+        const originalMuted = originalMuteState.has(tabId)
+            ? originalMuteState.get(tabId)
+            : false;
+        originalMuteState.delete(tabId);
+        chrome.tabs.update(tabId, { muted: originalMuted });
+    }
+});
+
 // Clear tab from set when it starts a new navigation
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
     if (changeInfo.status === "loading") {
@@ -54,4 +79,5 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 
 chrome.tabs.onRemoved.addListener(function(tabId) {
     injectedTabs.delete(tabId);
+    originalMuteState.delete(tabId);
 });

@@ -57,12 +57,21 @@ const toastSeconds = ref(RETURN_WARNING_SECONDS)
 const isReturn = ref(false)
 let toastInterval = null
 
+function sendTabMuteAction(action) {
+  try {
+    chrome.runtime.sendMessage({ action })
+  } catch {
+    /* extension context invalid / not extension page */
+  }
+}
+
 function showOverlay(options = {}) {
   view.value = 'overlay'
   isReturn.value = options.isReturn === true
   if (options.isReturn) didUnblock = false
   const host = normalizeHost(location.hostname)
   if (host) tracker.overlayShown(host)
+  sendTabMuteAction('muteTab')
 }
 
 function showReturnWarning(countdownSeconds = RETURN_WARNING_SECONDS) {
@@ -114,6 +123,7 @@ function onUnblock(minutes) {
     const map = overrideUntilByHost.value || {}
     set({ overrideUntilByHost: { ...map, [host]: expiry } })
   }
+  sendTabMuteAction('unmuteTab')
   hideOverlay()
 
   const delay = Math.max(minutes * 60 * 1000 - RETURN_WARNING_SECONDS * 1000, 0)
