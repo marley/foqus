@@ -219,61 +219,61 @@ function close() {
           <span class="popup-toggle-label">Dark mode</span>
         </label>
       </div>
-      <div class="popup-settings-row popup-settings-row--theme">
-        <span
-          id="popup-theme-rg-label"
-          class="popup-settings-theme-label"
-        >Accent</span>
-        <div
-          class="popup-settings-theme-swatches"
-          role="radiogroup"
-          aria-labelledby="popup-theme-rg-label"
-        >
-          <button
-            v-for="opt in THEME_OPTIONS"
-            :key="opt.id"
-            type="button"
-            role="radio"
-            class="popup-settings-theme-swatch"
-            :class="[
-              `popup-settings-theme-swatch--${opt.id}`,
-              { 'popup-settings-theme-swatch--selected': effectiveTheme === opt.id },
-            ]"
-            :aria-checked="effectiveTheme === opt.id"
-            :aria-label="opt.label"
-            @click="onThemeSelect(opt.id)"
-          ></button>
+        <div class="popup-settings-row">
+          <div
+            class="popup-settings-theme-swatches"
+            role="radiogroup"
+            aria-labelledby="popup-theme-rg-label"
+          >
+            <button
+              v-for="opt in THEME_OPTIONS"
+              :key="opt.id"
+              type="button"
+              role="radio"
+              class="popup-settings-theme-swatch"
+              :class="[
+                `popup-settings-theme-swatch--${opt.id}`,
+                { 'popup-settings-theme-swatch--selected': effectiveTheme === opt.id },
+              ]"
+              :aria-checked="effectiveTheme === opt.id"
+              :aria-label="opt.label"
+              @click="onThemeSelect(opt.id)"
+            ></button>
+          </div> <span class="popup-toggle-label">Themes</span>
         </div>
+      <div class="popup-settings-section">
+        <h3 class="popup-settings-subheading">Screen block</h3>
+        <p class="popup-settings-label">Custom message</p>
+        <form @submit="onOverlayTitleSubmit">
+          <label for="overlayTitleInput" class="visually-hidden">Custom block screen message</label>
+          <input
+            id="overlayTitleInput"
+            v-model="overlayTitleInput"
+            type="text"
+            placeholder="You shall not pass."
+            name="overlayTitleInput"
+          >
+          <button type="submit" class="popup-settings-button">Save</button>
+        </form>
+        <p class="popup-settings-label">Unblock time limit</p>
+        <form @submit="onLimitSubmit">
+          <label for="overrideLimitInput" class="visually-hidden">Unblock time limit in minutes</label>
+          <input
+            id="overrideLimitInput"
+            v-model.number="overrideLimitInput"
+            type="number"
+            min="1"
+            max="120"
+            placeholder="5"
+            name="overrideLimitInput"
+          >
+          minutes
+          <button type="submit" class="popup-settings-button">Save</button>
+        </form>
       </div>
-      <h3 class="popup-settings-subheading">Screen block</h3>
-      <p class="popup-settings-label">Custom message</p>
-      <form @submit="onOverlayTitleSubmit">
-        <label for="overlayTitleInput" class="visually-hidden">Custom block screen message</label>
-        <input
-          id="overlayTitleInput"
-          v-model="overlayTitleInput"
-          type="text"
-          placeholder="You shall not pass."
-          name="overlayTitleInput"
-        >
-        <button type="submit" class="popup-settings-button">Save</button>
-      </form>
-      <p class="popup-settings-label">Unblock time limit</p>
-      <form @submit="onLimitSubmit">
-        <label for="overrideLimitInput" class="visually-hidden">Unblock time limit in minutes</label>
-        <input
-          id="overrideLimitInput"
-          v-model.number="overrideLimitInput"
-          type="number"
-          min="1"
-          max="120"
-          placeholder="5"
-          name="overrideLimitInput"
-        >
-        minutes
-        <button type="submit" class="popup-settings-button">Save</button>
-      </form>
-      <DataExport />
+      <div class="popup-settings-section">
+        <DataExport />
+      </div>
     </div>
   </div>
 </template>

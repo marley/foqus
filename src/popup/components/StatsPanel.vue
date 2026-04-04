@@ -22,16 +22,21 @@ function streakLabel(n) {
         <span class="popup-stats-num popup-stats-num--accent">{{ stats.streak }}</span>
         <span class="popup-stats-unit"> {{ streakLabel(stats.streak) }}</span>
       </span>
-      <span class="popup-stats-sep" aria-hidden="true">·</span>
-      <span class="popup-stats-item">
-        <span class="popup-stats-num popup-stats-num--positive">{{ stats.intentionsKept }}</span>
-        <span class="popup-stats-unit"> kept</span>
+      <span v-if="stats.unblockedToday > 0">
+        <span class="popup-stats-sep" aria-hidden="true">|</span>
+        <span class="popup-stats-item">
+          <span class="popup-stats-num">{{ stats.unblockedToday }}</span>
+          <span class="popup-stats-unit"> unblocked today</span>
+        </span>
       </span>
-      <span class="popup-stats-sep" aria-hidden="true">·</span>
-      <span class="popup-stats-item">
-        <span class="popup-stats-num">{{ stats.keptToday }}</span>
-        <span class="popup-stats-unit"> today</span>
+      <span v-else>
+        <span class="popup-stats-sep" aria-hidden="true">|</span>
+        <span class="popup-stats-item">
+          <span class="popup-stats-num">{{ stats.keptToday }}</span>
+          <span class="popup-stats-unit"> avoided today</span>
+        </span>
       </span>
+      
     </p>
     <p
       v-if="stats.weeklyTrend && stats.weeklyTrend.change < 0"
@@ -43,7 +48,7 @@ function streakLabel(n) {
       v-else-if="stats.weeklyTrend && stats.weeklyTrend.change === 0"
       class="popup-stats-trend"
     >
-      Same unblock rate as last week — holding steady
+      Same unblock rate as last week
     </p>
   </div>
 </template>
@@ -92,12 +97,14 @@ function streakLabel(n) {
 .popup-stats-unit {
   font-weight: 500;
   color: var(--foqus-text-secondary);
+  padding-left: 5px;
 }
 
 .popup-stats-sep {
   color: var(--foqus-text-muted);
   font-weight: 400;
   user-select: none;
+  padding-right: 5px;
 }
 
 .popup-stats-trend {

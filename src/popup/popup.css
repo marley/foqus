@@ -115,7 +115,15 @@ body {
   }
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Header */
+h1 {
+  user-select: none;
+}
+
 .popup-header {
   margin: 0 16px 16px 16px;
 }
@@ -555,6 +563,10 @@ body {
 
 .popup-settings-drawer-inner .popup-settings-button:hover {
   filter: brightness(1.08);
+}
+
+.popup-settings-section {
+  margin-top: 20px;
 }
 
 /* Shared settings labels (overlay + data export) */
