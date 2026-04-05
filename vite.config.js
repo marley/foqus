@@ -11,7 +11,7 @@ export default defineConfig({
       targets: [
         { src: 'content/*', dest: 'content' },
         { src: 'shared/*', dest: 'shared' },
-        { src: 'foqus_extension.png', dest: '.' },
+        { src: 'src/assets/icons/*', dest: '.' },
       ],
     }),
   ],
