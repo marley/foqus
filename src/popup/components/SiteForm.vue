@@ -2,7 +2,8 @@
 import { ref } from 'vue'
 
 defineProps({
-  mode: { type: String, required: true },
+  /** Unique id for label/input pairing when multiple forms exist (e.g. tab panels). */
+  inputId: { type: String, default: 'siteInput' },
   initialHostname: { type: String, default: '' },
 })
 const emit = defineEmits(['add'])
@@ -26,15 +27,15 @@ function onSubmit(e) {
 
 <template>
   <form class="popup-input-row" @submit="onSubmit">
-    <label for="siteInput" class="visually-hidden">Add a site</label>
+    <label :for="inputId" class="visually-hidden">Add a site</label>
     <input
-      id="siteInput"
+      :id="inputId"
       v-model="inputValue"
       type="text"
       placeholder="example.com"
-      name="siteInput"
+      :name="inputId"
     >
-    <button type="submit" class="popup-submit-btn" :class="{ 'popup-submit-btn--visit': mode === 'visit' }" aria-label="Add site">
+    <button type="submit" class="popup-submit-btn" aria-label="Add site to the list">
       +
     </button>
   </form>

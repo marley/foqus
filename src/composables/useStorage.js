@@ -8,7 +8,9 @@ const DEFAULTS = {
   customOverlayTitle: '',
   preferReducedMotion: false,
   darkMode: false,
+  theme: 'green',
   descriptionBannerDismissed: false,
+  foqusEvents: [],
 }
 
 /**

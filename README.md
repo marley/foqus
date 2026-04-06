@@ -1,5 +1,23 @@
 # foqus
-Track your distraction sites and create new habits with this browser extension (TBA)
+## Track your sites of distraction and reshape your browsing habits (awaiting approval)
+
+☑️ Effective, positive reinforcement
+
+☑️ Beautiful, low stimulation visuals
+
+☑️ Privacy guaranteed: all data stored locally in your browser
+
+<img width="1350" height="789" alt="foqus2" src="https://github.com/user-attachments/assets/5a33fd4b-edf6-487c-8b26-c38fa3540b3e" />
+
+I created Foqus for myself. I found myself mindlessly opening time-waster sites and doomscrolling. I wasted hours. Sometimes for procrastinationg and sometimes from boredom.
+I created Foqus so that I can remind myself of who I really want to be: an avid reader, a learner, an artist. Foqus helps me pause and make an active choice about what to do next.
+
+## Foqus lets you
+- Choose sites to avoid, and receive gentle reminders to pause and decide your next move
+- Choose sites you'd like to visit more, healthier alternatives
+- Export your browsing data and track your behavior
+
+If you notice bugs or have suggestions, please [open an issue]()!
 
 ## Development
 ```bash
@@ -7,53 +25,6 @@ npm install
 npm run build
 ```
 Load the `dist/` folder as an unpacked extension in Chrome (Extensions → Load unpacked).
-
-# Goal of this chrome extension
-Chrome extension: Foqus
-
-
-distractions list - apps that you can’t stop using, apps that you spend too much time on
-Healthy pleasures list - apps or activities that you want to spend more time on!
-
-
-Main idea
-
-- You choose your distractions (instagram, Tik Tok, etc) at the beginning of each day.
-- You also choose which activities you want to do more of (e-book, strava, memrise)
-- Every time you try to open a distraction app, there is instead a screen showing the other apps saying “how about this instead?” If you say no, then you still have to wait 5 minutes before you are allowed to use your distraction app.
-- At the end of each week you get a summary of how much you used guilty pleasure vs other apps.
-- Any day that you avoid guilt pleasure apps completely you get a streak.
-
-
-Other
-- The app celebrates your wins: (You read 3 books this month! You tracked 5 runs on strava this month! You spent 10 hours learning languages, Etc).
-- It also promotes non-meta, non-BDS, open-source products to you. For example if you say you want to read a book, it will suggest e-readers that are not Amazon-affiliated.
-- In the future I want to somehow tie in a charitable aspect to the app: you can join a challenge where you read a certain amount of hours and then the app will match your donation to an educational startup for example.
-
-- The app is offline first. It is local to your device, chrome.storage.local . There could be an option to have an account in the future.
-
-
-Gamification:
-
-- Each distraction is like a chocolate. You save them for a later time. Idk could make people feel judged.
-- Every time you do something else instead of visiting the distraction site, you generate a cabbage. At the end of the day you feed the cabbages to a hungry rhino and the rhino is happy.
-- Every time you do at least 5 minutes of a task that you want to track, it adds a fish to your lake. Every time you do a distraction task, some predator comes at eats a random number of fish. The more time you spend on the GP task, the more likely more fish will get eaten.
-   - Other versions: penguins vs polar bears, seals vs orcas.
-
-# Todos
-- [x] When user inputs url, it gets saved to chrome.storage.local
-- [x] Navigating to distraction url triggers overlay which suggests other url instead
-- [x] Navigating to distraction url triggers 5 minute wait when other url rejected
-- [x] Allow for more than 1 distraction and more than 1 preferred site
-- [x] Remove input text from input field after submit
-- [x] 'remove' button for urls
-- [ ] streak gamification
-- [ ] positive reinforcement
-- [x] avoid urls should not be clickable
-
-- [x] Nicer copies
-- [ ] Fix icon not showing up
-- [x] Add nicer styling to page
 
 # Acknowledgements
 - Beautiful interactive background for focus overlay by [Cameron Knight](https://codepen.io/cameronknight/pen/ogxWmBP)

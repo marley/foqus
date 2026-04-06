@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const OVERRIDE_LIMIT_DEFAULT = 5
 const overlayTitles = [
@@ -18,9 +18,12 @@ const props = defineProps({
   customTitle: { type: String, default: '' },
   preferReducedMotion: { type: Boolean, default: false },
   isReturn: { type: Boolean, default: false },
+  currentStreak: { type: Number, default: 0 },
 })
 
-const emit = defineEmits(['unblock'])
+const emit = defineEmits(['unblock', 'intention-kept', 'visit-site-clicked'])
+
+const showConfirmModal = ref(false)
 
 const title = props.customTitle?.trim()
   ? props.customTitle.trim()
@@ -37,7 +40,22 @@ function toFullUrl(url) {
 }
 
 function onUnblockClick() {
+  showConfirmModal.value = true
+}
+
+function confirmUnblock() {
+  showConfirmModal.value = false
   emit('unblock', props.overrideMinutes)
+}
+
+function cancelUnblock() {
+  showConfirmModal.value = false
+  emit('intention-kept')
+}
+
+function onVisitSiteClick(url) {
+  emit('intention-kept')
+  emit('visit-site-clicked', url)
 }
 
 onMounted(() => {
@@ -73,7 +91,12 @@ onUnmounted(() => {
         <h2 class="foqus-overlay-subtitle">// go somewhere better</h2>
         <ul class="foqus-overlay-suggested-sites">
           <li v-for="(url, i) in urlsToVisit" :key="url">
-            <a :href="toFullUrl(url)" target="_blank" rel="noopener noreferrer">
+            <a
+              :href="toFullUrl(url)"
+              target="_blank"
+              rel="noopener noreferrer"
+              @click="onVisitSiteClick(url)"
+            >
               <span class="foqus-site-num">{{ String(i + 1).padStart(2, '0') }}</span>
               <span class="foqus-site-url">{{ formatUrl(url) }}</span>
               <span class="foqus-site-arrow">→</span>
@@ -91,5 +114,35 @@ onUnmounted(() => {
         </button>
       </div>
     </div>
+
+    <Transition name="foqus-modal">
+      <div v-if="showConfirmModal" class="foqus-confirm-backdrop" @click.self="cancelUnblock">
+        <div class="foqus-confirm-modal" role="dialog" aria-modal="true">
+          <p v-if="currentStreak > 0" class="foqus-confirm-message">
+            Are you sure you want to break your
+            <strong>{{ currentStreak }} day streak</strong>?
+          </p>
+          <p v-else class="foqus-confirm-message foqus-confirm-message--encourage">
+            Stay focused to build your streak.
+          </p>
+          <div class="foqus-confirm-actions">
+            <button
+              type="button"
+              class="foqus-confirm-btn foqus-confirm-btn--cancel"
+              @click="cancelUnblock"
+            >
+              Stay focused
+            </button>
+            <button
+              type="button"
+              class="foqus-confirm-btn foqus-confirm-btn--confirm"
+              @click="confirmUnblock"
+            >
+              Unblock anyway
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
