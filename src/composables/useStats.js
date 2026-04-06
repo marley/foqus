@@ -94,13 +94,13 @@ function computeVisitStreakForHost(events, host) {
 export function computeExportSummary(events, avoidList = [], visitList = []) {
   const { current: current_streak, longest: longest_streak } = computeStreaks(events)
 
-  const breaking_habits = avoidList.map((host) => {
+  const by_url_avoid = avoidList.map((host) => {
     const hostEvents = events.filter((e) => e.host === host)
     const { current, longest } = computeStreaks(hostEvents)
     return { site: host, current_streak: current, longest_streak: longest }
   })
 
-  const building_intentions = visitList.map((host) => {
+  const by_url_visit = visitList.map((host) => {
     const { current, longest } = computeVisitStreakForHost(events, host)
     return { site: host, current_streak: current, longest_streak: longest }
   })
@@ -108,8 +108,8 @@ export function computeExportSummary(events, avoidList = [], visitList = []) {
   return {
     current_streak,
     longest_streak,
-    breaking_habits,
-    building_intentions,
+    by_url_avoid,
+    by_url_visit,
   }
 }
 
