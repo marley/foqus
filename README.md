@@ -18,7 +18,7 @@ I created Foqus so that I can remind myself of who I really want to be: an avid 
 - Choose sites you'd like to visit more, healthier alternatives
 - Export your browsing data and track your behavior
 
-If you notice bugs or have suggestions, please [open an issue]()!
+If you notice bugs or have suggestions, please [open an issue](https://github.com/marley/foqus/issues/new)!
 
 ## Development
 ```bash
