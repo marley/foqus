@@ -1,15 +1,22 @@
 {
   "name": "Foqus",
   "description": "Track your sites of distraction and reshape your browsing habits",
-  "version": "1.0",
+  "version": "0.1",
   "manifest_version": 3,
   "action": {
     "default_popup": "src/popup/index.html",
     "default_icon": {
-      "16": "foqus_extension.png",
-      "48": "foqus_extension.png",
-      "128": "foqus_extension.png"
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
     }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   },
   "background": {
     "service_worker": "src/background/background.js"
