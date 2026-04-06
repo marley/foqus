@@ -19,6 +19,8 @@ I created Foqus so that I can remind myself of who I really want to be: an avid 
 - Choose sites you'd like to visit more, healthier alternatives
 - Export your browsing data and track your behavior
 
+## Focus does NOT collect your browsing data. All data is stored in your local chrome browser.
+
 If you notice bugs or have feature suggestions, [open an issue](https://github.com/marley/foqus/issues/new)!
 
 This product was developed using both human and artificial intelligence (AI).
