@@ -23,7 +23,6 @@
   },
   "permissions": [
     "storage",
-    "webRequest",
     "scripting",
     "tabs"
   ],
