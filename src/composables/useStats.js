@@ -56,6 +56,49 @@ function computeStreaks(events) {
 }
 
 /**
+ * Consecutive calendar days with at least one visit_site_clicked for this host.
+ * Current streak is 0 if neither today nor yesterday was visited (missed a day).
+ */
+function computeVisitStreakForHost(events, host) {
+  const today = todayStr()
+  const yesterday = toDateStr(Date.now() - 24 * 60 * 60 * 1000)
+  const visitDays = [
+    ...new Set(
+      events
+        .filter((e) => e.type === 'visit_site_clicked' && e.host === host)
+        .map((e) => toDateStr(e.ts)),
+    ),
+  ].sort()
+
+  if (!visitDays.length) return { current: 0, longest: 0 }
+
+  const visitSet = new Set(visitDays)
+  const anchor = visitSet.has(today) ? today : visitSet.has(yesterday) ? yesterday : null
+  let current = 0
+  if (anchor) {
+    const d = new Date(`${anchor}T12:00:00`)
+    while (visitSet.has(toDateStr(d.getTime()))) {
+      current++
+      d.setDate(d.getDate() - 1)
+    }
+  }
+
+  let longest = 1
+  let run = 1
+  for (let i = 1; i < visitDays.length; i++) {
+    if (calendarDaysDiff(visitDays[i - 1], visitDays[i]) === 1) {
+      run++
+    } else {
+      longest = Math.max(longest, run)
+      run = 1
+    }
+  }
+  longest = Math.max(longest, run)
+
+  return { current, longest }
+}
+
+/**
  * Structured summary for data export (not the raw event log).
  */
 export function computeExportSummary(events) {
