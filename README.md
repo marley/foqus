@@ -12,7 +12,7 @@
 
 
 I created Foqus for myself. I found myself mindlessly visiting social media and doomscrolling. I wasted hours. Sometimes to procrastinate and sometimes out of boredom.
-I created Foqus so that I can remind myself of who I really want to be: an avid reader, a learner, an artist. Foqus helps me pause and make an active choice about what to do next. Maybe it can help you too :)
+I know my potential: an avid reader, a learner, an artist. Foqus helps me pause and make an active choice about what to do next. Maybe it can help you too :)
 
 ## Foqus lets you
 - Choose sites to avoid, and receive gentle reminders to pause and decide your next move
