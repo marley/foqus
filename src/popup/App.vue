@@ -168,7 +168,7 @@ onMounted(() => {
               aria-label="Getting started"
             >
               <p class="popup-onboarding-hint-text">
-                Add sites to <strong>Avoid</strong> to block distractions, or to <strong>Visit</strong> for places you want to remember.
+                Add sites to <strong>Avoid</strong> to block distractions, or to <strong>Visit</strong> for sites you want to visit more.
               </p>
               <button
                 type="button"
@@ -199,7 +199,8 @@ onMounted(() => {
               aria-label="Getting started"
             >
               <p class="popup-onboarding-hint-text">
-                Add sites to <strong>Avoid</strong> to block distractions, or to <strong>Visit</strong> for places you want to remember.
+                Add sites to <strong>Avoid</strong> to block distractions, or to <strong>Visit</strong> for sites you want to visit more.
+
               </p>
               <button
                 type="button"
