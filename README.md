@@ -2,7 +2,9 @@
 ## Track your sites of distraction and reshape your browsing habits (awaiting approval)
 
 ☑️ Effective, positive reinforcement
+
 ☑️ Beautiful, low stimulation visuals
+
 ☑️ Privacy guaranteed: all data stored locally in your browser
 
 <img width="1350" height="789" alt="foqus2" src="https://github.com/user-attachments/assets/5a33fd4b-edf6-487c-8b26-c38fa3540b3e" />
