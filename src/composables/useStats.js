@@ -17,17 +17,6 @@ function calendarDaysDiff(earlierStr, laterStr) {
   return Math.round((b - a) / (24 * 60 * 60 * 1000))
 }
 
-function countByHostDesc(events, type, countKey) {
-  const map = new Map()
-  for (const e of events) {
-    if (e.type !== type || !e.host) continue
-    map.set(e.host, (map.get(e.host) || 0) + 1)
-  }
-  return [...map.entries()]
-    .map(([site, n]) => ({ site, [countKey]: n }))
-    .sort((a, b) => b[countKey] - a[countKey])
-}
-
 /** Days without unblocking avoid sites: current and longest (calendar-day based). */
 function computeStreaks(events) {
   const today = todayStr()
@@ -100,17 +89,27 @@ function computeVisitStreakForHost(events, host) {
 
 /**
  * Structured summary for data export (not the raw event log).
+ * Per-site streaks: avoid list = days without unblocking that host; visit list = consecutive visit days.
  */
-export function computeExportSummary(events) {
-  const habits_broken = countByHostDesc(events, 'unblock', 'unblocks')
-  const intentions_built = countByHostDesc(events, 'visit_site_clicked', 'visits')
+export function computeExportSummary(events, avoidList = [], visitList = []) {
   const { current: current_streak, longest: longest_streak } = computeStreaks(events)
+
+  const breaking_habits = avoidList.map((host) => {
+    const hostEvents = events.filter((e) => e.host === host)
+    const { current, longest } = computeStreaks(hostEvents)
+    return { site: host, current_streak: current, longest_streak: longest }
+  })
+
+  const building_intentions = visitList.map((host) => {
+    const { current, longest } = computeVisitStreakForHost(events, host)
+    return { site: host, current_streak: current, longest_streak: longest }
+  })
 
   return {
     current_streak,
     longest_streak,
-    habits_broken,
-    intentions_built,
+    breaking_habits,
+    building_intentions,
   }
 }
 
@@ -179,6 +178,6 @@ export function useStats() {
  * Load events and return structured export summary (not the raw log).
  */
 export async function getExportSummary() {
-  const data = await chrome.storage.local.get(STORAGE_KEY)
-  return computeExportSummary(data[STORAGE_KEY] || [])
+  const data = await chrome.storage.local.get([STORAGE_KEY, 'avoid', 'visit'])
+  return computeExportSummary(data[STORAGE_KEY] || [], data.avoid || [], data.visit || [])
 }
