@@ -1,7 +1,10 @@
 <script setup>
 import { ref, computed, watch, nextTick, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useStorage } from '../../composables/useStorage'
 import DataExport from './DataExport.vue'
+
+const { t } = useI18n()
 
 const open = defineModel({ type: Boolean, default: false })
 
@@ -18,11 +21,11 @@ function clampOverrideLimit(value) {
 
 const THEME_IDS = ['green', 'orange', 'mono']
 
-const THEME_OPTIONS = [
-  { id: 'green', label: 'Teal green, like the block screen' },
-  { id: 'orange', label: 'Coral orange, like the block screen' },
-  { id: 'mono', label: 'Black and white' },
-]
+const THEME_OPTIONS = computed(() => [
+  { id: 'green', label: t('settings.themeGreen') },
+  { id: 'orange', label: t('settings.themeOrange') },
+  { id: 'mono', label: t('settings.themeMono') },
+])
 
 const {
   preferReducedMotion,
@@ -169,26 +172,26 @@ function close() {
   >
     <div class="popup-settings-overlay-header">
       <h2 id="settings-dialog-title" class="popup-settings-overlay-title">
-        Settings
+        {{ t('settings.title') }}
       </h2>
       <span
         v-show="savedIndicator"
         role="status"
         aria-live="polite"
         class="popup-settings-saved"
-      >Saved!</span>
+      >{{ t('settings.saved') }}</span>
       <button
         ref="closeBtnRef"
         type="button"
         class="popup-settings-close"
-        aria-label="Close settings"
+        :aria-label="t('settings.closeAria')"
         @click="close"
       >
         <span aria-hidden="true">×</span>
       </button>
     </div>
     <div class="popup-settings-drawer-inner">
-      <h3 class="popup-settings-subheading">Visuals</h3>
+      <h3 class="popup-settings-subheading">{{ t('settings.visuals') }}</h3>
       <div class="popup-settings-row">
         <label class="popup-toggle" for="preferReducedMotion">
           <input
@@ -201,7 +204,7 @@ function close() {
           <span class="popup-toggle-track" aria-hidden="true">
             <span class="popup-toggle-thumb"></span>
           </span>
-          <span class="popup-toggle-label">Reduce animations</span>
+          <span class="popup-toggle-label">{{ t('settings.reduceAnimations') }}</span>
         </label>
       </div>
       <div class="popup-settings-row">
@@ -216,7 +219,7 @@ function close() {
           <span class="popup-toggle-track" aria-hidden="true">
             <span class="popup-toggle-thumb"></span>
           </span>
-          <span class="popup-toggle-label">Dark mode</span>
+          <span class="popup-toggle-label">{{ t('settings.darkMode') }}</span>
         </label>
       </div>
         <div class="popup-settings-row">
@@ -239,36 +242,36 @@ function close() {
               :aria-label="opt.label"
               @click="onThemeSelect(opt.id)"
             ></button>
-          </div> <span class="popup-toggle-label">Themes</span>
+          </div> <span class="popup-toggle-label">{{ t('settings.themes') }}</span>
         </div>
       <div class="popup-settings-section">
-        <h3 class="popup-settings-subheading">Screen block</h3>
-        <p class="popup-settings-label">Custom message</p>
+        <h3 class="popup-settings-subheading">{{ t('settings.screenBlock') }}</h3>
+        <p class="popup-settings-label">{{ t('settings.customMessage') }}</p>
         <form @submit="onOverlayTitleSubmit">
-          <label for="overlayTitleInput" class="visually-hidden">Custom block screen message</label>
+          <label for="overlayTitleInput" class="visually-hidden">{{ t('settings.customMessageLabel') }}</label>
           <input
             id="overlayTitleInput"
             v-model="overlayTitleInput"
             type="text"
-            placeholder="You shall not pass."
+            :placeholder="t('settings.customMessagePlaceholder')"
             name="overlayTitleInput"
           >
-          <button type="submit" class="popup-settings-button">Save</button>
+          <button type="submit" class="popup-settings-button">{{ t('settings.save') }}</button>
         </form>
-        <p class="popup-settings-label">Unblock time limit</p>
+        <p class="popup-settings-label">{{ t('settings.unblockLimit') }}</p>
         <form @submit="onLimitSubmit">
-          <label for="overrideLimitInput" class="visually-hidden">Unblock time limit in minutes</label>
+          <label for="overrideLimitInput" class="visually-hidden">{{ t('settings.unblockLimitLabel') }}</label>
           <input
             id="overrideLimitInput"
             v-model.number="overrideLimitInput"
             type="number"
             min="1"
             max="120"
-            placeholder="5"
+            :placeholder="t('settings.limitPlaceholder')"
             name="overrideLimitInput"
           >
-          minutes
-          <button type="submit" class="popup-settings-button">Save</button>
+          {{ t('settings.minutes') }}
+          <button type="submit" class="popup-settings-button">{{ t('settings.save') }}</button>
         </form>
       </div>
       <div class="popup-settings-section">

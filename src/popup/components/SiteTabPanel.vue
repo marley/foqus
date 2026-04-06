@@ -1,6 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SiteForm from './SiteForm.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({
   /** `'avoid'` | `'visit'` */
@@ -22,7 +25,7 @@ const inputId = computed(() => `site-input-${props.type}`)
 const listId = computed(() => `${props.type}-sites-list`)
 const emptyStateId = computed(() => `${props.type}-sites-empty`)
 const listLabel = computed(() =>
-  props.type === 'avoid' ? 'Sites to avoid' : 'Places to go instead',
+  props.type === 'avoid' ? t('site.listAvoid') : t('site.listVisit'),
 )
 
 defineExpose({
@@ -67,7 +70,7 @@ function removeItem(value) {
             <button
               type="button"
               class="popup-remove-btn"
-              :aria-label="`Remove ${item}`"
+              :aria-label="t('site.removeAria', { item })"
               @click="removeItem(item)"
             >
               <span aria-hidden="true">×</span>
@@ -80,7 +83,7 @@ function removeItem(value) {
         :id="emptyStateId"
         :hidden="items.length > 0"
       >
-        No sites added yet
+        {{ t('site.emptyState') }}
       </p>
     </div>
   </div>

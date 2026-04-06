@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { getExportSummary } from '../../composables/useStats'
 
+const { t } = useI18n()
 const exported = ref(false)
 
 function downloadFile(content, filename, type) {
@@ -29,20 +31,20 @@ function showExported() {
 
 <template>
   <div class="popup-export">
-    <h3 class="popup-settings-subheading">Data export</h3>
+    <h3 class="popup-settings-subheading">{{ t('export.heading') }}</h3>
     <div class="popup-export-buttons">
       <button
         type="button"
-        aria-label="Export statistics as a JSON file"
+        :aria-label="t('export.exportAria')"
         @click="exportJSON"
       >
-        Export JSON
+        {{ t('export.exportJson') }}
       </button>
       <span
         v-show="exported"
         role="status"
         class="popup-settings-saved"
-      >Exported!</span>
+      >{{ t('export.exported') }}</span>
     </div>
   </div>
 </template>

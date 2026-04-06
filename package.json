@@ -14,5 +14,8 @@
     "vite-plugin-static-copy": "^2.1.0",
     "vite-plugin-web-extension": "^4.5.0",
     "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "vue-i18n": "^9.14.5"
   }
 }
