@@ -7,7 +7,8 @@
 
 ☑️ Privacy guaranteed: all data stored locally in your browser
 
-<img width="1350" height="789" alt="foqus2" src="https://github.com/user-attachments/assets/5a33fd4b-edf6-487c-8b26-c38fa3540b3e" />
+<img width="1350" height="789" alt="foqus2" src="https://github.com/user-attachments/assets/e593652f-1382-4e64-89f8-cff7c3e47609" />
+
 
 I created Foqus for myself. I found myself mindlessly opening time-waster sites and doomscrolling. I wasted hours. Sometimes for procrastinationg and sometimes from boredom.
 I created Foqus so that I can remind myself of who I really want to be: an avid reader, a learner, an artist. Foqus helps me pause and make an active choice about what to do next.
