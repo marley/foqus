@@ -10,10 +10,6 @@ function todayStr() {
   return toDateStr(Date.now())
 }
 
-function yesterdayStr() {
-  return toDateStr(Date.now() - 24 * 60 * 60 * 1000)
-}
-
 /** Calendar-day difference: laterStr minus earlierStr (YYYY-MM-DD). */
 function calendarDaysDiff(earlierStr, laterStr) {
   const a = new Date(`${earlierStr}T12:00:00`).getTime()
@@ -21,66 +17,99 @@ function calendarDaysDiff(earlierStr, laterStr) {
   return Math.round((b - a) / (24 * 60 * 60 * 1000))
 }
 
-function countByHostDesc(events, type, countKey) {
-  const map = new Map()
-  for (const e of events) {
-    if (e.type !== type || !e.host) continue
-    map.set(e.host, (map.get(e.host) || 0) + 1)
-  }
-  return [...map.entries()]
-    .map(([site, n]) => ({ site, [countKey]: n }))
-    .sort((a, b) => b[countKey] - a[countKey])
-}
-
-/**
- * Structured summary for data export (not the raw event log).
- */
-export function computeExportSummary(events) {
+/** Days without unblocking avoid sites: current and longest (calendar-day based). */
+function computeStreaks(events) {
   const today = todayStr()
-  const breaking_habits = countByHostDesc(events, 'unblock', 'unblocks')
-  const building_intentions = countByHostDesc(events, 'visit_site_clicked', 'visits')
+  if (!events.length) return { current: 0, longest: 0 }
 
-  if (!events.length) {
-    return {
-      current_streak: 0,
-      longest_streak: 0,
-      breaking_habits,
-      building_intentions,
-    }
-  }
-
-  const minTs = Math.min(...events.map((e) => e.ts))
-  const firstEventDay = toDateStr(minTs)
-
+  const firstEventDay = toDateStr(Math.min(...events.map((e) => e.ts)))
   const unblockDays = [
     ...new Set(events.filter((e) => e.type === 'unblock').map((e) => toDateStr(e.ts))),
   ].sort()
 
-  let current_streak = 0
-  let longest_streak = 0
-
   if (!unblockDays.length) {
-    current_streak = calendarDaysDiff(firstEventDay, today)
-    longest_streak = current_streak
-  } else {
-    const lastU = unblockDays[unblockDays.length - 1]
-
-    current_streak = lastU === today ? 0 : calendarDaysDiff(lastU, today)
-
-    const candidates = []
-    candidates.push(calendarDaysDiff(firstEventDay, unblockDays[0]))
-    for (let i = 0; i < unblockDays.length - 1; i++) {
-      candidates.push(calendarDaysDiff(unblockDays[i], unblockDays[i + 1]) - 1)
-    }
-    candidates.push(lastU === today ? 0 : calendarDaysDiff(lastU, today))
-    longest_streak = Math.max(...candidates)
+    const current = calendarDaysDiff(firstEventDay, today)
+    return { current, longest: current }
   }
+
+  const lastU = unblockDays[unblockDays.length - 1]
+  const current = lastU === today ? 0 : calendarDaysDiff(lastU, today)
+
+  const candidates = [calendarDaysDiff(firstEventDay, unblockDays[0])]
+  for (let i = 0; i < unblockDays.length - 1; i++) {
+    candidates.push(calendarDaysDiff(unblockDays[i], unblockDays[i + 1]) - 1)
+  }
+  candidates.push(current)
+
+  return { current, longest: Math.max(...candidates) }
+}
+
+/**
+ * Consecutive calendar days with at least one visit_site_clicked for this host.
+ * Current streak is 0 if neither today nor yesterday was visited (missed a day).
+ */
+function computeVisitStreakForHost(events, host) {
+  const today = todayStr()
+  const yesterday = toDateStr(Date.now() - 24 * 60 * 60 * 1000)
+  const visitDays = [
+    ...new Set(
+      events
+        .filter((e) => e.type === 'visit_site_clicked' && e.host === host)
+        .map((e) => toDateStr(e.ts)),
+    ),
+  ].sort()
+
+  if (!visitDays.length) return { current: 0, longest: 0 }
+
+  const visitSet = new Set(visitDays)
+  const anchor = visitSet.has(today) ? today : visitSet.has(yesterday) ? yesterday : null
+  let current = 0
+  if (anchor) {
+    const d = new Date(`${anchor}T12:00:00`)
+    while (visitSet.has(toDateStr(d.getTime()))) {
+      current++
+      d.setDate(d.getDate() - 1)
+    }
+  }
+
+  let longest = 1
+  let run = 1
+  for (let i = 1; i < visitDays.length; i++) {
+    if (calendarDaysDiff(visitDays[i - 1], visitDays[i]) === 1) {
+      run++
+    } else {
+      longest = Math.max(longest, run)
+      run = 1
+    }
+  }
+  longest = Math.max(longest, run)
+
+  return { current, longest }
+}
+
+/**
+ * Structured summary for data export (not the raw event log).
+ * Per-site streaks: avoid list = days without unblocking that host; visit list = consecutive visit days.
+ */
+export function computeExportSummary(events, avoidList = [], visitList = []) {
+  const { current: current_streak, longest: longest_streak } = computeStreaks(events)
+
+  const by_url_avoid = avoidList.map((host) => {
+    const hostEvents = events.filter((e) => e.host === host)
+    const { current, longest } = computeStreaks(hostEvents)
+    return { site: host, current_streak: current, longest_streak: longest }
+  })
+
+  const by_url_visit = visitList.map((host) => {
+    const { current, longest } = computeVisitStreakForHost(events, host)
+    return { site: host, current_streak: current, longest_streak: longest }
+  })
 
   return {
     current_streak,
     longest_streak,
-    breaking_habits,
-    building_intentions,
+    by_url_avoid,
+    by_url_visit,
   }
 }
 
@@ -99,30 +128,7 @@ function computeStats(events) {
   const allUnblocks = events.filter((e) => e.type === 'unblock')
   const unblocksToday = allUnblocks.filter((e) => toDateStr(e.ts) === today).length
 
-  // Streak — consecutive days with at least one intention_kept
-  const keptDays = new Set(allKept.map((e) => toDateStr(e.ts)))
-  let streak = 0
-  let checkDate = today
-
-  // If no intention kept today, start checking from yesterday
-  // (streak is still alive if today isn't over yet)
-  if (!keptDays.has(today)) {
-    checkDate = yesterdayStr()
-    if (!keptDays.has(checkDate)) {
-      // No streak
-      return { intentionsKept, keptToday, unblocksToday, streak: 0, weeklyTrend: null }
-    }
-  }
-
-  // Count backwards from checkDate
-  const d = new Date(checkDate + 'T12:00:00')
-  while (keptDays.has(toDateStr(d.getTime()))) {
-    streak++
-    d.setDate(d.getDate() - 1)
-  }
-
-  // An unblock today breaks the streak
-  if (unblocksToday > 0) streak = 0
+  const { current: streak } = computeStreaks(events)
 
   // Weekly trend — compare this week's unblocks to last week's
   const thisWeekUnblocks = allUnblocks.filter((e) => e.ts >= weekAgo).length
@@ -172,6 +178,6 @@ export function useStats() {
  * Load events and return structured export summary (not the raw log).
  */
 export async function getExportSummary() {
-  const data = await chrome.storage.local.get(STORAGE_KEY)
-  return computeExportSummary(data[STORAGE_KEY] || [])
+  const data = await chrome.storage.local.get([STORAGE_KEY, 'avoid', 'visit'])
+  return computeExportSummary(data[STORAGE_KEY] || [], data.avoid || [], data.visit || [])
 }

@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted, nextTick, watch } from 'vue'
+import { I18nT, useI18n } from 'vue-i18n'
 import { useStorage } from '../composables/useStorage'
+
+const { t } = useI18n()
 
 const THEME_IDS = ['green', 'orange', 'mono']
 import SiteTabPanel from './components/SiteTabPanel.vue'
@@ -18,9 +21,9 @@ const {
 } = useStorage(['avoid', 'visit', 'descriptionBannerDismissed', 'theme'])
 
 watch(theme, () => {
-  const t = THEME_IDS.includes(theme.value) ? theme.value : 'green'
+  const id = THEME_IDS.includes(theme.value) ? theme.value : 'green'
   document.body.classList.remove('theme-green', 'theme-orange', 'theme-mono')
-  document.body.classList.add(`theme-${t}`)
+  document.body.classList.add(`theme-${id}`)
 }, { immediate: true })
 
 const activeTab = ref('avoid')
@@ -103,7 +106,7 @@ onMounted(() => {
         :aria-expanded="settingsOpen"
         aria-controls="settings-panel"
         aria-haspopup="dialog"
-        aria-label="Settings"
+        :aria-label="t('popup.settingsAria')"
         @click="settingsOpen = !settingsOpen"
       >
         <span class="popup-settings-icon" aria-hidden="true">&#9881;</span>
@@ -116,7 +119,7 @@ onMounted(() => {
       <div
         class="popup-tab-bar"
         role="tablist"
-        aria-label="Site lists"
+        :aria-label="t('popup.siteListsAria')"
         @keydown="onTabKeydown"
       >
         <button
@@ -131,7 +134,7 @@ onMounted(() => {
           :tabindex="activeTab === 'avoid' ? 0 : -1"
           @click="activeTab = 'avoid'"
         >
-          Avoid
+          {{ t('popup.tabAvoid') }}
         </button>
         <button
           id="tab-visit"
@@ -145,7 +148,7 @@ onMounted(() => {
           :tabindex="activeTab === 'visit' ? 0 : -1"
           @click="activeTab = 'visit'"
         >
-          Visit
+          {{ t('popup.tabVisit') }}
         </button>
       </div>
 
@@ -165,15 +168,24 @@ onMounted(() => {
               v-if="!descriptionBannerDismissed"
               class="popup-onboarding-hint"
               role="region"
-              aria-label="Getting started"
+              :aria-label="t('popup.gettingStartedAria')"
             >
-              <p class="popup-onboarding-hint-text">
-                Add sites to <strong>Avoid</strong> to block distractions, or to <strong>Visit</strong> for places you want to remember.
-              </p>
+              <I18nT
+                keypath="popup.onboardingHint"
+                tag="p"
+                class="popup-onboarding-hint-text"
+              >
+                <template #avoid>
+                  <strong>{{ t('popup.tabAvoid') }}</strong>
+                </template>
+                <template #visit>
+                  <strong>{{ t('popup.tabVisit') }}</strong>
+                </template>
+              </I18nT>
               <button
                 type="button"
                 class="popup-onboarding-hint-dismiss"
-                aria-label="Dismiss getting started tip"
+                :aria-label="t('popup.dismissOnboardingAria')"
                 @click="onOnboardingDismiss"
               >
                 <span aria-hidden="true">×</span>
@@ -196,15 +208,24 @@ onMounted(() => {
               v-if="!descriptionBannerDismissed"
               class="popup-onboarding-hint"
               role="region"
-              aria-label="Getting started"
+              :aria-label="t('popup.gettingStartedAria')"
             >
-              <p class="popup-onboarding-hint-text">
-                Add sites to <strong>Avoid</strong> to block distractions, or to <strong>Visit</strong> for places you want to remember.
-              </p>
+              <I18nT
+                keypath="popup.onboardingHint"
+                tag="p"
+                class="popup-onboarding-hint-text"
+              >
+                <template #avoid>
+                  <strong>{{ t('popup.tabAvoid') }}</strong>
+                </template>
+                <template #visit>
+                  <strong>{{ t('popup.tabVisit') }}</strong>
+                </template>
+              </I18nT>
               <button
                 type="button"
                 class="popup-onboarding-hint-dismiss"
-                aria-label="Dismiss getting started tip"
+                :aria-label="t('popup.dismissOnboardingAria')"
                 @click="onOnboardingDismiss"
               >
                 <span aria-hidden="true">×</span>
@@ -222,8 +243,8 @@ onMounted(() => {
         rel="noopener noreferrer"
         class="popup-ko-fi"
       >
-        <span aria-hidden="true">♥ </span>Support Foqus on Ko-fi
-        <span class="visually-hidden"> (opens in new tab)</span>
+        <span aria-hidden="true">♥ </span>{{ t('popup.supportKoFi') }}
+        <span class="visually-hidden">{{ t('popup.opensNewTab') }}</span>
       </a>
     </footer>
   </div>

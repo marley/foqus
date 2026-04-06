@@ -289,6 +289,7 @@
 .foqus-overlay-button {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   font-size: 15px;
+  line-height: normal;
   font-weight: 500;
   background: transparent;
   color: rgba(255, 255, 255, 0.9);
@@ -361,6 +362,7 @@
 .foqus-confirm-btn {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
+  line-height: normal;
   font-weight: 500;
   border-radius: 999px;
   padding: 9px 20px;

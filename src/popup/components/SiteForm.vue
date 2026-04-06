@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 defineProps({
   /** Unique id for label/input pairing when multiple forms exist (e.g. tab panels). */
@@ -27,15 +30,15 @@ function onSubmit(e) {
 
 <template>
   <form class="popup-input-row" @submit="onSubmit">
-    <label :for="inputId" class="visually-hidden">Add a site</label>
+    <label :for="inputId" class="visually-hidden">{{ t('site.addLabel') }}</label>
     <input
       :id="inputId"
       v-model="inputValue"
       type="text"
-      placeholder="example.com"
+      :placeholder="t('site.placeholder')"
       :name="inputId"
     >
-    <button type="submit" class="popup-submit-btn" aria-label="Add site to the list">
+    <button type="submit" class="popup-submit-btn" :aria-label="t('site.addAria')">
       +
     </button>
   </form>

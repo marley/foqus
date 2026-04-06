@@ -34,6 +34,24 @@ function injectIntoTab(tabId) {
     });
 }
 
+/** When the avoid list gains a URL, inject into already-open tabs that now match (no reload needed). */
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+    if (areaName !== "local" || !changes.avoid) return;
+    const newAvoid = changes.avoid.newValue;
+    if (!Array.isArray(newAvoid) || newAvoid.length === 0) return;
+
+    chrome.tabs.query({}, function(tabs) {
+        if (chrome.runtime.lastError) return;
+        for (const tab of tabs) {
+            if (tab.id == null || !tab.url || tab.status !== "complete") continue;
+            if (injectedTabs.has(tab.id)) continue;
+            if (urlMatchesPatterns(tab.url, newAvoid)) {
+                injectIntoTab(tab.id);
+            }
+        }
+    });
+});
+
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     // Wait until the page is fully loaded
     if (changeInfo.status !== "complete") return;

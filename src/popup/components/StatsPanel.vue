@@ -1,12 +1,9 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { useStats } from '../../composables/useStats'
 
+const { t } = useI18n()
 const { stats } = useStats()
-
-function streakLabel(n) {
-  if (n === 1) return 'day streak'
-  return 'days streak'
-}
 </script>
 
 <template>
@@ -20,20 +17,20 @@ function streakLabel(n) {
     <p class="popup-stats-strip">
       <span class="popup-stats-item">
         <span class="popup-stats-num popup-stats-num--accent">{{ stats.streak }}</span>
-        <span class="popup-stats-unit"> {{ streakLabel(stats.streak) }}</span>
+        <span class="popup-stats-unit"> {{ t('stats.streakUnit', stats.streak) }}</span>
       </span>
       <span v-if="stats.unblocksToday > 0">
         <span class="popup-stats-sep" aria-hidden="true">|</span>
         <span class="popup-stats-item">
           <span class="popup-stats-num">{{ stats.unblocksToday }}</span>
-          <span class="popup-stats-unit"> unblocks today</span>
+          <span class="popup-stats-unit"> {{ t('stats.unblocksToday') }}</span>
         </span>
       </span>
       <span v-if="stats.keptToday > 0">
         <span class="popup-stats-sep" aria-hidden="true">|</span>
         <span class="popup-stats-item">
           <span class="popup-stats-num">{{ stats.keptToday }}</span>
-          <span class="popup-stats-unit"> avoided today</span>
+          <span class="popup-stats-unit"> {{ t('stats.avoidedToday') }}</span>
         </span>
       </span>
       
@@ -42,13 +39,13 @@ function streakLabel(n) {
       v-if="stats.weeklyTrend && stats.weeklyTrend.change < 0"
       class="popup-stats-trend popup-stats-trend--positive"
     >
-      You unblocked {{ Math.abs(stats.weeklyTrend.change) }}% less than last week
+      {{ t('stats.trendLess', { pct: Math.abs(stats.weeklyTrend.change) }) }}
     </p>
     <p
       v-else-if="stats.weeklyTrend && stats.weeklyTrend.change === 0"
       class="popup-stats-trend"
     >
-      Same unblock rate as last week
+      {{ t('stats.trendSame') }}
     </p>
   </div>
 </template>
