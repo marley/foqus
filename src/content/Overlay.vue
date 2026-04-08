@@ -118,7 +118,7 @@ onUnmounted(() => {
       <div v-if="showConfirmModal" class="foqus-confirm-backdrop" @click.self="cancelUnblock">
         <div class="foqus-confirm-modal" role="dialog" aria-modal="true">
           <p v-if="currentStreak > 0" class="foqus-confirm-message">
-            <I18nT keypath="overlay.confirmBreakStreak" tag="span">
+            <I18nT keypath="overlay.confirmBreakStreak" tag="span" scope="global">
               <template #streak>
                 <strong>{{ currentStreak }} {{ t('overlay.streakNoun', currentStreak) }}</strong>
               </template>
