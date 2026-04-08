@@ -174,6 +174,7 @@ onMounted(() => {
                 keypath="popup.onboardingHint"
                 tag="p"
                 class="popup-onboarding-hint-text"
+                scope="global"
               >
                 <template #avoid>
                   <strong>{{ t('popup.tabAvoid') }}</strong>
@@ -214,6 +215,7 @@ onMounted(() => {
                 keypath="popup.onboardingHint"
                 tag="p"
                 class="popup-onboarding-hint-text"
+                scope="global"
               >
                 <template #avoid>
                   <strong>{{ t('popup.tabAvoid') }}</strong>
