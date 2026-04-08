@@ -34,20 +34,28 @@ export function createStorageOnChangedMock() {
 export function createStorageLocalMock(backing, onChangedApi) {
   const emit = onChangedApi._emit.bind(onChangedApi)
 
+  function buildGetResult(keys) {
+    const result = {}
+    if (keys == null) {
+      Object.assign(result, backing)
+    } else if (typeof keys === 'string') {
+      if (backing[keys] !== undefined) result[keys] = backing[keys]
+    } else if (Array.isArray(keys)) {
+      for (const k of keys) {
+        if (backing[k] !== undefined) result[k] = backing[k]
+      }
+    }
+    return result
+  }
+
   return {
     get(keys, cb) {
-      const result = {}
-      if (keys == null) {
-        Object.assign(result, backing)
-      } else if (typeof keys === 'string') {
-        if (backing[keys] !== undefined) result[keys] = backing[keys]
-      } else if (Array.isArray(keys)) {
-        for (const k of keys) {
-          if (backing[k] !== undefined) result[k] = backing[k]
-        }
+      const result = buildGetResult(keys)
+      if (typeof cb === 'function') {
+        queueMicrotask(() => cb(result))
+        return undefined
       }
-      const callback = typeof cb === 'function' ? cb : () => {}
-      queueMicrotask(() => callback(result))
+      return Promise.resolve(result)
     },
     set(items, cb) {
       if (items && typeof items === 'object') {
@@ -57,13 +65,23 @@ export function createStorageLocalMock(backing, onChangedApi) {
           backing[k] = v
           changes[k] = { oldValue, newValue: v }
         }
-        queueMicrotask(() => {
-          emit(changes, 'local')
-          if (typeof cb === 'function') cb()
+        return new Promise((resolve) => {
+          queueMicrotask(() => {
+            emit(changes, 'local')
+            if (typeof cb === 'function') cb()
+            resolve()
+          })
         })
-      } else if (typeof cb === 'function') {
-        queueMicrotask(() => cb())
       }
+      if (typeof cb === 'function') {
+        return new Promise((resolve) => {
+          queueMicrotask(() => {
+            cb()
+            resolve()
+          })
+        })
+      }
+      return Promise.resolve()
     },
     remove(keys, cb) {
       const keyList = typeof keys === 'string' ? [keys] : Array.isArray(keys) ? keys : []
@@ -74,9 +92,12 @@ export function createStorageLocalMock(backing, onChangedApi) {
           delete backing[k]
         }
       }
-      queueMicrotask(() => {
-        if (Object.keys(changes).length) emit(changes, 'local')
-        if (typeof cb === 'function') cb()
+      return new Promise((resolve) => {
+        queueMicrotask(() => {
+          if (Object.keys(changes).length) emit(changes, 'local')
+          if (typeof cb === 'function') cb()
+          resolve()
+        })
       })
     },
     clear(cb) {
@@ -85,9 +106,12 @@ export function createStorageLocalMock(backing, onChangedApi) {
         changes[k] = { oldValue: backing[k], newValue: undefined }
       }
       for (const k of Object.keys(backing)) delete backing[k]
-      queueMicrotask(() => {
-        emit(changes, 'local')
-        if (typeof cb === 'function') cb()
+      return new Promise((resolve) => {
+        queueMicrotask(() => {
+          emit(changes, 'local')
+          if (typeof cb === 'function') cb()
+          resolve()
+        })
       })
     },
   }
