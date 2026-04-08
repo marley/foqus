@@ -18,7 +18,7 @@ function calendarDaysDiff(earlierStr, laterStr) {
 }
 
 /** Days without unblocking avoid sites: current and longest (calendar-day based). */
-function computeStreaks(events) {
+export function computeStreaks(events) {
   const today = todayStr()
   if (!events.length) return { current: 0, longest: 0 }
 
@@ -48,7 +48,7 @@ function computeStreaks(events) {
  * Consecutive calendar days with at least one visit_site_clicked for this host.
  * Current streak is 0 if neither today nor yesterday was visited (missed a day).
  */
-function computeVisitStreakForHost(events, host) {
+export function computeVisitStreakForHost(events, host) {
   const today = todayStr()
   const yesterday = toDateStr(Date.now() - 24 * 60 * 60 * 1000)
   const visitDays = [

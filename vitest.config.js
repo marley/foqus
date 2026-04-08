@@ -11,6 +11,9 @@ export default defineConfig({
     environment: 'happy-dom',
     globals: true,
     setupFiles: ['./test/setup.js'],
+    env: {
+      TZ: 'UTC',
+    },
     include: ['src/**/*.{test,spec}.{js,mjs}', 'test/**/*.{test,spec}.{js,mjs}'],
     coverage: {
       provider: 'v8',
