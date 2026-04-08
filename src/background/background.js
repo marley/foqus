@@ -1,23 +1,8 @@
+import { urlMatchesPatterns } from "./urlMatchesPatterns.js";
+
 const injectedTabs = new Set();
 /** tabId -> muted before Foqus forced mute (restored on unblock) */
 const originalMuteState = new Map();
-
-function urlMatchesPatterns(url, storedUrls) {
-    try {
-        const { hostname } = new URL(url);
-        return storedUrls.some(storedUrl => {
-            try {
-                const normalized = storedUrl.includes('://') ? storedUrl : `https://${storedUrl}`;
-                const { hostname: storedHost } = new URL(normalized);
-                return hostname === storedHost;
-            } catch {
-                return false;
-            }
-        });
-    } catch {
-        return false;
-    }
-}
 
 function injectIntoTab(tabId) {
     if (injectedTabs.has(tabId)) return;
