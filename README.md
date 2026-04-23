@@ -1,6 +1,6 @@
 <img width="1400" height="560" alt="Track your sites of distraction (1)" src="https://github.com/user-attachments/assets/78546696-1c8d-40dc-a1e0-8aca33e34dca" alt="Foqus: Track your sites of distraction and reshape your browsing habits"/>
 
-### Status: ⏳ awaiting approval from Chrome store
+### Now available! [Add to Chrome](https://chromewebstore.google.com/detail/cnilaeoaogbnmmklekcplglklmphjddj?utm_source=item-share-cb).
 
 ☑️ Effective, positive reinforcement
 
