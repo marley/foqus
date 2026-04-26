@@ -14,6 +14,8 @@
 I created Foqus for myself. I found myself mindlessly visiting social media and doomscrolling. I wasted hours. Sometimes to procrastinate and sometimes out of boredom.
 I know my potential: an avid reader, a learner, an artist. Foqus helps me pause and make an active choice about what to do next. Maybe it can help you too :)
 
+<a href="https://www.producthunt.com/products/foqus-browser-extension?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-foqus-browser-extension" target="_blank" rel="noopener noreferrer"><img alt="Foqus browser extension - Track sites of distraction and reshape your browsing habits | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1132295&amp;theme=dark&amp;t=1777215688652"></a>
+
 ## Foqus lets you
 - Choose sites to avoid, and receive gentle reminders to pause and decide your next move
 - Choose sites you'd like to visit more, healthier alternatives
